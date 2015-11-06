@@ -1,8 +1,16 @@
 
 public class Manicure extends Funcionario
 {
-	public void trabalha()
+	public void run()
 	{
-		System.out.println("Fazendo unhas");
+		for(int i = 0; i < 100; i++)
+		{
+			System.out.println("Fazendo pé e mão");
+			
+			try
+			{
+				wait();
+			}catch(Exception e){}
+		}
 	}
 }

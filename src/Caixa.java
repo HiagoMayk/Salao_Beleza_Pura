@@ -1,8 +1,16 @@
 
 public class Caixa extends Funcionario
 {
-	public void trabalha()
+	public void run()
 	{
-		System.out.println("Cobrando");
+		for(int i = 0; i < 100; i++)
+		{
+			System.out.println("Cobrando");
+			
+			try
+			{
+				wait();
+			}catch(Exception e){}
+		}
 	}
 }

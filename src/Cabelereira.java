@@ -1,10 +1,18 @@
 
 public class Cabelereira extends Funcionario
 {
-	public void trabalha()
+	public void run()
 	{
-		cortar();
-		lavar();
+		for(int i = 0; i < 100; i++)
+		{
+			cortar();
+			lavar();
+			
+			try
+			{
+				wait();
+			}catch(Exception e){}
+		}
 	}
 	
 	public void cortar()

@@ -1,8 +1,17 @@
 
 public class Depiladora extends Funcionario
 {
-	public void trabalha()
+	public void run()
 	{
-		System.out.println("Depilando");
+		for(int i = 0; i < 100; i++)
+		{
+			System.out.println("Depilando");
+			
+			try
+			{
+				wait();
+			}catch(Exception e){}
+		}
 	}
+
 }

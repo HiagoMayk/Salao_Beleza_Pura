@@ -1,11 +1,19 @@
 
-public class Funcionario
+public class Funcionario implements Runnable
 {
 	private String nome;
 	
-	public void trabalha()
+	public void run()
 	{
-		System.out.println("Trabalando");
+		for(int i = 0; i < 100; i++)
+		{
+			System.out.println("Trabalando");
+			
+			try
+			{
+				wait();
+			}catch(Exception e){}
+		}
 	}
 	
 }
