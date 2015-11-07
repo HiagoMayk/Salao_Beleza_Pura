@@ -1,6 +1,13 @@
 
 public class Cabelereira extends Funcionario
 {
+	/*
+	public Cabelereira(String nome)
+	{
+		super(nome);
+	}
+	*/
+	
 	public void run()
 	{
 		for(int i = 0; i < 100; i++)
@@ -15,12 +22,12 @@ public class Cabelereira extends Funcionario
 		}
 	}
 	
-	public void cortar()
+	public synchronized void cortar()
 	{
 		System.out.println("Cortando Cabelo");
 	}
 	
-	public void lavar()
+	public synchronized void lavar()
 	{
 		System.out.println("Lavando Cabelo");
 	}

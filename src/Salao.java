@@ -6,12 +6,13 @@ public class Salao
 	
 	public Salao()
 	{
-		
+		clientes = new ArrayList<String>();
 	}
 	
 	public void executar()
 	{
-		Cabelereira cabelereira = new Cabelereira(); 
+		/*
+		Cabelereira cabelereira = new Cabelereira();
 		Manicure manicure = new Manicure();
 		Depiladora depiladora = new Depiladora();
 		Massagista massagista = new Massagista();
@@ -65,15 +66,20 @@ public class Salao
 		}
 		*/
 		
+		
 	}
+	
+	public Cliente criaCliente()
+	{
+		//Método que cria uma instancia de cliente, gera os serviços que o cliente quer e retorna essa instancia para
+		// o método executar()
+	}
+	
 	public static void main (String args[]){
         
 		Salao salao = new Salao();
 		
-		salao.executar();
-		
-		
-	               
+		salao.executar();            
 	}
 }
 
