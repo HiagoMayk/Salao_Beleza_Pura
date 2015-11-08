@@ -1,29 +1,11 @@
-------------------------------PLANEJAMENTO/ANDAMENTO DO PROJETO-------------------------------------
+------------------------------PLANEJAMENTO-------------------------------------
 
 Feito:
 
  - Modelagem inicial do sistema
-
- - Criação das threads especificadas para o problema (exeto threads para clientes)
-
- - d) Cada cliente pode desejar de 1 a todos os serviços oferecidos pelo salão. 
-      (Criação de um método que cria uma instancia de cliente a faz a escolha aleatória dos serviços).
-
- - h) O preço de cada serviço é de 50 para penteado, 30 para corte, 40 para corte e
-	penteado, 0 para lavagem, 30 para pedicure, 40 para depilação e 20 para massa-
-	gem. (Criação de uma classe para armazenar os preços).
-
+ - Criação das threads especificadas para o proclema (exeto threads para clientes)
 -------------------------------------------------------------------------------
 Em andamento:
-
-	Mayk - a) A chegada de clientes deve ser simulada segundo um critério aleatório de tempo
-		de chegada entre um e outro variando de 1 a 5 unidades de tempo.
-
-	Mayk - b) Os clientes devem ser atendidos na ordem de chegada e da disponibilidade dos
-		serviços.
-
-	Mayk - f) Todo corte deve ser sempre precedido de uma lavagem.
-	
 
 -------------------------------------------------------------------------------
 A ser feito:
@@ -31,15 +13,28 @@ A ser feito:
  - Implementar sincronizaçaão dos métodos
 
  - Implementar Regras de negócio:
+	a) A chegada de clientes deve ser simulada segundo um critério aleatório de tempo
+	de chegada entre um e outro variando de 1 a 5 unidades de tempo.
+	
+	b) Os clientes devem ser atendidos na ordem de chegada e da disponibilidade dos
+	serviços.
 	
 	c) A cabelereira alocada para realizar um corte também lava o cabelo do cliente.
+	
+	d) Cada cliente pode desejar de 1 a todos os serviços oferecidos pelo salão.
 	
 	e) Um cliente não deve prender outro que esteja atrás de si e que deseja um serviço
 	que esteja disponível.
 	
+	f) Todo corte deve ser sempre precedido de uma lavagem.
+	
 	g) O tempo gasto em cada serviço por cada cliente deve ser gerado aleatoriamente
 	considerando a seguinte ordem decrescente de duração: penteado, corte, depila-
 	ção, pés e mãos, massagem e lavagem.
+	
+	h) O preço de cada serviço é de 50 para penteado, 30 para corte, 40 para corte e
+	penteado, 0 para lavagem, 30 para pedicure, 40 para depilação e 20 para massa-
+	gem.
 	
 	i) Em geral 30% dos clientes desejam todos os serviços, 35% desejam 4, 20% dese-
 	jam 3, 10% apenas 2 e 5% apenas 1.

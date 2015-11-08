@@ -1,15 +1,16 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Salao 
 {
-	ArrayList clientes;
+	ArrayList<Cliente> clientes;
 	
 	public Salao()
 	{
-		clientes = new ArrayList<String>();
+		clientes = new ArrayList<Cliente>();
 	}
 	
-	public void executar()
+	public void executar() throws InterruptedException
 	{
 		/*
 		Cabelereira cabelereira = new Cabelereira();
@@ -65,17 +66,97 @@ public class Salao
 			}catch(Exception e){}
 		}
 		*/
+		Cliente cliente = new Cliente();;
+		while(true)
+		{
+			cliente = criaCliente();
+			clientes.add(cliente);
+			
+			System.out.println(clientes.size() + " Clientes na fila");
+			
+			try 
+			{
+				Thread.sleep(1000);
+			}
+			catch(InterruptedException ex) 
+			{
+				 Thread.currentThread().interrupt();
+			}
+		}
 		
-		
+
 	}
 	
+	//Método que cria uma instancia de cliente, gera os serviços que o cliente quer e retorna essa instancia para
+	// o método executar()
 	public Cliente criaCliente()
 	{
-		//Método que cria uma instancia de cliente, gera os serviços que o cliente quer e retorna essa instancia para
-		// o método executar()
+		boolean flag = false; 
+		Cliente cliente = new Cliente();
+		Random gerador = new Random();
+		ArrayList<Integer> inserido = new ArrayList<Integer>();
+		int quantServicos = gerador.nextInt(6)+1;
+		
+		// Faz a inserção da escolha dos clientes inserindo por ordem de escolha
+		// Não deixa escolher mais de uma vez um mesmo serviço
+		for(int i = 0; i < quantServicos; i++)
+		{
+			int tipoServico = gerador.nextInt(6)+1;
+			
+			if(inserido.isEmpty() == false)
+			{
+				while(flag == false)
+				{
+					for(int num : inserido)
+					{
+						if(num == tipoServico)
+						{
+							tipoServico = gerador.nextInt(6)+1;
+							flag = true;
+							break;
+						}
+					}
+					
+					if(flag == true)
+					{
+						flag = false;
+					}else{
+						flag = true;
+					}
+				}
+			}
+				
+			flag = false;
+			inserido.add(tipoServico);
+			switch(tipoServico)
+			{
+				case 1:
+					cliente.setServico("Penteado");
+					break;
+				case 2:
+					cliente.setServico("Corte");
+					break;
+				case 3:
+					cliente.setServico("Lavagem");
+					break;
+				case 4:
+					cliente.setServico("Pedicure");
+					break;
+				case 5:
+					cliente.setServico("Depilação");
+					break;
+				case 6:
+					cliente.setServico("Massagem");
+					break;
+				default:
+					System.out.println("Opção não existe!!!");
+			}
+		}
+		
+		return cliente;
 	}
 	
-	public static void main (String args[]){
+	public static void main (String args[]) throws InterruptedException{
         
 		Salao salao = new Salao();
 		
