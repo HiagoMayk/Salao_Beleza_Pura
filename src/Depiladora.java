@@ -12,7 +12,7 @@ public class Depiladora extends Funcionario
 	{
 		for(int i = 0; i < 100; i++)
 		{
-			depilar();
+			trabalhar();
 			
 			try
 			{
@@ -21,9 +21,9 @@ public class Depiladora extends Funcionario
 		}
 	}
 	
-	public synchronized void depilar()
+	public synchronized void trabalhar()
 	{
-		System.out.println("Depilando");
+		System.out.println(Thread.currentThread().getName() + ": Trabalhando");
 	}
 
 }

@@ -12,7 +12,7 @@ public class Massagista extends Funcionario
 	{
 		for(int i = 0; i < 100; i++)
 		{
-			massagear();
+			trabalhar();
 			
 			try
 			{
@@ -21,8 +21,8 @@ public class Massagista extends Funcionario
 		}
 	}
 	
-	public synchronized void massagear()
+	public synchronized void trabalhar()
 	{
-		System.out.println("Massageando");
+		System.out.println(Thread.currentThread().getName() + ": Trabalhando");
 	}
 }

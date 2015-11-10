@@ -12,6 +12,7 @@ public class Manicure extends Funcionario
 	{
 		for(int i = 0; i < 100; i++)
 		{
+			
 			trabalhar();
 			
 			try
@@ -23,6 +24,6 @@ public class Manicure extends Funcionario
 	
 	public synchronized void trabalhar()
 	{
-		System.out.println("Fazendo pé e mão");
+		System.out.println(Thread.currentThread().getName() + ": Trabalhando");
 	}
 }

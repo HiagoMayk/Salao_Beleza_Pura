@@ -12,7 +12,7 @@ public class Caixa extends Funcionario
 	{
 		for(int i = 0; i < 100; i++)
 		{
-			cobrar();
+			trabalhar();
 			
 			try
 			{
@@ -21,9 +21,9 @@ public class Caixa extends Funcionario
 		}
 	}
 	
-	public synchronized void cobrar()
+	public synchronized void trabalhar()
 	{
-		System.out.println("Cobrando");
+		System.out.println(Thread.currentThread().getName() + ": Trabalhando");
 	}
 	
 }

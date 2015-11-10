@@ -10,26 +10,25 @@ public class Cabelereira extends Funcionario
 	
 	public void run()
 	{
-		for(int i = 0; i < 100; i++)
-		{
-			cortar();
-			lavar();
+			// Todo corte deve ser precedido de uma lavagem: como diferenciar as tarefas?
 			
-			try
-			{
-				wait();
-			}catch(Exception e){}
+			trabalhar();
+		    System.exit(0);
+			// Thread.currentThread().interrupt();
+	}
+	
+	public synchronized void trabalhar()
+	{
+		System.out.println(Thread.currentThread().getName() + ": Trabalhando");
+		
+		try 
+		{
+			Thread.sleep(2000);
 		}
-	}
-	
-	public synchronized void cortar()
-	{
-		System.out.println("Cortando Cabelo");
-	}
-	
-	public synchronized void lavar()
-	{
-		System.out.println("Lavando Cabelo");
+		catch(InterruptedException ex) 
+		{
+			 Thread.currentThread().interrupt();
+		}
 	}
 	
 }
