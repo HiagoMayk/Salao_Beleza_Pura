@@ -26,15 +26,17 @@ Em andamento:
 		serviços.
 
 	Mayk - c) A cabelereira alocada para realizar um corte também lava o cabelo do cliente.
+		Como diferenciar as tarefas que a cabelereira realiza?
 
 	Mayk - e) Um cliente não deve prender outro que esteja atrás de si e que deseja um serviço
 		que esteja disponível.
 	
 	Mayk - g) O tempo gasto em cada serviço por cada cliente deve ser gerado aleatoriamente
 		considerando a seguinte ordem decrescente de duração: penteado, corte, depila-
-		ção, pés e mãos, massagem e lavagem.
+		ção, pés e mãos, massagem e lavagem. Como atrobuir tempo para cada tarefa por cliente? 
+		na hora da inseção na lista de tarefas?
 
-	Mayk - Como interromper uma thread e depois fazê-la executar novamente? Thread.isAlive() e ou é o outro método?
+	Mayk - Como interromper uma thread e depois fazê-la executar novamente? Thread.isAlive() e ou é o 			outro método?
 	
 -------------------------------------------------------------------------------
 A ser feito:

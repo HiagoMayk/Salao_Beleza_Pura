@@ -10,20 +10,21 @@ public class Depiladora extends Funcionario
 	
 	public void run()
 	{
-		for(int i = 0; i < 100; i++)
-		{
-			trabalhar();
-			
-			try
-			{
-				wait();
-			}catch(Exception e){}
-		}
+		trabalhar();
+		Thread.currentThread().interrupt();
 	}
 	
 	public synchronized void trabalhar()
 	{
 		System.out.println(Thread.currentThread().getName() + ": Trabalhando");
+		try 
+		{
+			Thread.sleep(10000);
+		}
+		catch(InterruptedException ex) 
+		{
+			 Thread.currentThread().interrupt();
+		}
 	}
 
 }

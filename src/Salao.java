@@ -4,11 +4,15 @@ import java.util.Random;
 public class Salao 
 {
 	Random gerador;
+	/*
 	ArrayList<Cliente> filaClientes1;
 	ArrayList<Cliente> filaClientes2;
 	ArrayList<Cliente> filaClientes3;
 	ArrayList<Cliente> filaClientes4;
 	ArrayList<Cliente> filaClientes5;
+	*/
+	
+	FilasClientes filas;
 	
 	Cabelereira cabelereira;
 	Manicure manicure;
@@ -30,11 +34,15 @@ public class Salao
 	
 	public Salao()
 	{
+		/*
 		filaClientes1 = new ArrayList<Cliente>();
 		filaClientes2 = new ArrayList<Cliente>();
 		filaClientes3 = new ArrayList<Cliente>();
 		filaClientes4 = new ArrayList<Cliente>();
 		filaClientes5 = new ArrayList<Cliente>();
+		*/
+		
+		filas = new FilasClientes();
 		
 		gerador = new Random();
 		cabelereira = new Cabelereira();
@@ -76,6 +84,7 @@ public class Salao
 		}
 		
 		tMassagista = new Thread(gMassagistas, massagista, "Massagista1");
+		
 	}
 	
 	public void executar() throws InterruptedException
@@ -118,17 +127,20 @@ public class Salao
 		while(true)
 		{
 			cliente = criaCliente();
-			filaClientes5.add(cliente); // mudar para filaClientes1
+			filas.setFilaCliente(1, cliente); // mudar para filaClientes1
 			
-			System.out.println(filaClientes5.size() + " Clientes na fila");
+			System.out.println();
+			System.out.println("===========================================");
+			System.out.println(filas.getFila(1).size() + " Clientes na fila");
 			
-			for(Cliente c: filaClientes5)
+			for(Cliente c: filas.getFila(1))
 			{	
 				System.out.println("cliente - " + c.verServico());
 			}
+			System.out.println("-------------------------------------------");
 			atendeCliente();
 			
-			try 
+			try
 			{
 				Thread.sleep(2000*(gerador.nextInt(5)+1));
 			}
@@ -148,72 +160,81 @@ public class Salao
 	* filaClientes5 é de um cliente que já foi atendido 4 vezes e ainda tem pedido
 	* 
 	* */
+	
+	// Até o momento só estamos atendendo 1 fila, ou seja, apenas 1 pedido por cliente
 	public boolean atendeCliente()
 	{
-		int index = 0;
-		if(!(filaClientes5.isEmpty()))
+		// A prioridade das filas segue da seguinte forma do maior para o menor
+		//  Mais alta: 5, 4, 3, 2, 1 :Mais baixa 
+		for(int fila = 5; fila >= 1; fila--) 
 		{
-			for(Cliente c: filaClientes5)
+			int index = 0;
+			if(!(filas.getFila(fila).isEmpty()))
 			{
-				if(c.verServico().contains("Penteado") && gCabelereiras.activeCount() < 5)
+				for(Cliente c: filas.getFila(1))
 				{
-					for(int i = 0; i < 5; i++)
+					if((c.verServico().contains("Penteado") || c.verServico().contains("Corte") ||
+						c.verServico().contains("Lavagem")) && gCabelereiras.activeCount() < 5)
 					{
-						if(!(tCabelereira[i].isAlive()))
+						for(int i = 0; i < 5; i++)
 						{
-							tCabelereira[i].start();
-							filaClientes5.remove(index);
-							return true;
+							if(!(tCabelereira[i].isAlive()))
+							{
+								tCabelereira[i] = new Thread(gCabelereiras, cabelereira, "Cabelereira" + (i+1));
+								tCabelereira[i].start();
+	
+								filas.removeClienteIndex(1, filas.getFila(fila).indexOf(c));
+								return true;
+							}
 						}
 					}
-				}
-				/*
-				else if(c.getServico().contains("Corte"))
-				{
 					
-				}
-				else if(c.getServico().contains("Lavagem"))
-				{
+					if(c.verServico().contains("Pedicure") && gManicures.activeCount() < 3)
+					{
+						for(int i = 0; i < 3; i++)
+						{
+							if(!(tManicure[i].isAlive()))
+							{
+								tManicure[i] = new Thread(gManicures, manicure, "Manicure" + (i+1));
+								tManicure[i].start();
+	
+								filas.removeClienteIndex(1, filas.getFila(fila).indexOf(c));
+								return true;
+							}
+						}
+					}
 					
-				}
-				else if(c.getServico().contains("Pedicure"))
-				{
+					if(c.verServico().contains("Depilação") && gDepiladoras.activeCount() < 2)
+					{
+						for(int i = 0; i < 2; i++)
+						{
+							if(!(tDepiladora[i].isAlive()))
+							{
+								tDepiladora[i] = new Thread(gDepiladoras, depiladora, "Depiladora" + (i+1));
+								tDepiladora[i].start();
+	
+								filas.removeClienteIndex(1, filas.getFila(fila).indexOf(c));
+								return true;
+							}
+						}
+					}
 					
-				}
-				else if(c.getServico().contains("Depilação"))
-				{
+					if(c.verServico().contains("Massagem") && gMassagistas.activeCount() < 1)
+					{
+							if(!(tMassagista.isAlive()))
+							{
+								tMassagista = new Thread(gMassagistas, massagista, "Massagista1");
+								tMassagista.start();
+	
+								filas.removeClienteIndex(1, filas.getFila(fila).indexOf(c));
+								return true;
+							}
+					}
 					
+					index++;
 				}
-				else if(c.getServico().contains("Massagem"))
-				{
-					
-				}
-				*/
-				index++;
 			}
-			
 		}
-		
-		if(filaClientes4.isEmpty() != true)
-		{
-			
-		}
-		
-		if(filaClientes3.isEmpty() != true)
-		{
-			
-		}
-		
-		if(filaClientes2.isEmpty() != true)
-		{
-			
-		}
-		
-		if(filaClientes1.isEmpty() != true)
-		{
-			
-		}
-		
 		return false;
 	}
 	
