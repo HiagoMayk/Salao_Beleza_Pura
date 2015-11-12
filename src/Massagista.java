@@ -1,12 +1,12 @@
+import java.util.ArrayList;
+
 
 public class Massagista extends Funcionario
 {
-	/*
-	public Massagista(String nome)
+	public Massagista(ArrayList<Cliente> array, Cliente c)
 	{
-		super(nome);
+		super(array, c);
 	}
-	*/
 	
 	public void run()
 	{
@@ -16,7 +16,7 @@ public class Massagista extends Funcionario
 	
 	public synchronized void trabalhar()
 	{
-		System.out.println(Thread.currentThread().getName() + ": Trabalhando");
+		System.out.println(Thread.currentThread().getName() + ": Atendendo cliente " + getCliente().getIdCliente());
 		try 
 		{
 			Thread.sleep(10000);
@@ -24,6 +24,11 @@ public class Massagista extends Funcionario
 		catch(InterruptedException ex) 
 		{
 			 Thread.currentThread().interrupt();
+		}
+		
+		if(getCliente().verServico() != "")
+		{
+			insere();
 		}
 	}
 }

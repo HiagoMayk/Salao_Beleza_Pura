@@ -41,6 +41,9 @@ Em andamento:
 		na hora da inseção na lista de tarefas?
 
 Problemas a serem solucionados:
+ - apareceu um bug deem um teste, porém qaudno executei o programa novamente
+   não apareeu mais (é oque acontece quando se trabalha com várias threads)
+   POR FAVOR TESTEM EXAUSTIVAMENTE
 
 -------------------------------------------------------------------------------
 A ser feito:
@@ -66,4 +69,6 @@ A ser feito:
 	
 	n) Tente construir uma representação na tela do monitor da movimentação nas filas
 	de entrada, de espera por cada profissional.
+
+ - Tratar os serviços: só corte, só penteado e corte e pendeado juntos
 

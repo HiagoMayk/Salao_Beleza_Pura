@@ -1,14 +1,26 @@
+import java.util.ArrayList;
+
 
 public class Funcionario implements Runnable
 {
-	private String nome;
+	private Cliente cliente;
+	private ArrayList<Cliente> array;
 	
-	/*
-	public Funcionario(String nome)
+	public Funcionario(ArrayList<Cliente> array, Cliente c)
 	{
-		this.nome = nome;
+		this.cliente = c;
+		this.array = array;
 	}
-	*/
+	
+	public Cliente getCliente()
+	{
+		return cliente;
+	}
+	
+	public void insere()
+	{
+		array.add(cliente);
+	}
 	
 	public void run()
 	{
@@ -22,14 +34,5 @@ public class Funcionario implements Runnable
 			}catch(Exception e){}
 		}
 	}
-	
-	public void setNome(String nome)
-	{
-		this.nome = nome;	
-	}
-	
-	public String getNome()
-	{
-		return nome;	
-	}
+
 }

@@ -1,12 +1,13 @@
+import java.util.ArrayList;
+
 
 public class Depiladora extends Funcionario
 {
-	/*
-	public Depiladora(String nome)
+	public Depiladora(ArrayList<Cliente> array, Cliente c)
 	{
-		super(nome);
+		super(array, c);
 	}
-	*/
+	
 	
 	public void run()
 	{
@@ -16,7 +17,7 @@ public class Depiladora extends Funcionario
 	
 	public synchronized void trabalhar()
 	{
-		System.out.println(Thread.currentThread().getName() + ": Trabalhando");
+		System.out.println(Thread.currentThread().getName() + ": Atendendo cliente " + getCliente().getIdCliente());
 		try 
 		{
 			Thread.sleep(10000);
@@ -24,6 +25,11 @@ public class Depiladora extends Funcionario
 		catch(InterruptedException ex) 
 		{
 			 Thread.currentThread().interrupt();
+		}
+		
+		if(getCliente().verServico() != "")
+		{
+			insere();
 		}
 	}
 
