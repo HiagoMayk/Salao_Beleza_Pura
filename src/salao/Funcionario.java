@@ -1,3 +1,4 @@
+package salao;
 import java.util.ArrayList;
 
 
@@ -26,7 +27,7 @@ public class Funcionario implements Runnable
 	{
 		for(int i = 0; i < 100; i++)
 		{
-			System.out.println("Trabalando");
+			System.out.println("Trabalhando");
 			
 			try
 			{

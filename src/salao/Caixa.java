@@ -1,13 +1,13 @@
+package salao;
 import java.util.ArrayList;
 
 
-public class Depiladora extends Funcionario
+public class Caixa extends Funcionario
 {
-	public Depiladora(ArrayList<Cliente> array, Cliente c)
+	public Caixa(ArrayList<Cliente> array, Cliente c)
 	{
 		super(array, c);
 	}
-	
 	
 	public void run()
 	{
@@ -32,5 +32,5 @@ public class Depiladora extends Funcionario
 			insere();
 		}
 	}
-
+	
 }

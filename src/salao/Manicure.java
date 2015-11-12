@@ -1,17 +1,18 @@
+package salao;
 import java.util.ArrayList;
 
 
-public class Caixa extends Funcionario
+public class Manicure extends Funcionario
 {
-	public Caixa(ArrayList<Cliente> array, Cliente c)
+	public Manicure(ArrayList<Cliente> array, Cliente c)
 	{
 		super(array, c);
 	}
 	
 	public void run()
-	{
-		trabalhar();
-		Thread.currentThread().interrupt();
+	{	
+			trabalhar();
+			Thread.currentThread().interrupt();
 	}
 	
 	public synchronized void trabalhar()
@@ -31,5 +32,4 @@ public class Caixa extends Funcionario
 			insere();
 		}
 	}
-	
 }

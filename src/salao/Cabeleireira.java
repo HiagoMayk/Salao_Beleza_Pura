@@ -1,15 +1,17 @@
+package salao;
 import java.util.ArrayList;
 
 
-public class Manicure extends Funcionario
+public class Cabeleireira extends Funcionario
 {
-	public Manicure(ArrayList<Cliente> array, Cliente c)
+	public Cabeleireira(ArrayList<Cliente> array, Cliente c)
 	{
 		super(array, c);
 	}
 	
 	public void run()
-	{	
+	{
+			// Todo corte deve ser precedido de uma lavagem: como diferenciar as tarefas?
 			trabalhar();
 			Thread.currentThread().interrupt();
 	}
@@ -17,6 +19,7 @@ public class Manicure extends Funcionario
 	public synchronized void trabalhar()
 	{
 		System.out.println(Thread.currentThread().getName() + ": Atendendo cliente " + getCliente().getIdCliente());
+		
 		try 
 		{
 			Thread.sleep(10000);
@@ -31,4 +34,5 @@ public class Manicure extends Funcionario
 			insere();
 		}
 	}
+	
 }
