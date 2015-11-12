@@ -29,6 +29,14 @@ public class Salao
 	private ThreadGroup gMassagistas;
 	private ThreadGroup gCaixas;
 	
+	public FilasClientes getFilas() {
+		return filas;
+	}
+
+	public void setFilas(FilasClientes filas) {
+		this.filas = filas;
+	}
+
 	public Salao()
 	{
 		idCliente = 0;
