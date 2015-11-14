@@ -9,6 +9,9 @@ Feito:
  - a) A chegada de clientes deve ser simulada segundo um critério aleatório de tempo
       de chegada entre um e outro variando de 1 a 5 unidades de tempo.
 
+ - b) Os clientes devem ser atendidos na ordem de chegada e da disponibilidade dos
+		serviços. (Falta atender alocar os clientes para as diferentes filas)
+
  - d) Cada cliente pode desejar de 1 a todos os serviços oferecidos pelo salão. 
       (Criação de um método que cria uma instancia de cliente a faz a escolha aleatória dos serviços).
 
@@ -24,13 +27,15 @@ Feito:
 Problemas Solucionados:
 
  - Como interromper uma thread e depois fazê-la executar novamente? Thread.isAlive() e ou é o outro método?
-   Solução: Quando quiser executar uma thread deve-se criar uma nova instância para ela e starta-la novamente.
+   Solução: quando quiser executar uma thread deve-se criar uma nova instância para ela e starta-la novamente.
+
+ - O cliente estava sendo alocado na proxima fila mesmo ainda sendo atendido
+   Solução: passar a referencia para a proxima fila e o cliente para a thread que irá executar, ou seja,
+            atendê-lo, e após o termino inserir o cliente na proxima fila. Com isso garantimos que ele não 
+            será atendido mais de uma vez ao mesmo tempo.
 
 -------------------------------------------------------------------------------
 Em andamento:
-
-	Mayk - b) Os clientes devem ser atendidos na ordem de chegada e da disponibilidade dos
-		serviços. (Falta atender alocar os clientes para as diferentes filas)
 
 	Mayk - c) A cabelereira alocada para realizar um corte também lava o cabelo do cliente.
 		Como diferenciar as tarefas que a cabelereira realiza?
@@ -40,7 +45,12 @@ Em andamento:
 		ção, pés e mãos, massagem e lavagem. Como atrobuir tempo para cada tarefa por cliente? 
 		na hora da inseção na lista de tarefas?
 
+	Mayk - Alocar clientes para o caixa
+
 Problemas a serem solucionados:
+ - apareceu um bug deem um teste, porém qaudno executei o programa novamente
+   não apareeu mais (é oque acontece quando se trabalha com várias threads)
+   ***POR FAVOR TESTEM EXAUSTIVAMENTE***
 
 -------------------------------------------------------------------------------
 A ser feito:

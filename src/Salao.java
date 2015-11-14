@@ -178,7 +178,7 @@ public class Salao
 								}
 								
 								tManicure[i] = new Thread(gManicures, manicure, "Manicure" + (i+1));
-								tManicure[i].start();
+								tManicure[i].start();	
 								
 								return true;
 							}

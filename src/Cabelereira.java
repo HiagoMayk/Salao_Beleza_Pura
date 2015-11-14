@@ -27,11 +27,12 @@ public class Cabelereira extends Funcionario
 		{
 			 Thread.currentThread().interrupt();
 		}
-		
+	
 		if(getCliente().verServico() != "")
 		{
 			insere();
 		}
+
 	}
 	
 }
