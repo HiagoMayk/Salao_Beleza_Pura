@@ -1,3 +1,4 @@
+package salao;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,19 +11,19 @@ public class Salao
 
 	private FilasClientes filas;
 	
-	private Cabelereira cabelereira;
+	private Cabeleireira cabeleireira;
 	private Manicure manicure;
 	private Depiladora depiladora;
 	private Massagista massagista;
 	private Caixa caixa;
 	
-	private Thread tCabelereira[];
+	private Thread tCabeleireira[];
 	private Thread tManicure[];
 	private Thread tDepiladora[];
 	private Thread tMassagista;
 	Thread tCaixa[];
 	
-	private ThreadGroup gCabelereiras;
+	private ThreadGroup gCabeleireiras;
 	private ThreadGroup gManicures;
 	private ThreadGroup gDepiladoras;
 	private ThreadGroup gMassagistas;
@@ -35,19 +36,19 @@ public class Salao
 		filas = new FilasClientes();
 		
 		gerador = new Random();
-		cabelereira = new Cabelereira(null, null);
+		cabeleireira = new Cabeleireira(null, null);
 		manicure = new Manicure(null, null);
 		depiladora = new Depiladora(null, null);
 		massagista = new Massagista(null, null);
 		caixa = new Caixa(null, null);
 		
-		tCabelereira = new Thread[5];
+		tCabeleireira = new Thread[5];
 		tManicure = new Thread[3];
 		tDepiladora = new Thread[2];
 		tMassagista = new Thread();
 		tCaixa = new Thread[2];
 		
-		gCabelereiras = new ThreadGroup ("Cabelereiras");
+		gCabeleireiras = new ThreadGroup ("cabeleireiras");
 		gManicures = new ThreadGroup ("Manicures");
 		gDepiladoras = new ThreadGroup ("Depiladoras");
 		gMassagistas = new ThreadGroup ("Massagistas");
@@ -55,7 +56,7 @@ public class Salao
 		
 		for(int i = 0; i < 5; i++)
 		{
-			tCabelereira[i] = new Thread(gCabelereiras, cabelereira, "Cabelereira" + (i+1));
+			tCabeleireira[i] = new Thread(gCabeleireiras, cabeleireira, "cabeleireira" + (i+1));
 		}
 		
 		for(int i = 0; i < 3; i++)
@@ -133,26 +134,26 @@ public class Salao
 				for(Cliente c: filas.getFila(fila))
 				{
 					if((c.verServico().contains("Penteado") || c.verServico().contains("Corte") ||
-						c.verServico().contains("Lavagem")) && gCabelereiras.activeCount() < 5)
+						c.verServico().contains("Lavagem")) && gCabeleireiras.activeCount() < 5)
 					{
 						for(int i = 0; i < 5; i++)
 						{
-							if(!(tCabelereira[i].isAlive()))
+							if(!(tCabeleireira[i].isAlive()))
 							{
 								c.getServico();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 								
 								if(fila != 5)
 								{
-									cabelereira = new Cabelereira(filas.getFila(fila+1), c);
+									cabeleireira = new Cabeleireira(filas.getFila(fila+1), c);
 								}
 								else
 								{
-									cabelereira = new Cabelereira(null, c);
+									cabeleireira = new Cabeleireira(null, c);
 								}
 								
-								tCabelereira[i] = new Thread(gCabelereiras, cabelereira, "Cabelereira" + (i+1));
-								tCabelereira[i].start();
+								tCabeleireira[i] = new Thread(gCabeleireiras, cabeleireira, "cabeleireira" + (i+1));
+								tCabeleireira[i].start();
 						
 								return true;
 							}

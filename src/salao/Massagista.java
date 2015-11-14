@@ -1,17 +1,18 @@
+package salao;
 import java.util.ArrayList;
 
 
-public class Manicure extends Funcionario
+public class Massagista extends Funcionario
 {
-	public Manicure(ArrayList<Cliente> array, Cliente c)
+	public Massagista(ArrayList<Cliente> array, Cliente c)
 	{
 		super(array, c);
 	}
 	
 	public void run()
-	{	
-			trabalhar();
-			Thread.currentThread().interrupt();
+	{
+		trabalhar();
+		Thread.currentThread().interrupt();
 	}
 	
 	public synchronized void trabalhar()
@@ -25,11 +26,10 @@ public class Manicure extends Funcionario
 		{
 			 Thread.currentThread().interrupt();
 		}
-	
+		
 		if(getCliente().verServico() != "")
 		{
 			insere();
 		}
-		
 	}
 }
