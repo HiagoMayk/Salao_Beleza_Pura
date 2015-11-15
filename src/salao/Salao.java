@@ -76,7 +76,7 @@ public class Salao extends JFrame implements ActionListener
 		cabeleireira = new Cabeleireira[5];
 		manicure = new Manicure[3];
 		depiladora = new Depiladora[2];
-		massagista = new Massagista(null, null);
+		massagista = new Massagista(null, null, 0);
 		caixa = new Caixa[2];
 		
 		tCabeleireira = new Thread[5];
@@ -93,19 +93,19 @@ public class Salao extends JFrame implements ActionListener
 		
 		for(int i = 0; i < 5; i++)
 		{
-			cabeleireira[i] = new Cabeleireira(null, null);
+			cabeleireira[i] = new Cabeleireira(null, null, 0);
 			tCabeleireira[i] = new Thread(gCabeleireiras, cabeleireira[i], "cabeleireira" + (i+1));
 		}
 		
 		for(int i = 0; i < 3; i++)
 		{
-			manicure[i] = new Manicure(null, null);
+			manicure[i] = new Manicure(null, null, 0);
 			tManicure[i] = new Thread(gManicures, manicure[i], "Manicure" + (i+1));
 		}
 		
 		for(int i = 0; i < 2; i++)
 		{
-			depiladora[i] = new Depiladora(null, null);
+			depiladora[i] = new Depiladora(null, null, 0);
 			tDepiladora[i] = new Thread(gDepiladoras, depiladora[i], "Depiladora" + (i+1));
 		}
 
@@ -189,7 +189,7 @@ public class Salao extends JFrame implements ActionListener
          
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Salão Beleza Pura");       
-        this.setSize(8000, 600);
+        this.setSize(800, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         
@@ -302,8 +302,15 @@ public class Salao extends JFrame implements ActionListener
 					t.remove(0);
 				}
 			}
-			
-			// Insere na fila 1, que é a fila dos clientes que acabaram de chegar no salão
+			/* //teste de ordenação OK
+			System.out.println("Cliente" + cliente.getIdCliente() + ":");
+			for(Servico c: cliente.getServicos())
+			{
+				
+				System.out.println(c.getServico() + " - " + c.getTempo());
+			}
+			*/
+			//Insere na fila 1, que é a fila dos clientes que acabaram de chegar no salão
 			filas.setFilaCliente(1, cliente);
 			
 			System.out.println();
@@ -327,13 +334,13 @@ public class Salao extends JFrame implements ActionListener
 			System.out.println(filaCaixas.size() + " Clientes na fila do Caixa");
 			for(Cliente c: filaCaixas)
 			{	
-				System.out.println("cliente" + c.getIdCliente());
-			}
-			System.out.println("--");		
-			
-			System.out.println("-------------------------------------------");
-			
-			atualizaColunaFunc(colunas);
+					System.out.println("cliente" + c.getIdCliente());
+				}
+				System.out.println("--");		
+				
+				System.out.println("-------------------------------------------");
+				
+				atualizaColunaFunc(colunas);
 			clientesSendoAtendidos(colunas);
 			String s = atendeCliente();			
 			do {
@@ -343,8 +350,9 @@ public class Salao extends JFrame implements ActionListener
 			} while(s != "");
 			
 			try
-			{
-				Thread.sleep(2000*(gerador.nextInt(5)+1));
+			{	
+				// Tempo de geração de clientes: 1 ~ 5 segundos
+				Thread.sleep(1000*(gerador.nextInt(5)+1));
 			}
 			catch(InterruptedException ex) 
 			{
@@ -387,7 +395,7 @@ public class Salao extends JFrame implements ActionListener
 				
 		// A prioridade das filas segue da seguinte forma do maior para o menor
 		// Mais alta: 5, 4, 3, 2, 1 :Mais baixa 
-		for(int fila = 5; fila >= 1; fila--) 
+		for(int fila = 5; fila >= 1; fila--)
 		{
 			if(!(filas.getFila(fila).isEmpty()))
 			{
@@ -400,23 +408,23 @@ public class Salao extends JFrame implements ActionListener
 						{
 							if(!(tCabeleireira[i].isAlive()))
 							{
-								c.getServico();
+								int tempo = c.getServico().getTempo();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 								
 								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									cabeleireira[i] = new Cabeleireira(filaCaixas, c);
+									cabeleireira[i] = new Cabeleireira(filaCaixas, c, tempo); // passa o tempo de execução e gasta 1 serviço
 								}
 								else
 								{
-									cabeleireira[i] = new Cabeleireira(filas.getFila(fila+1), c);
+									cabeleireira[i] = new Cabeleireira(filas.getFila(fila+1), c, tempo); // passa o tempo de execução e gasta 1 serviço
 								}
 								
 								tCabeleireira[i] = new Thread(gCabeleireiras, cabeleireira[i], "Cabeleireira" + (i+1));
 								tCabeleireira[i].start();
 						
 								//return true;
-								return tCabeleireira[i].getName() + ": Atendendo cliente " + cabeleireira[i].getCliente().getIdCliente();
+								return tCabeleireira[i].getName() + ": Atendendo cliente" + cabeleireira[i].getCliente().getIdCliente();
 							}
 						}
 					}
@@ -427,16 +435,16 @@ public class Salao extends JFrame implements ActionListener
 						{
 							if(!(tManicure[i].isAlive()))
 							{
-								c.getServico();
+								int tempo = c.getServico().getTempo();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 								
 								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									manicure[i] = new Manicure(filaCaixas, c);
+									manicure[i] = new Manicure(filaCaixas, c, tempo); // passa o tempo de execução e gasta 1 serviço
 								}
 								else
 								{
-									manicure[i] = new Manicure(filas.getFila(fila+1), c);
+									manicure[i] = new Manicure(filas.getFila(fila+1), c, tempo); // passa o tempo de execução e gasta 1 serviço
 								}
 								
 								tManicure[i] = new Thread(gManicures, manicure[i], "Manicure" + (i+1));
@@ -454,16 +462,16 @@ public class Salao extends JFrame implements ActionListener
 						{
 							if(!(tDepiladora[i].isAlive()))
 							{
-								c.getServico();
+								int tempo = c.getServico().getTempo();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 								
 								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									depiladora[i] = new Depiladora(filaCaixas, c);
+									depiladora[i] = new Depiladora(filaCaixas, c, tempo); // passa o tempo de execução e gasta 1 serviço
 								}
 								else
 								{
-									depiladora[i] = new Depiladora(filas.getFila(fila+1), c);
+									depiladora[i] = new Depiladora(filas.getFila(fila+1), c, tempo); // passa o tempo de execução e gasta 1 serviço
 								}
 								
 								tDepiladora[i] = new Thread(gDepiladoras, depiladora[i], "Depiladora" + (i+1));
@@ -479,16 +487,16 @@ public class Salao extends JFrame implements ActionListener
 					{
 							if(!(tMassagista.isAlive()))
 							{
-								c.getServico();
+								int tempo = c.getServico().getTempo();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 
 								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									massagista = new Massagista(filaCaixas, c);
+									massagista = new Massagista(filaCaixas, c, tempo); // passa o tempo de execução e gasta 1 serviço
 								}
 								else
 								{
-									massagista = new Massagista(filas.getFila(fila+1), c);
+									massagista = new Massagista(filas.getFila(fila+1), c, tempo); // passa o tempo de execução e gasta 1 serviço
 								}
 								
 								tMassagista = new Thread(gMassagistas, massagista, "Massagista1");
@@ -498,6 +506,7 @@ public class Salao extends JFrame implements ActionListener
 								return tMassagista.getName() + ": Atendendo cliente " + massagista.getCliente().getIdCliente();
 							}
 					}
+					
 				}
 				
 			}
@@ -510,7 +519,7 @@ public class Salao extends JFrame implements ActionListener
 		// Checa caixas
 		for(int i = 0; i < 2; i++) {
 			if((tCaixa[i].isAlive())) {
-				adicionaFuncEmColuna(tCaixa[i].getName() + ": Atendendo cliente " + caixa[i].getCliente().getIdCliente(), colunas); 
+				adicionaFuncEmColuna(tCaixa[i].getName() + ": Atendendo cliente" + caixa[i].getCliente().getIdCliente(), colunas); 
 			}
 		}
 		
@@ -606,7 +615,9 @@ public class Salao extends JFrame implements ActionListener
 			
 			if(inserido.isEmpty() == false)
 			{
-				// Enquanto for serviço repetido, gera outro
+				// Enquanto for serviço repetido, gera outro 
+				// (Na realidade, se gerar um igual ele incrementa o valor e testa novamente)
+				// Fiz assim pra simplificar
 				while(flag == false)
 				{
 					for(int num : inserido)

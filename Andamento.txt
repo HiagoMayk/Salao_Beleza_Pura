@@ -37,6 +37,14 @@ Feito:
  - l) O salão tem por regra de negócio otimizar o tempo do cliente, atendendo-o da
 	melhor forma e no menor tempo possível.
 
+ - g) O tempo gasto em cada serviço por cada cliente deve ser gerado aleatoriamente
+	considerando a seguinte ordem decrescente de duração: penteado, corte, depila-
+	ção, pés e mãos, massagem e lavagem. Como atribuir tempo para cada tarefa por cliente? 
+	na hora da inseção na lista de tarefas?
+
+ - Implementar sincronizaçaão dos métodos (não )
+
+
  - Alocar clientes para o caixa
 
 Problemas Solucionados:
@@ -52,14 +60,15 @@ Problemas Solucionados:
 -------------------------------------------------------------------------------
 Em andamento:
 
-	Mayk - g) O tempo gasto em cada serviço por cada cliente deve ser gerado aleatoriamente
-		considerando a seguinte ordem decrescente de duração: penteado, corte, depila-
-		ção, pés e mãos, massagem e lavagem. Como atribuir tempo para cada tarefa por cliente? 
-		na hora da inseção na lista de tarefas?
-		(falta implementar pois estava gerando MUITOS BUG)
-		
 	Rubem - n) Tente construir uma representação na tela do monitor da movimentação nas filas
 	de entrada, de espera por cada profissional.
+
+	k) A política adotada pelo dono do estabelecimento é que cada profissional recebe
+	40% do total faturado por ele durante o dia de trabalho.
+	
+	m) O sistema deve apresentar um resumo do movimento e do faturamento realizado.
+
+ 	Mayk - Tratar os serviços: só corte, só penteado e corte e pendeado juntos
 
 Problemas a serem solucionados:
  - apareceu um bug deem um teste, porém qaudno executei o programa novamente
@@ -69,14 +78,10 @@ Problemas a serem solucionados:
 -------------------------------------------------------------------------------
 A ser feito:
 
- - Implementar sincronizaçaão dos métodos
-
  - Implementar Regras de negócio:
-	
-	k) A política adotada pelo dono do estabelecimento é que cada profissional recebe
-	40% do total faturado por ele durante o dia de trabalho.
-	
-	m) O sistema deve apresentar um resumo do movimento e do faturamento realizado.
 
- - Tratar os serviços: só corte, só penteado e corte e pendeado juntos
+ 				- Relatório final
+ 				- Copiar para um DVD todo o conteúdo
+ 				- Encadernar o relatório 
+	
 

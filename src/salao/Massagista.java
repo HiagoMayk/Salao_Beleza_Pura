@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class Massagista extends Funcionario
 {
-	public Massagista(ArrayList<Cliente> array, Cliente c)
+	int tempo;
+	public Massagista(ArrayList<Cliente> array, Cliente c, int tempo)
 	{
 		super(array, c);
+		this.tempo = tempo;
 	}
 	
 	public void run()

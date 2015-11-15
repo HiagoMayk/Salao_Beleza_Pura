@@ -10,7 +10,10 @@ Feito:
       de chegada entre um e outro variando de 1 a 5 unidades de tempo.
 
  - b) Os clientes devem ser atendidos na ordem de chegada e da disponibilidade dos
-		serviços. (Falta atender alocar os clientes para as diferentes filas)
+      serviços. (Falta atender alocar os clientes para as diferentes filas)
+
+ - c) A cabelereira alocada para realizar um corte também lava o cabelo do cliente.
+      Como diferenciar as tarefas que a cabelereira realiza?
 
  - d) Cada cliente pode desejar de 1 a todos os serviços oferecidos pelo salão. 
       (Criação de um método que cria uma instancia de cliente a faz a escolha aleatória dos serviços).
@@ -23,6 +26,26 @@ Feito:
  - h) O preço de cada serviço é de 50 para penteado, 30 para corte, 40 para corte e
       penteado, 0 para lavagem, 30 para pedicure, 40 para depilação e 20 para massa-
       gem. (Criação de uma classe para armazenar os preços).
+
+ - i) Em geral 30% dos clientes desejam todos os serviços, 35% desejam 4, 20% dese-
+	jam 3, 10% apenas 2 e 5% apenas 1.
+
+ - j) Os serviços também são procurados segundo um percentual médio de 50% para
+	corte, 40% para penteado, 30% para pedicure, 20% para depilação, 15% para mas-
+	sagem.
+
+ - l) O salão tem por regra de negócio otimizar o tempo do cliente, atendendo-o da
+	melhor forma e no menor tempo possível.
+
+ - g) O tempo gasto em cada serviço por cada cliente deve ser gerado aleatoriamente
+		considerando a seguinte ordem decrescente de duração: penteado, corte, depila-
+		ção, pés e mãos, massagem e lavagem. Como atribuir tempo para cada tarefa por cliente? 
+		na hora da inseção na lista de tarefas?
+
+ - Implementar sincronizaçaão dos métodos (não )
+
+
+ - Alocar clientes para o caixa
 
 Problemas Solucionados:
 
@@ -37,18 +60,15 @@ Problemas Solucionados:
 -------------------------------------------------------------------------------
 Em andamento:
 
-	Mayk - c) A cabelereira alocada para realizar um corte também lava o cabelo do cliente.
-		Como diferenciar as tarefas que a cabelereira realiza?
-
-	Mayk - g) O tempo gasto em cada serviço por cada cliente deve ser gerado aleatoriamente
-		considerando a seguinte ordem decrescente de duração: penteado, corte, depila-
-		ção, pés e mãos, massagem e lavagem. Como atrobuir tempo para cada tarefa por cliente? 
-		na hora da inseção na lista de tarefas?
-		
 	Rubem - n) Tente construir uma representação na tela do monitor da movimentação nas filas
 	de entrada, de espera por cada profissional.
 
-	Mayk - Alocar clientes para o caixa
+	k) A política adotada pelo dono do estabelecimento é que cada profissional recebe
+	40% do total faturado por ele durante o dia de trabalho.
+	
+	m) O sistema deve apresentar um resumo do movimento e do faturamento realizado.
+
+ 	Mayk - Tratar os serviços: só corte, só penteado e corte e pendeado juntos
 
 Problemas a serem solucionados:
  - apareceu um bug deem um teste, porém qaudno executei o programa novamente
@@ -58,24 +78,10 @@ Problemas a serem solucionados:
 -------------------------------------------------------------------------------
 A ser feito:
 
- - Implementar sincronizaçaão dos métodos
-
  - Implementar Regras de negócio:
-	
-	i) Em geral 30% dos clientes desejam todos os serviços, 35% desejam 4, 20% dese-
-	jam 3, 10% apenas 2 e 5% apenas 1.
-	
-	j) Os serviços também são procurados segundo um percentual médio de 50% para
-	corte, 40% para penteado, 30% para pedicure, 20% para depilação, 15% para mas-
-	sagem.
-	
-	k) A política adotada pelo dono do estabelecimento é que cada profissional recebe
-	40% do total faturado por ele durante o dia de trabalho.
-	
-	l) O salão tem por regra de negócio otimizar o tempo do cliente, atendendo-o da
-	melhor forma e no menor tempo possível.
-	
-	m) O sistema deve apresentar um resumo do movimento e do faturamento realizado.
 
- - Tratar os serviços: só corte, só penteado e corte e pendeado juntos
+ 				- Relatório final
+ 				- Copiar para um DVD todo o conteúdo
+ 				- Encadernar o relatório 
+	
 

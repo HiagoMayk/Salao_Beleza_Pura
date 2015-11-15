@@ -4,9 +4,12 @@ import java.util.ArrayList;
 
 public class Manicure extends Funcionario
 {
-	public Manicure(ArrayList<Cliente> array, Cliente c)
+	int tempo;
+	
+	public Manicure(ArrayList<Cliente> array, Cliente c, int tempo)
 	{
 		super(array, c);
+		this.tempo = tempo;
 	}
 	
 	public void run()
@@ -21,7 +24,7 @@ public class Manicure extends Funcionario
 
 		try 
 		{
-			Thread.sleep(10000);
+			Thread.sleep(1000 * tempo);
 		}
 		catch(InterruptedException ex) 
 		{

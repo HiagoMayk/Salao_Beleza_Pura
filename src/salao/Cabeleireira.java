@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class Cabeleireira extends Funcionario
 {
-	public Cabeleireira(ArrayList<Cliente> array, Cliente c)
+	int tempo;
+	public Cabeleireira(ArrayList<Cliente> array, Cliente c, int tempo)
 	{
 		super(array, c);
+		this.tempo = tempo;
 	}
 	
 	public void run()
@@ -22,7 +24,7 @@ public class Cabeleireira extends Funcionario
 	
 		try 
 		{
-			Thread.sleep(10000);
+			Thread.sleep(1000 * tempo);
 		}
 		catch(InterruptedException ex) 
 		{
