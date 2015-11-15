@@ -1,7 +1,6 @@
 package salao;
 import java.util.ArrayList;
 
-
 public class Caixa extends Funcionario
 {
 	public Caixa(ArrayList<Cliente> array, Cliente c)
@@ -22,14 +21,9 @@ public class Caixa extends Funcionario
 		{
 			Thread.sleep(10000);
 		}
-		catch(InterruptedException ex) 
+		catch(InterruptedException ex)
 		{
 			 Thread.currentThread().interrupt();
-		}
-		
-		if(getCliente().verServico() != "")
-		{
-			insere();
 		}
 	}
 	

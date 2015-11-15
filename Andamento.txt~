@@ -44,9 +44,6 @@ Em andamento:
 		considerando a seguinte ordem decrescente de duração: penteado, corte, depila-
 		ção, pés e mãos, massagem e lavagem. Como atrobuir tempo para cada tarefa por cliente? 
 		na hora da inseção na lista de tarefas?
-		
-	Rubem - n) Tente construir uma representação na tela do monitor da movimentação nas filas
-	de entrada, de espera por cada profissional.
 
 	Mayk - Alocar clientes para o caixa
 
@@ -76,6 +73,9 @@ A ser feito:
 	melhor forma e no menor tempo possível.
 	
 	m) O sistema deve apresentar um resumo do movimento e do faturamento realizado.
+	
+	n) Tente construir uma representação na tela do monitor da movimentação nas filas
+	de entrada, de espera por cada profissional.
 
  - Tratar os serviços: só corte, só penteado e corte e pendeado juntos
 

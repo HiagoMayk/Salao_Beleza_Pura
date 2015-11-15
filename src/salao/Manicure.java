@@ -26,10 +26,8 @@ public class Manicure extends Funcionario
 		{
 			 Thread.currentThread().interrupt();
 		}
+	
+		insere();
 		
-		if(getCliente().verServico() != "")
-		{
-			insere();
-		}
 	}
 }

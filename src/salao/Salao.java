@@ -10,6 +10,7 @@ public class Salao
 	private Random gerador; // Gera o que for de ser eleatório do sistema
 
 	private FilasClientes filas;
+	ArrayList<Cliente> filaCaixas;
 	
 	private Cabeleireira cabeleireira;
 	private Manicure manicure;
@@ -42,6 +43,7 @@ public class Salao
 		idCliente = 0;
 		
 		filas = new FilasClientes();
+		filaCaixas = new ArrayList<Cliente>();
 		
 		gerador = new Random();
 		cabeleireira = new Cabeleireira(null, null);
@@ -96,6 +98,7 @@ public class Salao
 			
 			System.out.println();
 			System.out.println("===========================================");
+			
 			for(int fila = 5; fila >= 1; fila--)
 			{
 				System.out.println(filas.getFila(fila).size() + " Clientes na fila " + fila);
@@ -107,8 +110,17 @@ public class Salao
 				System.out.println("--");
 			}
 			
+			System.out.println(filaCaixas.size() + " Clientes na fila do Caixa");
+			for(Cliente c: filaCaixas)
+			{	
+				System.out.println("cliente" + c.getIdCliente());
+			}
+			System.out.println("--");		
+			
 			System.out.println("-------------------------------------------");
+			
 			atendeCliente();
+			
 			try
 			{
 				Thread.sleep(2000*(gerador.nextInt(5)+1));
@@ -130,9 +142,28 @@ public class Salao
 	* 
 	* */
 	
-	// Até o momento só estamos atendendo 1 fila, ou seja, apenas 1 pedido por cliente
 	public boolean atendeCliente()
 	{
+		// Caixas
+		if(!(filaCaixas.isEmpty()))
+		{
+			for(Cliente c: filaCaixas)
+			{
+				for(int i = 0; i < 2; i++)
+				{
+					if(!(tCaixa[i].isAlive()))
+					{
+						filaCaixas.remove(c);
+	
+						caixa = new Caixa(null, c);
+						tCaixa[i] = new Thread(gCaixas, caixa, "Caixa" + (i+1));
+						tCaixa[i].start();
+						return true;
+					}	
+				}
+			}
+	}
+				
 		// A prioridade das filas segue da seguinte forma do maior para o menor
 		//  Mais alta: 5, 4, 3, 2, 1 :Mais baixa 
 		for(int fila = 5; fila >= 1; fila--) 
@@ -151,13 +182,13 @@ public class Salao
 								c.getServico();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 								
-								if(fila != 5)
+								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									cabeleireira = new Cabeleireira(filas.getFila(fila+1), c);
+									cabeleireira = new Cabeleireira(filaCaixas, c);
 								}
 								else
 								{
-									cabeleireira = new Cabeleireira(null, c);
+									cabeleireira = new Cabeleireira(filas.getFila(fila+1), c);
 								}
 								
 								tCabeleireira[i] = new Thread(gCabeleireiras, cabeleireira, "cabeleireira" + (i+1));
@@ -177,17 +208,17 @@ public class Salao
 								c.getServico();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 								
-								if(fila != 5)
+								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									manicure = new Manicure(filas.getFila(fila+1), c);
+									manicure = new Manicure(filaCaixas, c);
 								}
 								else
 								{
-									manicure = new Manicure(null, c);
+									manicure = new Manicure(filas.getFila(fila+1), c);
 								}
 								
 								tManicure[i] = new Thread(gManicures, manicure, "Manicure" + (i+1));
-								tManicure[i].start();
+								tManicure[i].start();	
 								
 								return true;
 							}
@@ -203,13 +234,13 @@ public class Salao
 								c.getServico();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 								
-								if(fila != 5)
+								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									depiladora = new Depiladora(filas.getFila(fila+1), c);
+									depiladora = new Depiladora(filaCaixas, c);
 								}
 								else
 								{
-									depiladora = new Depiladora(null, c);
+									depiladora = new Depiladora(filas.getFila(fila+1), c);
 								}
 								
 								tDepiladora[i] = new Thread(gDepiladoras, depiladora, "Depiladora" + (i+1));
@@ -226,14 +257,14 @@ public class Salao
 							{
 								c.getServico();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
-								
-								if(fila != 5)
+
+								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									massagista = new Massagista(filas.getFila(fila+1), c);
+									massagista = new Massagista(filaCaixas, c);
 								}
 								else
 								{
-									massagista = new Massagista(null, c);
+									massagista = new Massagista(filas.getFila(fila+1), c);
 								}
 								
 								tMassagista = new Thread(gMassagistas, massagista, "Massagista1");
@@ -243,8 +274,10 @@ public class Salao
 							}
 					}
 				}
+				
 			}
 		}
+		
 		return false;
 	}
 	

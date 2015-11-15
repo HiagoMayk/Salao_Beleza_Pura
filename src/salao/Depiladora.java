@@ -27,11 +27,8 @@ public class Depiladora extends Funcionario
 		{
 			 Thread.currentThread().interrupt();
 		}
-		
-		if(getCliente().verServico() != "")
-		{
-			insere();
-		}
+
+		insere();
 	}
 
 }
