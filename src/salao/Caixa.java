@@ -16,10 +16,11 @@ public class Caixa extends Funcionario
 	
 	public synchronized void trabalhar()
 	{
-		System.out.println(Thread.currentThread().getName() + ": Atendendo cliente " + getCliente().getIdCliente());
+		System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + getCliente().getIdCliente());
+		
 		try 
 		{
-			Thread.sleep(10000);
+			Thread.sleep(5000);
 		}
 		catch(InterruptedException ex)
 		{

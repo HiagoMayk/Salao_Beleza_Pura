@@ -4,18 +4,23 @@ import java.util.ArrayList;
 public class Cliente 
 {
 	private int idCliente;
-	private ArrayList<String> servicos;
+	private ArrayList<Servico> servicos;
 	
 	public Cliente(int idCliente)
 	{
 		this.idCliente = idCliente;
-		servicos = new ArrayList<String>();
+		servicos = new ArrayList<Servico>();
 	}
 	
-	public void setServico(String servico)
+	public void setServico(Servico servico)
 	{
 		this.servicos.add(servico);
 	}
+	
+	public ArrayList<Servico> getServicos()
+	{
+		return servicos;
+	};
 	
 	// Retorna a string só para visualização do primeiro pedido
 	public String verServico()
@@ -24,17 +29,17 @@ public class Cliente
 		{
 			return "";
 		}
-		return servicos.get(0);
+		return servicos.get(0).getServico();
 	}
 	
 	// Retorna a string e exclui o pedido
-	public String getServico()
+	public Servico getServico()
 	{
 		if(servicos.isEmpty()==true)
 		{
-			return "";
+			return null;
 		}
-		String aux = servicos.get(0);
+		Servico aux = servicos.get(0);
 		servicos.remove(0);
 		return aux;
 	}

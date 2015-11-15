@@ -1,7 +1,8 @@
 package salao;
 import java.util.ArrayList;
 
-public class FilasClientes {
+public class FilasClientes 
+{
 	ArrayList<Cliente> filaClientes1;
 	ArrayList<Cliente> filaClientes2;
 	ArrayList<Cliente> filaClientes3;

@@ -1,11 +1,10 @@
 package salao;
 import java.util.ArrayList;
 
-
 public class Funcionario implements Runnable
 {
-	private Cliente cliente;
-	private ArrayList<Cliente> array;
+	private Cliente cliente; 			// Representa o cliente que está sendo atendido
+	private ArrayList<Cliente> array;   // Representa a próxima fila que o cliente será inserido
 	
 	public Funcionario(ArrayList<Cliente> array, Cliente c)
 	{

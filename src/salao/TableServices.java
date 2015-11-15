@@ -10,11 +10,11 @@ public class TableServices
 	{
 		services = new HashMap<String,Float>();
 		
-		//Services default 
+		//Services default
 		services.put("Penteado", new Float(50.0));
 		services.put("Corte", new Float(30.0));
 		services.put("Corte e Penteado", new Float(40.0));
-		services.put("Lavagem", new Float(0.0));
+		//services.put("Lavagem", new Float(0.0));
 		services.put("Pedicure", new Float(30.0));
 		services.put("Depilação", new Float(40.0));
 		services.put("Massagem", new Float(20.0));
@@ -41,20 +41,7 @@ public class TableServices
             float value = services.get(service);
             System.out.println(service + " = " + value);
 		}
-	}
-	
-	/*//Testes 
-	public static void main (String args[]){
-        
-		TableServices services = new TableServices();
-	       
-		services.listServices();
-		
-		System.out.println(services.searchPrice("Corte"));
-	               
-	}
-	*/
-	     
+	}    
 }
 
 
