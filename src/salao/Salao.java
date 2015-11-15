@@ -126,14 +126,16 @@ public class Salao extends JFrame implements ActionListener
             // create the list
             queueLists.add(new JList<String>(listModels.get(colunas)));
             add(queueLists.get(colunas));
-            JScrollPane sp = new JScrollPane(queueLists.get(colunas));
-            add(sp);
+            
             Dimension d = queueLists.get(colunas).getPreferredSize();
+            d.height = 200;
             d.width = 200;
-            queueLists.get(colunas).setPreferredSize(d);
-            //add(new JScrollPane(queueLists.get(colunas)));
+            
+            JScrollPane sp = new JScrollPane(queueLists.get(colunas));
+            sp.setPreferredSize(d);
+            add(sp);
             queueLists.get(colunas).setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            queueLists.get(colunas).setVisibleRowCount(10);
+            //queueLists.get(colunas).setVisibleRowCount(10);
     	}
     	
     	// Cria filas de caixas
@@ -146,40 +148,44 @@ public class Salao extends JFrame implements ActionListener
             // create the list
             queueLists.add(new JList<String>(listModels.get(colunas)));
             add(queueLists.get(colunas));
-            JScrollPane sp = new JScrollPane(queueLists.get(colunas));
-            add(sp);
+            
             Dimension d = queueLists.get(colunas).getPreferredSize();
+            d.height = 200;
             d.width = 200;
-            queueLists.get(colunas).setPreferredSize(d);
-            //add(new JScrollPane(queueLists.get(colunas)));
+            
+            JScrollPane sp = new JScrollPane(queueLists.get(colunas));
+            sp.setPreferredSize(d);
+            add(sp);
             queueLists.get(colunas).setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            queueLists.get(colunas).setVisibleRowCount(10);
+            //queueLists.get(colunas).setVisibleRowCount(10);
     	}
     	
     	// Cria coluna para funcionarios ativos
     	// create the model and add elements
     	DefaultListModel<String> listModel = new DefaultListModel<>();
-        listModel.addElement("--Funcionarios ativos--");
+        listModel.addElement("--Novos atendimentos--");
         listModels.add(listModel);
 
         // create the list
         queueLists.add(new JList<String>(listModels.get(colunas)));
         add(queueLists.get(colunas));
-        JScrollPane sp = new JScrollPane(queueLists.get(colunas));
-        add(sp);
+        
         Dimension d = queueLists.get(colunas).getPreferredSize();
+        d.height = 200;
         d.width = 400;
-        queueLists.get(colunas).setPreferredSize(d);
-        //add(new JScrollPane(queueLists.get(colunas)));
+        
+        JScrollPane sp = new JScrollPane(queueLists.get(colunas));
+        sp.setPreferredSize(d);
+        add(sp);
         queueLists.get(colunas).setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        queueLists.get(colunas).setVisibleRowCount(5);
+        //queueLists.get(colunas).setVisibleRowCount(10);
         
         Container c = getContentPane();
         c.setLayout(new FlowLayout());
          
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Salão Beleza Pura");       
-        this.setSize(800, 500);
+        this.setSize(8000, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         
@@ -213,10 +219,13 @@ public class Salao extends JFrame implements ActionListener
 		}
 	}
 	
-	public void atualizaColunaFunc(String s, int i) {
+	public void atualizaColunaFunc(int i) {
 		listModels.get(i).clear();
-		listModels.get(i).addElement("--Funcionarios ativos--");
+		listModels.get(i).addElement("--Novos atendimentos--");
 		listModels.get(i).addElement(" ");
+	}
+	
+	public void adicionaFuncEmColuna(String s, int i) {
 		listModels.get(i).addElement(s);
 	}
 	
@@ -320,11 +329,13 @@ public class Salao extends JFrame implements ActionListener
 			
 			System.out.println("-------------------------------------------");
 			
-			String s = atendeCliente();
-			
-			System.out.println(s);
-			
-			atualizaColunaFunc(s, colunas);
+			atualizaColunaFunc(colunas);
+			String s = atendeCliente();			
+			do {
+				System.out.println(s);
+				adicionaFuncEmColuna(s, colunas);
+				s = atendeCliente();
+			} while(s != "");
 			
 			try
 			{
