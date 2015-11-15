@@ -27,9 +27,6 @@ public class Massagista extends Funcionario
 			 Thread.currentThread().interrupt();
 		}
 		
-		if(getCliente().verServico() != "")
-		{
-			insere();
-		}
+		insere();
 	}
 }
