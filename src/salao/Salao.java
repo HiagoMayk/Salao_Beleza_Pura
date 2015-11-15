@@ -1,9 +1,27 @@
 package salao;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Salao 
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
+public class Salao extends JFrame implements ActionListener
 {
+
+	private static final long serialVersionUID = 1L;
+
 	private int idCliente;  // Identificador do cliente e tam serve para contar
 					// quantos clientes foram atendidos até um determina momento
 	
@@ -22,13 +40,23 @@ public class Salao
 	private Thread tManicure[];
 	private Thread tDepiladora[];
 	private Thread tMassagista;
-	Thread tCaixa[];
+	private Thread tCaixa[];
 	
 	private ThreadGroup gCabeleireiras;
 	private ThreadGroup gManicures;
 	private ThreadGroup gDepiladoras;
 	private ThreadGroup gMassagistas;
 	private ThreadGroup gCaixas;
+	
+	private List<JList<String>> queueLists = new ArrayList<JList<String>>();
+	
+	private List<DefaultListModel<String>> listModels = new ArrayList<DefaultListModel<String>>();
+	
+	private final int numFilas = 5;
+	
+	private final int numFilasCaixas = 1;
+	
+	private JButton logButton = new JButton("Gerar relatório");
 	
 	public FilasClientes getFilas() {
 		return filas;
@@ -86,6 +114,111 @@ public class Salao
 		
 		tMassagista = new Thread(gMassagistas, massagista, "Massagista1");
 		
+		// Screen
+		
+		// Cria filas de servicos
+		int colunas = 0;
+    	for(int i = 0; i < numFilas; i++, colunas++) {
+        	// create the model and add elements
+        	DefaultListModel<String> listModel = new DefaultListModel<>();
+            listModel.addElement("--Fila " + (i+1) + "--");
+            listModels.add(listModel);
+
+            // create the list
+            queueLists.add(new JList<String>(listModels.get(colunas)));
+            add(queueLists.get(colunas));
+            JScrollPane sp = new JScrollPane(queueLists.get(colunas));
+            add(sp);
+            Dimension d = queueLists.get(colunas).getPreferredSize();
+            d.width = 200;
+            queueLists.get(colunas).setPreferredSize(d);
+            //add(new JScrollPane(queueLists.get(colunas)));
+            queueLists.get(colunas).setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            queueLists.get(colunas).setVisibleRowCount(10);
+    	}
+    	
+    	// Cria filas de caixas
+    	for(int i = 0; i < numFilasCaixas; i++, colunas++) {
+        	// create the model and add elements
+        	DefaultListModel<String> listModel = new DefaultListModel<>();
+            listModel.addElement("--Fila" + (i+1) + " Caixa --");
+            listModels.add(listModel);
+
+            // create the list
+            queueLists.add(new JList<String>(listModels.get(colunas)));
+            add(queueLists.get(colunas));
+            JScrollPane sp = new JScrollPane(queueLists.get(colunas));
+            add(sp);
+            Dimension d = queueLists.get(colunas).getPreferredSize();
+            d.width = 200;
+            queueLists.get(colunas).setPreferredSize(d);
+            //add(new JScrollPane(queueLists.get(colunas)));
+            queueLists.get(colunas).setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            queueLists.get(colunas).setVisibleRowCount(10);
+    	}
+    	
+    	// Cria coluna para funcionarios ativos
+    	// create the model and add elements
+    	DefaultListModel<String> listModel = new DefaultListModel<>();
+        listModel.addElement("--Funcionarios ativos--");
+        listModels.add(listModel);
+
+        // create the list
+        queueLists.add(new JList<String>(listModels.get(colunas)));
+        add(queueLists.get(colunas));
+        JScrollPane sp = new JScrollPane(queueLists.get(colunas));
+        add(sp);
+        Dimension d = queueLists.get(colunas).getPreferredSize();
+        d.width = 400;
+        queueLists.get(colunas).setPreferredSize(d);
+        //add(new JScrollPane(queueLists.get(colunas)));
+        queueLists.get(colunas).setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        queueLists.get(colunas).setVisibleRowCount(5);
+        
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+         
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("Salão Beleza Pura");       
+        this.setSize(800, 500);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        
+        logButton.addActionListener(this);
+        add(logButton);
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent evento) {
+		logButton.setText("Botão foi clicado!");
+	}
+	
+	public void atualizaFilaServico(ArrayList<Cliente> fila, int i) {
+		listModels.get(i).clear();
+		listModels.get(i).addElement("--Fila" + (i+1) + "--");
+		listModels.get(i).addElement(" ");
+
+        for(Cliente c: fila) {	
+        	listModels.get(i).addElement("cliente" + c.getIdCliente() + " - " + c.verServico() + " - " + c.getQtdServicos());
+		}
+	}
+	
+	public void atualizaFilaCaixa(ArrayList<Cliente> fila, int i) {
+		listModels.get(i).clear();
+		listModels.get(i).addElement("--Fila Caixa--");
+		listModels.get(i).addElement(" ");
+
+        for(Cliente c: fila) {	
+        	listModels.get(i).addElement("cliente" + c.getIdCliente());
+		}
+	}
+	
+	public void atualizaColunaFunc(String s, int i) {
+		listModels.get(i).clear();
+		listModels.get(i).addElement("--Funcionarios ativos--");
+		listModels.get(i).addElement(" ");
+		listModels.get(i).addElement(s);
 	}
 	
 	public void executar() throws InterruptedException
@@ -93,15 +226,18 @@ public class Salao
 		Cliente cliente;
 		while(true)
 		{
+			int colunas = 0;
 			cliente = criaCliente();
 			filas.setFilaCliente(1, cliente);
 			
 			System.out.println();
 			System.out.println("===========================================");
 			
-			for(int fila = 5; fila >= 1; fila--)
+			for(int fila = 5; fila >= 1; fila--, colunas++)
 			{
 				System.out.println(filas.getFila(fila).size() + " Clientes na fila " + fila);
+				
+				atualizaFilaServico(filas.getFila(fila), fila-1);
 				
 				for(Cliente c: filas.getFila(fila))
 				{	
@@ -110,6 +246,8 @@ public class Salao
 				System.out.println("--");
 			}
 			
+			colunas++;
+			atualizaFilaCaixa(filaCaixas, colunas-1);
 			System.out.println(filaCaixas.size() + " Clientes na fila do Caixa");
 			for(Cliente c: filaCaixas)
 			{	
@@ -119,7 +257,11 @@ public class Salao
 			
 			System.out.println("-------------------------------------------");
 			
-			atendeCliente();
+			String s = atendeCliente();
+			
+			System.out.println(s);
+			
+			atualizaColunaFunc(s, colunas);
 			
 			try
 			{
@@ -142,7 +284,7 @@ public class Salao
 	* 
 	* */
 	
-	public boolean atendeCliente()
+	public String atendeCliente()
 	{
 		// Caixas
 		if(!(filaCaixas.isEmpty()))
@@ -158,7 +300,8 @@ public class Salao
 						caixa = new Caixa(null, c);
 						tCaixa[i] = new Thread(gCaixas, caixa, "Caixa" + (i+1));
 						tCaixa[i].start();
-						return true;
+						//return true;
+						return tCaixa[i].getName() + ": Atendendo cliente " + caixa.getCliente().getIdCliente(); 
 					}	
 				}
 			}
@@ -194,7 +337,8 @@ public class Salao
 								tCabeleireira[i] = new Thread(gCabeleireiras, cabeleireira, "cabeleireira" + (i+1));
 								tCabeleireira[i].start();
 						
-								return true;
+								//return true;
+								return tCabeleireira[i].getName() + ": Atendendo cliente " + cabeleireira.getCliente().getIdCliente();
 							}
 						}
 					}
@@ -218,9 +362,10 @@ public class Salao
 								}
 								
 								tManicure[i] = new Thread(gManicures, manicure, "Manicure" + (i+1));
-								tManicure[i].start();	
+								tManicure[i].start();
 								
-								return true;
+								//return true;
+								return tManicure[i].getName() + ": Atendendo cliente " + manicure.getCliente().getIdCliente();
 							}
 						}
 					}
@@ -246,7 +391,8 @@ public class Salao
 								tDepiladora[i] = new Thread(gDepiladoras, depiladora, "Depiladora" + (i+1));
 								tDepiladora[i].start();
 								
-								return true;
+								//return true;
+								return tDepiladora[i].getName() + ": Atendendo cliente " + depiladora.getCliente().getIdCliente();
 							}
 						}
 					}
@@ -270,7 +416,8 @@ public class Salao
 								tMassagista = new Thread(gMassagistas, massagista, "Massagista1");
 								tMassagista.start();
 								
-								return true;
+								//return true;
+								return tMassagista.getName() + ": Atendendo cliente " + massagista.getCliente().getIdCliente();
 							}
 					}
 				}
@@ -278,7 +425,7 @@ public class Salao
 			}
 		}
 		
-		return false;
+		return "";
 	}
 	
 	//Método que cria uma instancia de cliente, gera os serviços que o cliente quer e retorna essa instancia para
