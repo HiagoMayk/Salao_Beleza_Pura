@@ -19,10 +19,16 @@ import javax.swing.ListSelectionModel;
 
 public class Salao extends JFrame implements ActionListener
 {
+<<<<<<< HEAD
+	private int idCliente;  	// Identificador do cliente e tam serve para contar
+								// quantos clientes foram atendidos até um determina momento
+=======
+
 	private static final long serialVersionUID = 1L;
 
 	private int idCliente;  // Identificador do cliente e tam serve para contar
 					// quantos clientes foram atendidos até um determina momento
+>>>>>>> 93cdab21c99cf8f353c65aa9c1c5fecb2e1a1d90
 	
 	private Random gerador; 	// Gera o que for de ser eleatório do sistema
 
@@ -345,8 +351,12 @@ public class Salao extends JFrame implements ActionListener
 	* filaClientes4 é de um cliente que já foi atendido 3 vezes e ainda tem pedido
 	* filaClientes5 é de um cliente que já foi atendido 4 vezes e ainda tem pedido
 	* */
-
+<<<<<<< HEAD
+	public boolean atendeCliente()
+=======
+	
 	public String atendeCliente()
+>>>>>>> 93cdab21c99cf8f353c65aa9c1c5fecb2e1a1d90
 	{
 		// Caixas
 		if(!(filaCaixas.isEmpty()))

@@ -2,23 +2,28 @@ package salao;
 import java.util.ArrayList;
 
 
-public class Massagista extends Funcionario
+public class Cabeleireira extends Funcionario
 {
-	public Massagista(ArrayList<Cliente> array, Cliente c)
+	public Cabeleireira(ArrayList<Cliente> array, Cliente c)
 	{
 		super(array, c);
 	}
 	
 	public void run()
 	{
-		trabalhar();
-		Thread.currentThread().interrupt();
+			// Todo corte deve ser precedido de uma lavagem: como diferenciar as tarefas?
+			trabalhar();
+			Thread.currentThread().interrupt();
 	}
 	
 	public synchronized void trabalhar()
 	{
+<<<<<<< HEAD
 		System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + getCliente().getIdCliente());
-
+=======
+		//System.out.println(Thread.currentThread().getName() + ": Atendendo cliente " + getCliente().getIdCliente());
+>>>>>>> 93cdab21c99cf8f353c65aa9c1c5fecb2e1a1d90
+		
 		try 
 		{
 			Thread.sleep(10000);
@@ -31,4 +36,5 @@ public class Massagista extends Funcionario
 		//getCliente().getServico(); // gasta serviço
 		insere();
 	}
+	
 }
