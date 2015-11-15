@@ -624,7 +624,7 @@ public class Salao extends JFrame implements ActionListener
         
 		Salao salao = new Salao();
 		
-		salao.executar();            
+		salao.executar();            	
 	}
 }
 
