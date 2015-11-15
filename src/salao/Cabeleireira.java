@@ -16,7 +16,7 @@ public class Cabeleireira extends Funcionario
 			Thread.currentThread().interrupt();
 	}
 	
-	public synchronized void trabalhar()
+	public void trabalhar()
 	{
 		//System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + getCliente().getIdCliente());
 	
