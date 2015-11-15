@@ -1,4 +1,4 @@
-package salao;
+﻿package salao;
 import java.util.ArrayList;
 
 
@@ -11,8 +11,7 @@ public class Depiladora extends Funcionario
 		super(array, c);
 		this.tempo = tempo;
 	}
-	
-	
+
 	public void run()
 	{
 		trabalhar();
@@ -34,5 +33,4 @@ public class Depiladora extends Funcionario
 		//getCliente().getServico(); // gasta serviço
 		insere();
 	}
-
 }

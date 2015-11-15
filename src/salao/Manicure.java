@@ -1,4 +1,4 @@
-package salao;
+﻿package salao;
 import java.util.ArrayList;
 
 
@@ -11,7 +11,7 @@ public class Manicure extends Funcionario
 		super(array, c);
 		this.tempo = tempo;
 	}
-	
+
 	public void run()
 	{	
 			trabalhar();

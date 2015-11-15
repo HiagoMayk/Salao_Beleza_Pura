@@ -7,7 +7,7 @@ public class Caixa extends Funcionario
 	{
 		super(array, c);
 	}
-	
+
 	public void run()
 	{
 		trabalhar();
@@ -27,5 +27,4 @@ public class Caixa extends Funcionario
 			 Thread.currentThread().interrupt();
 		}
 	}
-	
 }

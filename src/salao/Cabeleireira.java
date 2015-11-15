@@ -1,6 +1,5 @@
-package salao;
+﻿package salao;
 import java.util.ArrayList;
-
 
 public class Cabeleireira extends Funcionario
 {
@@ -34,5 +33,4 @@ public class Cabeleireira extends Funcionario
 		//getCliente().getServico(); // gasta serviço
 		insere();
 	}
-	
 }
