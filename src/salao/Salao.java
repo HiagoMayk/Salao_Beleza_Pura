@@ -21,13 +21,15 @@ public class Salao extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private int idCliente;  // Identificador do cliente e tam serve para contar
-					// quantos clientes foram atendidos até um determina momento
+	private int idCliente;      // Identificador do cliente e também serve para contar
+					            // quantos clientes foram atendidos até um determina momento
 	
-	private Random gerador; 	// Gera o que for de ser eleatório do sistema
+	private Random gerador; 	// Gera o que for de eleatório do sistema
 
 	private FilasClientes filas;
 	ArrayList<Cliente> filaCaixas;
+	
+	private Financeira financeira;
 	
 	private Cabeleireira cabeleireira[];
 	private Manicure manicure[];
@@ -47,30 +49,38 @@ public class Salao extends JFrame implements ActionListener
 	private ThreadGroup gMassagistas;
 	private ThreadGroup gCaixas;
 	
-	private List<JList<String>> queueLists = new ArrayList<JList<String>>();
+	private List<JList<String>> queueLists;
 	
-	private List<DefaultListModel<String>> listModels = new ArrayList<DefaultListModel<String>>();
+	private List<DefaultListModel<String>> listModels;
 	
 	private final int numFilas = 5;
 	
 	private final int numFilasCaixas = 1;
 	
-	private JButton logButton = new JButton("Gerar relatório");
+	private JButton logButton;
 	
-	public FilasClientes getFilas() {
+	public FilasClientes getFilas() 
+	{
 		return filas;
 	}
 
-	public void setFilas(FilasClientes filas) {
+	public void setFilas(FilasClientes filas) 
+	{
 		this.filas = filas;
 	}
 
 	public Salao()
 	{
+		queueLists = new ArrayList<JList<String>>();
+		listModels = new ArrayList<DefaultListModel<String>>();
+		logButton = new JButton("Gerar relatório");
+			
 		idCliente = 0;
 		
 		filas = new FilasClientes();
 		filaCaixas = new ArrayList<Cliente>();
+		
+		financeira = new Financeira();
 		
 		gerador = new Random();
 		cabeleireira = new Cabeleireira[5];
@@ -121,7 +131,8 @@ public class Salao extends JFrame implements ActionListener
 		
 		// Cria filas de servicos
 		int colunas = 0;
-    	for(int i = 0; i < numFilas; i++, colunas++) {
+    	for(int i = 0; i < numFilas; i++, colunas++) 
+    	{
         	// create the model and add elements
         	DefaultListModel<String> listModel = new DefaultListModel<>();
             listModel.addElement("--Fila " + (i+1) + "--");
@@ -143,7 +154,8 @@ public class Salao extends JFrame implements ActionListener
     	}
     	
     	// Cria filas de caixas
-    	for(int i = 0; i < numFilasCaixas; i++, colunas++) {
+    	for(int i = 0; i < numFilasCaixas; i++, colunas++) 
+    	{
         	// create the model and add elements
         	DefaultListModel<String> listModel = new DefaultListModel<>();
             listModel.addElement("--Fila" + (i+1) + " Caixa --");
@@ -199,37 +211,44 @@ public class Salao extends JFrame implements ActionListener
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent evento) {
+	public void actionPerformed(ActionEvent evento) 
+	{
 		logButton.setText("Botão foi clicado!");
 	}
 	
-	public void atualizaFilaServico(ArrayList<Cliente> fila, int i) {
+	public void atualizaFilaServico(ArrayList<Cliente> fila, int i) 
+	{
 		listModels.get(i).clear();
 		listModels.get(i).addElement("--Fila" + (i+1) + "--");
 		listModels.get(i).addElement(" ");
 
-        for(Cliente c: fila) {	
+        for(Cliente c: fila)
+        {	
         	listModels.get(i).addElement("cliente" + c.getIdCliente() + " - " + c.verServico() + " - " + c.getQtdServicos());
 		}
 	}
 	
-	public void atualizaFilaCaixa(ArrayList<Cliente> fila, int i) {
+	public void atualizaFilaCaixa(ArrayList<Cliente> fila, int i) 
+	{
 		listModels.get(i).clear();
 		listModels.get(i).addElement("--Fila Caixa--");
 		listModels.get(i).addElement(" ");
 
-        for(Cliente c: fila) {	
+        for(Cliente c: fila) 
+        {	
         	listModels.get(i).addElement("cliente" + c.getIdCliente());
 		}
 	}
 	
-	public void atualizaColunaFunc(int i) {
+	public void atualizaColunaFunc(int i) 
+	{
 		listModels.get(i).clear();
 		listModels.get(i).addElement("--Funcionários ativos--");
 		listModels.get(i).addElement(" ");
 	}
 	
-	public void adicionaFuncEmColuna(String s, int i) {
+	public void adicionaFuncEmColuna(String s, int i) 
+	{
 		listModels.get(i).addElement(s);
 	}
 	
@@ -238,12 +257,14 @@ public class Salao extends JFrame implements ActionListener
 		int tempos[] = new int[quantidade];
 		ArrayList<Integer> t = new ArrayList<Integer>();
 		
+		// Gera os tempos aleatoriamente
 		for(int i = 0; i < quantidade; i++)
 		{
 			tempos[i] = (gerador.nextInt(10)+1);
 		}
-	
-		for (int i = tempos.length; i >= 1; i--) 
+		
+		// BubbluSort
+		for (int i = tempos.length; i >= 1; i--)
 		{  
 		    for (int j = 1; j < i; j++) 
 		    {  
@@ -253,9 +274,10 @@ public class Salao extends JFrame implements ActionListener
 		            tempos[j] = tempos[j-1];  
 		            tempos[j-1] = aux;  
 		        }  
-		    }  
+		    }
 		}
 		
+		// Insere de forma decrescente os elemento eno array list
 		for(int i = tempos.length-1; i >= 0; i--)
 		{
 			t.add(tempos[i]);
@@ -274,7 +296,9 @@ public class Salao extends JFrame implements ActionListener
 			Cliente cliente = criaCliente();
 			t = geraTempoServicos(cliente.getQtdServicos());
 			
-			for(Servico c: cliente.getServicos())
+			// Atribui o tempo aos serviços da forma especificada na descrição do projeto
+			// Obs: getServico() da classe serviço não gasta um serviço
+			for(Servico c: cliente.getServicosSolicitados())
 			{
 				if(c.getServico() == "Penteado")
 				{
@@ -302,14 +326,7 @@ public class Salao extends JFrame implements ActionListener
 					t.remove(0);
 				}
 			}
-			/* //teste de ordenação OK
-			System.out.println("Cliente" + cliente.getIdCliente() + ":");
-			for(Servico c: cliente.getServicos())
-			{
-				
-				System.out.println(c.getServico() + " - " + c.getTempo());
-			}
-			*/
+	
 			//Insere na fila 1, que é a fila dos clientes que acabaram de chegar no salão
 			filas.setFilaCliente(1, cliente);
 			
@@ -335,12 +352,22 @@ public class Salao extends JFrame implements ActionListener
 			for(Cliente c: filaCaixas)
 			{	
 					System.out.println("cliente" + c.getIdCliente());
-				}
-				System.out.println("--");		
+			}
+			
+			System.out.println("--");		
 				
-				System.out.println("-------------------------------------------");
+			System.out.println("-------------------------------------------");
+			
+			for(int i = 0; i < 5; i++)
+			{
+				//System.out.println("Total Caleleireira" + (i+1) + " :" + financeira.getFatCabelereira(i).getTotalDinheiro());
+			}
+			
+			//System.out.println("Total Atendimentos: " + financeira.getTotalAtendimento());
+			//System.out.println("Total recebido: " + financeira.getTotalDinheiroSalao());
+			
 				
-				atualizaColunaFunc(colunas);
+			atualizaColunaFunc(colunas);
 			clientesSendoAtendidos(colunas);
 			String s = atendeCliente();			
 			do {
@@ -381,6 +408,74 @@ public class Salao extends JFrame implements ActionListener
 				{
 					if(!(tCaixa[i].isAlive()))
 					{
+						/*
+						for(Servico aux : c.getServicosSolicitados())
+						{
+							if(aux.getServico().contains("Penteado"))
+							{
+								boolean f = false;
+								for(Servico aux2: c.getServicosSolicitados())
+								{
+									if(aux2.getServico().contains("Corte"))
+									{
+										financeira.incrementaDinheiroSalao(40);
+										c.getServicosSolicitados().remove(aux);
+										c.getServicosSolicitados().remove(aux2);
+										financeira.incrementaAtendimento();
+										financeira.incrementaAtendimento();
+										f = true;
+										break;
+									}
+								}
+								
+								if(f == false)
+								{
+									financeira.incrementaDinheiroSalao(50);
+									c.getServicosSolicitados().remove(aux);
+									financeira.incrementaAtendimento();
+								}				
+							}
+							else if(aux.getServico().contains("Corte"))
+							{
+								boolean f = false;
+								for(Servico aux2: c.getServicosSolicitados())
+								{
+									if(aux2.getServico().contains("Penteado"))
+									{
+										financeira.incrementaDinheiroSalao(40);
+										c.getServicosSolicitados().remove(aux);
+										c.getServicosSolicitados().remove(aux2);
+										financeira.incrementaAtendimento();
+										financeira.incrementaAtendimento();
+										f = true;
+										break;
+									}
+								}
+								
+								if(f == false)
+								{
+									financeira.incrementaDinheiroSalao(30);
+									c.getServicosSolicitados().remove(aux);
+									financeira.incrementaAtendimento();
+								}			
+							}
+							else if(aux.getServico().contains("Pedicure"))
+							{
+								financeira.incrementaDinheiroSalao(30);
+								financeira.incrementaAtendimento();
+							}
+							else if(aux.getServico().contains("Depilação"))
+							{
+								financeira.incrementaDinheiroSalao(40);
+								financeira.incrementaAtendimento();
+							}
+							else if(aux.getServico().contains("Massagem"))
+							{
+								financeira.incrementaDinheiroSalao(20);
+								financeira.incrementaAtendimento();
+							}
+						}
+						*/
 						filaCaixas.remove(c);
 	
 						caixa[i] = new Caixa(null, c);
@@ -401,13 +496,62 @@ public class Salao extends JFrame implements ActionListener
 			{
 				for(Cliente c: filas.getFila(fila))
 				{
-					if((c.verServico().contains("Penteado") || c.verServico().contains("Corte") ||
-						c.verServico().contains("Lavagem")) && gCabeleireiras.activeCount() < 5)
+					if((c.verServico().contains("Penteado") || c.verServico().contains("Corte")) && gCabeleireiras.activeCount() < 5)
 					{
 						for(int i = 0; i < 5; i++)
 						{
 							if(!(tCabeleireira[i].isAlive()))
 							{
+								if(c.verServico().contains("Penteado"))
+								{
+									boolean f = false;
+									for(Servico aux: c.getServicosSolicitados())
+									{
+										if(aux.getServico() == "Corte")
+										{
+											financeira.getFatCabelereira(i).incrementaDinheiro(20); // corte e penteado eh 50, se tver od ois esse sai por 25 
+																									// e na proxima iteração para o outro pedido vai ser descontado só 25
+																									// totalizando 50
+											financeira.getFatCabelereira(i).incrementaQtdServicos();
+											//financeira.incrementaAtendimento();
+											f = true;
+											break;
+										}
+									}
+									
+									if(f == false)
+									{
+										financeira.getFatCabelereira(i).incrementaDinheiro(50);
+										financeira.getFatCabelereira(i).incrementaQtdServicos();
+										//financeira.incrementaAtendimento();
+									}				
+								}
+								else if(c.verServico().contains("Corte"))
+								{
+									boolean f = false;
+									for(Servico aux: c.getServicosSolicitados())
+									{
+										if(aux.getServico() == "Penteado")
+										{
+											financeira.getFatCabelereira(i).incrementaDinheiro(20); 
+											// corte e penteado eh 50, se tver od ois esse sai por 25 
+											// e na proxima iteração para o outro pedido vai ser descontado só 25
+											// totalizando 50
+											financeira.getFatCabelereira(i).incrementaQtdServicos();
+											//financeira.incrementaAtendimento();
+											f = true;
+											break;
+										}
+									}
+									
+									if(f == false)
+									{
+										financeira.getFatCabelereira(i).incrementaDinheiro(30);
+										financeira.getFatCabelereira(i).incrementaQtdServicos();
+										//financeira.incrementaAtendimento();
+									}			
+								}
+									
 								int tempo = c.getServico().getTempo();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 								
@@ -435,6 +579,10 @@ public class Salao extends JFrame implements ActionListener
 						{
 							if(!(tManicure[i].isAlive()))
 							{
+								financeira.getFatManicure(i).incrementaDinheiro(30);
+								financeira.getFatManicure(i).incrementaQtdServicos();
+								//financeira.incrementaAtendimento();
+								
 								int tempo = c.getServico().getTempo();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 								
@@ -462,6 +610,10 @@ public class Salao extends JFrame implements ActionListener
 						{
 							if(!(tDepiladora[i].isAlive()))
 							{
+								financeira.getFatDepiladora(i).incrementaDinheiro(30);
+								financeira.getFatDepiladora(i).incrementaQtdServicos();
+								//financeira.incrementaAtendimento();
+								
 								int tempo = c.getServico().getTempo();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 								
@@ -487,6 +639,10 @@ public class Salao extends JFrame implements ActionListener
 					{
 							if(!(tMassagista.isAlive()))
 							{
+								financeira.getFatMassagista().incrementaDinheiro(20);
+								financeira.getFatMassagista().incrementaQtdServicos();
+								//financeira.incrementaAtendimento();
+								
 								int tempo = c.getServico().getTempo();
 								filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
 
@@ -515,37 +671,47 @@ public class Salao extends JFrame implements ActionListener
 		return "";
 	}
 	
-	public void clientesSendoAtendidos(int colunas) {
+	public void clientesSendoAtendidos(int colunas) 
+	{
 		// Checa caixas
-		for(int i = 0; i < 2; i++) {
-			if((tCaixa[i].isAlive())) {
+		for(int i = 0; i < 2; i++) 
+		{
+			if((tCaixa[i].isAlive())) 
+			{
 				adicionaFuncEmColuna(tCaixa[i].getName() + ": Atendendo cliente" + caixa[i].getCliente().getIdCliente(), colunas); 
 			}
 		}
 		
 		// Checa cabeleireiras
-		for(int i = 0; i < 5; i++) {
-			if((tCabeleireira[i].isAlive())) {
+		for(int i = 0; i < 5; i++) 
+		{
+			if((tCabeleireira[i].isAlive())) 
+			{
 				adicionaFuncEmColuna(tCabeleireira[i].getName() + ": Atendendo cliente " + cabeleireira[i].getCliente().getIdCliente(), colunas);
 			}
 		}
 		
 		// Checa manicures
-		for(int i = 0; i < 3; i++) {
-			if((tManicure[i].isAlive())) {
+		for(int i = 0; i < 3; i++) 
+		{
+			if((tManicure[i].isAlive())) 
+			{
 				adicionaFuncEmColuna(tManicure[i].getName() + ": Atendendo cliente " + manicure[i].getCliente().getIdCliente(), colunas);
 			}
 		}
 		
 		// Checa depiladoras
-		for(int i = 0; i < 2; i++) {
-			if((tDepiladora[i].isAlive())) {
+		for(int i = 0; i < 2; i++) 
+		{
+			if((tDepiladora[i].isAlive())) 
+			{
 				adicionaFuncEmColuna(tDepiladora[i].getName() + ": Atendendo cliente " + depiladora[i].getCliente().getIdCliente(), colunas);
 			}
 		}
 		
 		// Checa massagista 
-		if((tMassagista.isAlive())) {
+		if((tMassagista.isAlive())) 
+		{
 			adicionaFuncEmColuna(tMassagista.getName() + ": Atendendo cliente " + massagista.getCliente().getIdCliente(), colunas);
 		}
 	}

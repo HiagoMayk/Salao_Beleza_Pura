@@ -7,14 +7,15 @@ public class Caixa extends Funcionario
 	{
 		super(array, c);
 	}
-
+<<<<<<< HEAD
+	
 	public void run()
 	{
 		trabalhar();
 		Thread.currentThread().interrupt();
 	}
 	
-	public synchronized void trabalhar()
+	public void trabalhar()
 	{
 		//System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + getCliente().getIdCliente());
 
@@ -27,4 +28,7 @@ public class Caixa extends Funcionario
 			 Thread.currentThread().interrupt();
 		}
 	}
+	
+=======
+>>>>>>> 65b9901a4272e10817713b9f6431c70ee60f0ae5
 }
