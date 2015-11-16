@@ -234,7 +234,7 @@ public class Salao extends JFrame implements ActionListener
                 frame.add(countryList);
                  
                 //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setTitle("Resumo de movimentações");       
+                frame.setTitle("Resumo das movimentações");       
                 frame.setSize(400,350);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
