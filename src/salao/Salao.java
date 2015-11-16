@@ -73,7 +73,7 @@ public class Salao extends JFrame implements ActionListener
 	{
 		queueLists = new ArrayList<JList<String>>();
 		listModels = new ArrayList<DefaultListModel<String>>();
-		logButton = new JButton("Gerar relatório");
+		logButton = new JButton("Gerar resumo");
 			
 		idCliente = 0;
 		qtdClientesAtendidos = 0;
