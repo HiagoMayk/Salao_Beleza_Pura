@@ -220,6 +220,10 @@ public class Salao extends JFrame implements ActionListener
 	public static void createLogFrame() {
         EventQueue.invokeLater(new Runnable()
         {
+        	public String format(double x) {  
+        	    return String.format("%.2f", x);  
+        	}
+        	
             @Override
             public void run()
             {
@@ -241,29 +245,29 @@ public class Salao extends JFrame implements ActionListener
                 
                 for(int i = 0; i < 5; i++)
     			{
-                	listModel.addElement("Caleleireira" + (i+1) + " : " + (financeira.getFatCabelereira(i).getTotalDinheiro()*0.4));
+                	listModel.addElement("Caleleireira" + (i+1) + " : " + format((financeira.getFatCabelereira(i).getTotalDinheiro()*0.4)));
     			}
     			
     			for(int i = 0; i < 3; i++)
     			{
-    				listModel.addElement("Manicure" + (i+1) + " : " + (financeira.getFatManicure(i).getTotalDinheiro()*0.4));
+    				listModel.addElement("Manicure" + (i+1) + " : " + format((financeira.getFatManicure(i).getTotalDinheiro()*0.4)));
     			}
     			
     			for(int i = 0; i < 2; i++)
     			{
-    				listModel.addElement("Depiladora" + (i+1) + ": " + (financeira.getFatDepiladora(i).getTotalDinheiro()*0.4));
+    				listModel.addElement("Depiladora" + (i+1) + ": " + format((financeira.getFatDepiladora(i).getTotalDinheiro()*0.4)));
     			}
     			
-    			listModel.addElement("Massagista: " + (financeira.getFatMassagista().getTotalDinheiro()*0.4));
+    			listModel.addElement("Massagista: " + format((financeira.getFatMassagista().getTotalDinheiro()*0.4)));
     			
     			listModel.addElement("Total de atendimentos: " + financeira.getTotalAtendimentoFunc());
-    			listModel.addElement("Valor total: R$ " + financeira.getValorTotalfuncionarios());
+    			listModel.addElement("Valor total: R$ " + format(financeira.getValorTotalfuncionarios()));
     			
     			listModel.addElement("Total de atendimentos computados no caixa: " + financeira.getTotalAtendimento());
-    			listModel.addElement("Total de dinheiro recebido no caixa: R$ " + financeira.getTotalDinheiroSalao());
+    			listModel.addElement("Total de dinheiro recebido no caixa: R$ " + format(financeira.getTotalDinheiroSalao()));
     			
     			listModel.addElement("Atendimentos a serem computados: " + (financeira.getTotalAtendimentoFunc() - financeira.getTotalAtendimento()));
-    			listModel.addElement("Dinheiro a ser recebido no caixa: R$ " + (financeira.getValorTotalfuncionarios() - financeira.getTotalDinheiroSalao()));    			
+    			listModel.addElement("Dinheiro a ser recebido no caixa: R$ " + format((financeira.getValorTotalfuncionarios() - financeira.getTotalDinheiroSalao())));    			
     			listModel.addElement("Clientes que faltam ir ao caixa: " + (idCliente - qtdClientesAtendidos));
             }
         });
