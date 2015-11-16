@@ -21,9 +21,14 @@ public class Salao extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 
+<<<<<<< HEAD
 	// Identificador do cliente e também serve para contar quantos cliente entraram no salão
 	private int idCliente;      
-
+=======
+	private static int idCliente;      // Identificador do cliente e também serve para contar
+	private static int qtdClientesAtendidos;		            // quantos clientes foram atendidos até um determina momento
+>>>>>>> fa8649473fd02e5249e257999f4428ec20f13ed0
+	
 	 // Quantos clientes foram atendidos até um determinado momento
 	private int qtdClientesAtendidos;		           
 	
@@ -216,18 +221,20 @@ public class Salao extends JFrame implements ActionListener
 	}
 	
 	@Override
-
-	public void actionPerformed(ActionEvent event) 
+<<<<<<< HEAD
+	public void actionPerformed(ActionEvent evento) 
 	{
+		logButton.setText("Resumo gerado!");
+=======
+	public void actionPerformed(ActionEvent event) {
 		createLogFrame();
+>>>>>>> fa8649473fd02e5249e257999f4428ec20f13ed0
 	}
 	
-	public static void createLogFrame() 
-	{
+	public static void createLogFrame() {
         EventQueue.invokeLater(new Runnable()
         {
-        	public String format(double x) 
-		{  
+        	public String format(double x) {  
         	    return String.format("%.2f", x);  
         	}
         	
@@ -424,9 +431,13 @@ public class Salao extends JFrame implements ActionListener
 			System.out.println("Resumo:");
 			for(int i = 0; i < 5; i++)
 			{
+<<<<<<< HEAD
+				System.out.println("Caleleireira" + (i+1) + " : " + financeira.getFatCabelereira(i).getTotalDinheiro());
+		}
+=======
 				System.out.println("Caleleireira" + (i+1) + " : " + (financeira.getFatCabelereira(i).getTotalDinheiro()*0.4));
 			}
-
+>>>>>>> fa8649473fd02e5249e257999f4428ec20f13ed0
 			
 			for(int i = 0; i < 3; i++)
 			{
