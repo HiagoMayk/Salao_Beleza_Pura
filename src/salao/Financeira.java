@@ -77,4 +77,52 @@ public class Financeira
 	{
 		totalDinheiroSalao += valor;
 	}
+	
+	public int getTotalAtendimentoFunc()
+	{
+		int count = 0;
+		
+		for(int i = 0; i < 5; i++)
+		{
+			count += cabeleireiras[i].getQtdServicos();
+		}
+		
+		for(int i = 0; i < 3; i++)
+		{
+			count += manicures[i].getQtdServicos();
+		}
+		
+		for(int i = 0; i < 2; i++)
+		{
+			count += depiladoras[i].getQtdServicos();
+		}
+		
+		count += massagista.getQtdServicos();
+		
+		return count;
+	}
+	
+	public float getValorTotalfuncionarios()
+	{
+		float count = 0;
+		
+		for(int i = 0; i < 5; i++)
+		{
+			count += cabeleireiras[i].getTotalDinheiro();
+		}
+		
+		for(int i = 0; i < 3; i++)
+		{
+			count += manicures[i].getTotalDinheiro();
+		}
+		
+		for(int i = 0; i < 2; i++)
+		{
+			count += depiladoras[i].getTotalDinheiro();
+		}
+		
+		count += massagista.getTotalDinheiro();
+		
+		return count;
+	}
 }
