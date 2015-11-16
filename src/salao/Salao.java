@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,15 +21,15 @@ public class Salao extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private int idCliente;      // Identificador do cliente e também serve para contar
-	private int qtdClientesAtendidos;		            // quantos clientes foram atendidos até um determina momento
+	private static int idCliente;      // Identificador do cliente e também serve para contar
+	private static int qtdClientesAtendidos;		            // quantos clientes foram atendidos até um determina momento
 	
 	private Random gerador; 	// Gera o que for de eleatório do sistema
 
 	private FilasClientes filas;
 	ArrayList<Cliente> filaCaixas;
 	
-	private Financeira financeira;
+	private static Financeira financeira;
 	
 	private Cabeleireira cabeleireira[];
 	private Manicure manicure[];
@@ -202,7 +203,7 @@ public class Salao extends JFrame implements ActionListener
          
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Salão Beleza Pura");       
-        this.setSize(800, 600);
+        this.setSize(900, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         
@@ -212,10 +213,61 @@ public class Salao extends JFrame implements ActionListener
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent evento) 
-	{
-		logButton.setText("Botão foi clicado!");
+	public void actionPerformed(ActionEvent event) {
+		createLogFrame();
 	}
+	
+	public static void createLogFrame() {
+        EventQueue.invokeLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                JFrame frame = new JFrame("Test");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                JList<String> countryList;
+                //create the model and add elements
+                DefaultListModel<String> listModel = new DefaultListModel<>();
+                
+                //create the list
+                countryList = new JList<>(listModel);
+                frame.add(countryList);
+                 
+                //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setTitle("Resumo de movimentações");       
+                frame.setSize(400,350);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+                
+                for(int i = 0; i < 5; i++)
+    			{
+                	listModel.addElement("Caleleireira" + (i+1) + " : " + (financeira.getFatCabelereira(i).getTotalDinheiro()*0.4));
+    			}
+    			
+    			for(int i = 0; i < 3; i++)
+    			{
+    				listModel.addElement("Manicure" + (i+1) + " : " + (financeira.getFatManicure(i).getTotalDinheiro()*0.4));
+    			}
+    			
+    			for(int i = 0; i < 2; i++)
+    			{
+    				listModel.addElement("Depiladora" + (i+1) + ": " + (financeira.getFatDepiladora(i).getTotalDinheiro()*0.4));
+    			}
+    			
+    			listModel.addElement("Massagista: " + (financeira.getFatMassagista().getTotalDinheiro()*0.4));
+    			
+    			listModel.addElement("Total de atendimentos: " + financeira.getTotalAtendimentoFunc());
+    			listModel.addElement("Valor total: R$ " + financeira.getValorTotalfuncionarios());
+    			
+    			listModel.addElement("Total de atendimentos computados no caixa: " + financeira.getTotalAtendimento());
+    			listModel.addElement("Total de dinheiro recebido no caixa: R$ " + financeira.getTotalDinheiroSalao());
+    			
+    			listModel.addElement("Atendimentos a serem computados: " + (financeira.getTotalAtendimentoFunc() - financeira.getTotalAtendimento()));
+    			listModel.addElement("Dinheiro a ser recebido no caixa: R$ " + (financeira.getValorTotalfuncionarios() - financeira.getTotalDinheiroSalao()));    			
+    			listModel.addElement("Clientes que faltam ir ao caixa: " + (idCliente - qtdClientesAtendidos));
+            }
+        });
+    }
 	
 	public void atualizaFilaServico(ArrayList<Cliente> fila, int i) 
 	{
@@ -362,20 +414,20 @@ public class Salao extends JFrame implements ActionListener
 			System.out.println("Resumo:");
 			for(int i = 0; i < 5; i++)
 			{
-				System.out.println("Caleleireira" + (i+1) + " : " + financeira.getFatCabelereira(i).getTotalDinheiro());
+				System.out.println("Caleleireira" + (i+1) + " : " + (financeira.getFatCabelereira(i).getTotalDinheiro()*0.4));
 			}
 			
 			for(int i = 0; i < 3; i++)
 			{
-				System.out.println("Manicure" + (i+1) + " : " + financeira.getFatManicure(i).getTotalDinheiro());
+				System.out.println("Manicure" + (i+1) + " : " + (financeira.getFatManicure(i).getTotalDinheiro()*0.4));
 			}
 			
 			for(int i = 0; i < 2; i++)
 			{
-				System.out.println("Depiladora" + (i+1) + ": " + financeira.getFatDepiladora(i).getTotalDinheiro());
+				System.out.println("Depiladora" + (i+1) + ": " + (financeira.getFatDepiladora(i).getTotalDinheiro()*0.4));
 			}
 			
-			System.out.println("Massagista: " + financeira.getFatMassagista().getTotalDinheiro());
+			System.out.println("Massagista: " + (financeira.getFatMassagista().getTotalDinheiro()*0.4));
 			
 			System.out.println("Total de atendimentos: " + financeira.getTotalAtendimentoFunc());
 			System.out.printf("Valor total: R$ %.2f", financeira.getValorTotalfuncionarios());
