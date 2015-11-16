@@ -12,7 +12,6 @@ public class Cabeleireira extends Funcionario
 	
 	public void run()
 	{
-			// Todo corte deve ser precedido de uma lavagem: como diferenciar as tarefas?
 			trabalhar();
 			Thread.currentThread().interrupt();
 	}
@@ -20,7 +19,7 @@ public class Cabeleireira extends Funcionario
 	public void trabalhar()
 	{
 		//System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + getCliente().getIdCliente());
-	
+		
 		try 
 		{
 			Thread.sleep(1000 * tempo);
@@ -30,7 +29,6 @@ public class Cabeleireira extends Funcionario
 			 Thread.currentThread().interrupt();
 		}
 		
-		//getCliente().getServico(); // gasta serviço
 		insere();
 	}
 }

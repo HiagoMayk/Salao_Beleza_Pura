@@ -1,7 +1,6 @@
 ﻿package salao;
 import java.util.ArrayList;
 
-
 public class Depiladora extends Funcionario
 {
 	int tempo;
@@ -30,7 +29,7 @@ public class Depiladora extends Funcionario
 		{
 			 Thread.currentThread().interrupt();
 		}
-		//getCliente().getServico(); // gasta serviço
+
 		insere();
 	}
 }

@@ -20,10 +20,14 @@ public class Salao extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private int idCliente;      // Identificador do cliente e também serve para contar
-	private int qtdClientesAtendidos;		            // quantos clientes foram atendidos até um determina momento
+	// Identificador do cliente e também serve para contar quantos cliente entraram no salão
+	private int idCliente;      
 	
-	private Random gerador; 	// Gera o que for de eleatório do sistema
+	 // Quantos clientes foram atendidos até um determinado momento
+	private int qtdClientesAtendidos;		           
+	
+	// Gera o que for de eleatório do sistema
+	private Random gerador; 	
 
 	private FilasClientes filas;
 	ArrayList<Cliente> filaCaixas;
@@ -128,18 +132,18 @@ public class Salao extends JFrame implements ActionListener
 		
 		tMassagista = new Thread(gMassagistas, massagista, "Massagista1");
 		
-		// Screen
-		
+		// Classes para o Screen
+
 		// Cria filas de servicos
 		int colunas = 0;
     	for(int i = 0; i < numFilas; i++, colunas++) 
     	{
-        	// create the model and add elements
+        	// Cria o modelo e adiciona os elementos
         	DefaultListModel<String> listModel = new DefaultListModel<>();
             listModel.addElement("--Fila " + (i+1) + "--");
             listModels.add(listModel);
 
-            // create the list
+            // Cria a lista
             queueLists.add(new JList<String>(listModels.get(colunas)));
             add(queueLists.get(colunas));
             
@@ -157,12 +161,12 @@ public class Salao extends JFrame implements ActionListener
     	// Cria filas de caixas
     	for(int i = 0; i < numFilasCaixas; i++, colunas++) 
     	{
-        	// create the model and add elements
+        	// Cria o modelo e adiciona os elementos
         	DefaultListModel<String> listModel = new DefaultListModel<>();
             listModel.addElement("--Fila" + (i+1) + " Caixa --");
             listModels.add(listModel);
 
-            // create the list
+            // Cria a lista
             queueLists.add(new JList<String>(listModels.get(colunas)));
             add(queueLists.get(colunas));
             
@@ -178,12 +182,12 @@ public class Salao extends JFrame implements ActionListener
     	}
     	
     	// Cria coluna para funcionarios ativos
-    	// create the model and add elements
+    	// Cria o modelo e adiciona os elementos
     	DefaultListModel<String> listModel = new DefaultListModel<>();
         listModel.addElement("--Funcionários ativos--");
         listModels.add(listModel);
 
-        // create the list
+        // Cria a lista
         queueLists.add(new JList<String>(listModels.get(colunas)));
         add(queueLists.get(colunas));
         
@@ -208,19 +212,18 @@ public class Salao extends JFrame implements ActionListener
         
         logButton.addActionListener(this);
         add(logButton);
-		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent evento) 
 	{
-		logButton.setText("Botão foi clicado!");
+		logButton.setText("Resumo gerado!");
 	}
 	
 	public void atualizaFilaServico(ArrayList<Cliente> fila, int i) 
 	{
 		listModels.get(i).clear();
-		listModels.get(i).addElement("--Fila" + (i+1) + "--");
+		listModels.get(i).addElement("--------------- Fila" + (i+1) + " ---------------");
 		listModels.get(i).addElement(" ");
 
         for(Cliente c: fila)
@@ -232,7 +235,7 @@ public class Salao extends JFrame implements ActionListener
 	public void atualizaFilaCaixa(ArrayList<Cliente> fila, int i) 
 	{
 		listModels.get(i).clear();
-		listModels.get(i).addElement("--Fila Caixa--");
+		listModels.get(i).addElement("---------------- Fila Caixa ---------------");
 		listModels.get(i).addElement(" ");
 
         for(Cliente c: fila) 
@@ -244,7 +247,7 @@ public class Salao extends JFrame implements ActionListener
 	public void atualizaColunaFunc(int i) 
 	{
 		listModels.get(i).clear();
-		listModels.get(i).addElement("--Funcionários ativos--");
+		listModels.get(i).addElement("------------------------ Funcionários Ativos -------------------------");
 		listModels.get(i).addElement(" ");
 	}
 	
@@ -278,7 +281,7 @@ public class Salao extends JFrame implements ActionListener
 		    }
 		}
 		
-		// Insere de forma decrescente os elemento eno array list
+		// Insere de forma decrescente os elemento no ArrayList
 		for(int i = tempos.length-1; i >= 0; i--)
 		{
 			t.add(tempos[i]);
@@ -289,7 +292,6 @@ public class Salao extends JFrame implements ActionListener
 	
 	public void executar() throws InterruptedException
 	{
-		//Cliente cliente;
 		ArrayList<Integer> t = new ArrayList<Integer>();
 		while(true)
 		{
@@ -298,7 +300,7 @@ public class Salao extends JFrame implements ActionListener
 			t = geraTempoServicos(cliente.getQtdServicos());
 			
 			// Atribui o tempo aos serviços da forma especificada na descrição do projeto
-			// Obs: getServico() da classe serviço não gasta um serviço
+			// Obs: getServico() da classe serviço não "gasta" um serviço
 			for(Servico c: cliente.getServicosSolicitados())
 			{
 				if(c.getServico() == "Penteado")
@@ -363,7 +365,7 @@ public class Salao extends JFrame implements ActionListener
 			for(int i = 0; i < 5; i++)
 			{
 				System.out.println("Caleleireira" + (i+1) + " : " + financeira.getFatCabelereira(i).getTotalDinheiro());
-			}
+		}
 			
 			for(int i = 0; i < 3; i++)
 			{
@@ -436,8 +438,6 @@ public class Salao extends JFrame implements ActionListener
 				{
 					if(!(tCaixa[i].isAlive()))
 					{	
-						//ArrayList<Servico> itera = new ArrayList<Servico>();
-						//itera = (ArrayList<Servico>) c.getServicosSolicitados().clone();
 						for(Servico aux : c.getServicosSolicitados())
 						{
 							if(aux.getServico().contains("Penteado"))
@@ -447,7 +447,9 @@ public class Salao extends JFrame implements ActionListener
 								{
 									if(aux2.getServico().contains("Corte"))
 									{
-										financeira.incrementaDinheiroSalao(20);  // vai ter que entrar aqui denovo
+										// Ser Tiver os dois serviços é cobrado só 20 e na
+										// outra interação é cobrado os outros 20 totalizando 40
+										financeira.incrementaDinheiroSalao(20);
 										financeira.incrementaAtendimento();
 										f = true;
 										break;
@@ -467,8 +469,10 @@ public class Salao extends JFrame implements ActionListener
 								{
 									if(aux2.getServico().contains("Penteado"))
 									{
+										// Ser Tiver os dois serviços é cobrado só 20 e na
+										// outra interação é cobrado os outros 20 totalizando 40
 										financeira.incrementaDinheiroSalao(20);
-										financeira.incrementaAtendimento();// vai ter que entrar aqui denovo
+										financeira.incrementaAtendimento();
 										f = true;
 										break;
 									}
@@ -478,7 +482,6 @@ public class Salao extends JFrame implements ActionListener
 								{
 									financeira.incrementaDinheiroSalao(30);
 									financeira.incrementaAtendimento();
-									//c.getServicosSolicitados().remove(aux);
 								}			
 							}
 							else if(aux.getServico().contains("Pedicure"))
@@ -503,15 +506,14 @@ public class Salao extends JFrame implements ActionListener
 						caixa[i] = new Caixa(null, c);
 						tCaixa[i] = new Thread(gCaixas, caixa[i], "Caixa" + (i+1));
 						tCaixa[i].start();
-						//return true;
 						return tCaixa[i].getName() + ": Atendendo cliente " + caixa[i].getCliente().getIdCliente(); 
 					}	
 				}
 			}
 		}
 				
-		// A prioridade das filas segue da seguinte forma do maior para o menor
-		// Mais alta: 5, 4, 3, 2, 1 :Mais baixa 
+		// A prioridade das filas segue da seguinte forma do maior para o menor:
+		// mais alta: 5, 4, 3, 2, 1 :mais baixa 
 		for(int fila = 5; fila >= 1; fila--)
 		{
 			if(!(filas.getFila(fila).isEmpty()))
@@ -531,9 +533,10 @@ public class Salao extends JFrame implements ActionListener
 									{
 										if(aux.getServico() == "Corte")
 										{
-											financeira.getFatCabelereira(i).incrementaDinheiro(20); // corte e penteado eh 50, se tver od ois esse sai por 25 
-																									// e na proxima iteração para o outro pedido vai ser descontado só 25
-																									// totalizando 50
+											// Corte e penteado eh 40, se tiver os doisserviços o valor do corte será
+											// corte  por 20 e na proxima iteração para o outro pedido o penteado vai
+											// ser descontado só 20 totalizando 40
+											financeira.getFatCabelereira(i).incrementaDinheiro(20); 
 											financeira.getFatCabelereira(i).incrementaQtdServicos();
 											f = true;
 											break;
@@ -554,10 +557,10 @@ public class Salao extends JFrame implements ActionListener
 									{
 										if(aux.getServico() == "Penteado")
 										{
-											financeira.getFatCabelereira(i).incrementaDinheiro(20); 
-											// corte e penteado eh 50, se tver od ois esse sai por 25 
-											// e na proxima iteração para o outro pedido vai ser descontado só 25
-											// totalizando 50
+											// Corte e penteado eh 40, se tiver os doisserviços o valor do corte será
+											// corte  por 20 e na proxima iteração para o outro pedido o penteado vai
+											// ser descontado só 20 totalizando 40
+											financeira.getFatCabelereira(i).incrementaDinheiro(20);
 											financeira.getFatCabelereira(i).incrementaQtdServicos();
 										
 											f = true;
@@ -569,7 +572,6 @@ public class Salao extends JFrame implements ActionListener
 									{
 										financeira.getFatCabelereira(i).incrementaDinheiro(30);
 										financeira.getFatCabelereira(i).incrementaQtdServicos();
-										
 									}			
 								}
 									
@@ -578,17 +580,16 @@ public class Salao extends JFrame implements ActionListener
 								
 								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									cabeleireira[i] = new Cabeleireira(filaCaixas, c, tempo); // passa o tempo de execução e gasta 1 serviço
+									cabeleireira[i] = new Cabeleireira(filaCaixas, c, tempo); 
 								}
 								else
 								{
-									cabeleireira[i] = new Cabeleireira(filas.getFila(fila+1), c, tempo); // passa o tempo de execução e gasta 1 serviço
+									cabeleireira[i] = new Cabeleireira(filas.getFila(fila+1), c, tempo);
 								}
 								
 								tCabeleireira[i] = new Thread(gCabeleireiras, cabeleireira[i], "Cabeleireira" + (i+1));
 								tCabeleireira[i].start();
-						
-								//return true;
+
 								return tCabeleireira[i].getName() + ": Atendendo cliente" + cabeleireira[i].getCliente().getIdCliente();
 							}
 						}
@@ -609,17 +610,16 @@ public class Salao extends JFrame implements ActionListener
 								
 								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									manicure[i] = new Manicure(filaCaixas, c, tempo); // passa o tempo de execução e gasta 1 serviço
+									manicure[i] = new Manicure(filaCaixas, c, tempo);
 								}
 								else
 								{
-									manicure[i] = new Manicure(filas.getFila(fila+1), c, tempo); // passa o tempo de execução e gasta 1 serviço
+									manicure[i] = new Manicure(filas.getFila(fila+1), c, tempo);
 								}
 								
 								tManicure[i] = new Thread(gManicures, manicure[i], "Manicure" + (i+1));
 								tManicure[i].start();
-								
-								//return true;
+			
 								return tManicure[i].getName() + ": Atendendo cliente " + manicure[i].getCliente().getIdCliente();
 							}
 						}
@@ -640,17 +640,16 @@ public class Salao extends JFrame implements ActionListener
 								
 								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									depiladora[i] = new Depiladora(filaCaixas, c, tempo); // passa o tempo de execução e gasta 1 serviço
+									depiladora[i] = new Depiladora(filaCaixas, c, tempo);
 								}
 								else
 								{
-									depiladora[i] = new Depiladora(filas.getFila(fila+1), c, tempo); // passa o tempo de execução e gasta 1 serviço
+									depiladora[i] = new Depiladora(filas.getFila(fila+1), c, tempo);
 								}
 								
 								tDepiladora[i] = new Thread(gDepiladoras, depiladora[i], "Depiladora" + (i+1));
 								tDepiladora[i].start();
-								
-								//return true;
+		
 								return tDepiladora[i].getName() + ": Atendendo cliente " + depiladora[i].getCliente().getIdCliente();
 							}
 						}
@@ -669,17 +668,16 @@ public class Salao extends JFrame implements ActionListener
 
 								if(fila == 5 || c.getQtdServicos() == 0)
 								{
-									massagista = new Massagista(filaCaixas, c, tempo); // passa o tempo de execução e gasta 1 serviço
+									massagista = new Massagista(filaCaixas, c, tempo);
 								}
 								else
 								{
-									massagista = new Massagista(filas.getFila(fila+1), c, tempo); // passa o tempo de execução e gasta 1 serviço
+									massagista = new Massagista(filas.getFila(fila+1), c, tempo);
 								}
 								
 								tMassagista = new Thread(gMassagistas, massagista, "Massagista1");
 								tMassagista.start();
-								
-								//return true;
+
 								return tMassagista.getName() + ": Atendendo cliente " + massagista.getCliente().getIdCliente();
 							}
 					}
@@ -693,7 +691,7 @@ public class Salao extends JFrame implements ActionListener
 	
 	public void clientesSendoAtendidos(int colunas) 
 	{
-		// Checa caixas
+		// Verifica caixas
 		for(int i = 0; i < 2; i++) 
 		{
 			if((tCaixa[i].isAlive())) 
@@ -702,7 +700,7 @@ public class Salao extends JFrame implements ActionListener
 			}
 		}
 		
-		// Checa cabeleireiras
+		// Verifica cabeleireiras
 		for(int i = 0; i < 5; i++) 
 		{
 			if((tCabeleireira[i].isAlive())) 
@@ -711,7 +709,7 @@ public class Salao extends JFrame implements ActionListener
 			}
 		}
 		
-		// Checa manicures
+		// Verifica manicures
 		for(int i = 0; i < 3; i++) 
 		{
 			if((tManicure[i].isAlive())) 
@@ -720,7 +718,7 @@ public class Salao extends JFrame implements ActionListener
 			}
 		}
 		
-		// Checa depiladoras
+		// Verifica depiladoras
 		for(int i = 0; i < 2; i++) 
 		{
 			if((tDepiladora[i].isAlive())) 
@@ -729,43 +727,52 @@ public class Salao extends JFrame implements ActionListener
 			}
 		}
 		
-		// Checa massagista 
+		// Verifica massagista 
 		if((tMassagista.isAlive())) 
 		{
 			adicionaFuncEmColuna(tMassagista.getName() + ": Atendendo cliente " + massagista.getCliente().getIdCliente(), colunas);
 		}
 	}
 	
-	//Método que cria uma instancia de cliente, gera os serviços que o cliente quer e retorna essa instancia para
-	// o método executar()
+	// Método que cria uma instancia de cliente,
+	// gera os serviços que o cliente quer e retorna
+	// essa instancia para o método executar()
 	public Cliente criaCliente()
 	{
-		idCliente++; 												//Incrementa o identificador do cliente
+		// Incrementa o identificador do cliente
+		idCliente++;
 		boolean flag = false; 
 		Servico servico;
 		Cliente cliente = new Cliente(idCliente);
-		ArrayList<Integer> inserido = new ArrayList<Integer>(); 	// evita a repetição de tipos de serviços
-		//int quantServicos = gerador.nextInt(6)+1;
+		
+		// Evita a repetição de tipos de serviços
+		ArrayList<Integer> inserido = new ArrayList<Integer>(); 	
+		
 		int quantServicos = 0;
 		int porcentagemQtd = gerador.nextInt(100)+1;
 		
-		if(porcentagemQtd >= 1 && porcentagemQtd <= 30)					// 30% dos clientes desejam todos os serviços
+		// 30% dos clientes desejam todos os serviços
+		if(porcentagemQtd >= 1 && porcentagemQtd <= 30)					
 		{
 			quantServicos = 5;
 		}
-		else if(porcentagemQtd >= 31 && porcentagemQtd <= 65) 			//35% desejam 4
+		//35% dos clientes desejam desejam 4 serviços
+		else if(porcentagemQtd >= 31 && porcentagemQtd <= 65) 			
 		{
 			quantServicos = 4;
 		}
-		else if(porcentagemQtd >= 66 && porcentagemQtd <= 85)  			// 20% desejam 3
+		// 20% dos clientes desejam desejam 3 serviços
+		else if(porcentagemQtd >= 66 && porcentagemQtd <= 85)  			
 		{
 			quantServicos = 3;
 		}
-		else if(porcentagemQtd >= 86 && porcentagemQtd <= 95) 			 // 10% apenas 2
+		// 10% dos clientes desejam apenas 2 serviços
+		else if(porcentagemQtd >= 86 && porcentagemQtd <= 95) 			 
 		{
 			quantServicos = 2;
 		}
-		else if(porcentagemQtd >= 96 && porcentagemQtd <= 100)  			// 5% apenas 1
+		// 5% dos clientes desejam apenas 1 serviço
+		else if(porcentagemQtd >= 96 && porcentagemQtd <= 100)  			
 		{
 			quantServicos = 1;
 		}
@@ -778,23 +785,28 @@ public class Salao extends JFrame implements ActionListener
 			int tipoServico = 0;
 			int porcentagemTipo = gerador.nextInt(100)+1;
 			
-			if(porcentagemTipo >= 1 && porcentagemTipo <= 50)			// 50% para corte
+			// 50% para corte
+			if(porcentagemTipo >= 1 && porcentagemTipo <= 50)			
 			{
 				tipoServico = 1;
 			}
-			else if(porcentagemTipo >= 51 && porcentagemTipo <= 90) 	// 40% para penteado
+			// 40% para penteado
+			else if(porcentagemTipo >= 51 && porcentagemTipo <= 90) 	
 			{
 				tipoServico = 2;
 			}
-			else if(porcentagemTipo >= 91 && porcentagemTipo <= 120)  	// 30% para pedicure
+			// 30% para pedicure
+			else if(porcentagemTipo >= 91 && porcentagemTipo <= 120)  	
 			{
 				tipoServico = 3;
 			}
-			else if(porcentagemTipo >= 121 && porcentagemTipo <= 140) 	// 20% para depilação
+			// 20% para depilação
+			else if(porcentagemTipo >= 121 && porcentagemTipo <= 140) 	
 			{
 				tipoServico = 4;
 			}
-			else if(porcentagemTipo >= 141 && porcentagemTipo <= 155)  	// 15% para massagem
+			// 15% para massagem
+			else if(porcentagemTipo >= 141 && porcentagemTipo <= 155)  	
 			{
 				tipoServico = 5;
 			}
@@ -803,14 +815,13 @@ public class Salao extends JFrame implements ActionListener
 			{
 				// Enquanto for serviço repetido, gera outro 
 				// (Na realidade, se gerar um igual ele incrementa o valor e testa novamente)
-				// Fiz assim pra simplificar
+				// Implementamos assim pra simplificar
 				while(flag == false)
 				{
 					for(int num : inserido)
 					{
 						if(num == tipoServico)
 						{	
-							//tipoServico = gerador.nextInt(5)+1;
 							if(tipoServico < 5)
 							{
 								tipoServico++;
@@ -868,10 +879,10 @@ public class Salao extends JFrame implements ActionListener
 		return cliente;
 	}
 	
-	public static void main (String args[]) throws InterruptedException{
+	public static void main (String args[]) throws InterruptedException
+	{
         
 		Salao salao = new Salao();
-		
 		salao.executar();            	
 	}
 }

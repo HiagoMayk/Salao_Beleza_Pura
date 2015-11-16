@@ -30,7 +30,7 @@ public class Manicure extends Funcionario
 		{
 			 Thread.currentThread().interrupt();
 		}
-		//getCliente().getServico(); // gasta serviço
+
 		insere();
 		
 	}

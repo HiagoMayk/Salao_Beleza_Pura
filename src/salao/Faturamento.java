@@ -3,7 +3,7 @@ package salao;
 public class Faturamento 
 {
 	private int qtdServicos = 0;
-	private float totalDinheiro = 0; // já atribui com o desconto de 40%
+	private float totalDinheiro = 0;
 	
 	public Faturamento()
 	{

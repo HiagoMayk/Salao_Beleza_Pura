@@ -1,7 +1,6 @@
 ﻿package salao;
 import java.util.ArrayList;
 
-
 public class Massagista extends Funcionario
 {
 	int tempo;
@@ -29,8 +28,7 @@ public class Massagista extends Funcionario
 		{
 			 Thread.currentThread().interrupt();
 		}
-		
-		//getCliente().getServico(); // gasta serviço
+
 		insere();
 	}
 }
