@@ -2,6 +2,7 @@ package salao;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.Semaphore;
 
 public class GeradorClientes implements Runnable
 {
@@ -11,13 +12,15 @@ public class GeradorClientes implements Runnable
 	private Random gerador;
 	
 	private ArrayList<Cliente> fila1;
+	Semaphore semFilas;
 	
-	public GeradorClientes(ArrayList<Cliente> fila)
+	public GeradorClientes(ArrayList<Cliente> fila, Semaphore semFilas)
 	{
 		this.fila1 = fila;
 		idCliente = 0;
 		qtdClientesAtendidos = 0;
 		gerador = new Random();
+		this.semFilas = semFilas;
 	}
 	
 	public void run()
@@ -61,7 +64,7 @@ public class GeradorClientes implements Runnable
 				}
 			}
 			
-			//método sincronizado
+			// Acessa a RC
 			adicionaNaFila1(cliente);
 				
 			try
@@ -76,10 +79,23 @@ public class GeradorClientes implements Runnable
 		}
 	}
 
-	//Insere na fila 1, que é a fila dos clientes que acabaram de chegar no salão
-	public synchronized void adicionaNaFila1(Cliente cliente)
+	// Acesso a RC
+	public void adicionaNaFila1(Cliente cliente)
 	{
-		fila1.add(cliente);
+		 try 
+		 {
+		     semFilas.acquire();
+		        
+		     fila1.add(cliente);
+		 } 
+		 catch (InterruptedException e) 
+		 {
+		     e.printStackTrace();
+		 } 
+		 finally 
+		 {
+		     semFilas.release();
+		 }
 	}
 	
 	//Método que cria uma instancia de cliente, gera os serviços que o cliente quer e retorna essa instancia para

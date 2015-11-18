@@ -1,6 +1,6 @@
 ﻿package salao;
 import java.util.ArrayList;
-
+import java.util.concurrent.Semaphore;
 
 public class Manicure extends Funcionario
 {
@@ -10,14 +10,21 @@ public class Manicure extends Funcionario
 	ArrayList<Cliente> array;
 	int proxFila;
 	
+	private Semaphore semFilas;
+	private Semaphore semCaixas;
+
 	int tempo;
-	public Manicure(FilasClientes filas, ArrayList<Cliente> filaCaixas)
+	public Manicure(FilasClientes filas, ArrayList<Cliente> filaCaixas,
+						Semaphore semFilas, Semaphore semCaixas)
 	{
 		this.filas = new FilasClientes(null);
 		this.filas = filas;
 		
 		this.filaCaixas = new ArrayList<Cliente>();
 		this.filaCaixas = filaCaixas;
+		
+		this.semFilas = semFilas;
+		this.semCaixas = semCaixas;
 		
 		financeira = new Financeira();
 		proxFila = 0;
@@ -28,6 +35,7 @@ public class Manicure extends Funcionario
 			Cliente  c = new Cliente(0);
 			while(true)
 			{
+				// Acesso a RC
 				c = pegaCliente();
 				
 				if(c != null)
@@ -43,9 +51,11 @@ public class Manicure extends Funcionario
 						 Thread.currentThread().interrupt();
 					}
 					
+					// Acesso a RC
 					insere(c);
 				}
 				
+				// Espera um tempo pra tentar pegar cliente novamente
 				try
 				{	
 					Thread.sleep(2000);
@@ -54,61 +64,93 @@ public class Manicure extends Funcionario
 				{
 					 Thread.currentThread().interrupt();
 				}
+
 			}	
 	}
 	
-	public synchronized void insere(Cliente c)
+	// Acesso a RC
+	public void insere(Cliente c)
 	{
-		if(proxFila < 6)
-		{
-			c.getServico();
-			if(c.verServico() == "")
-			{
+		 try 
+		 {     
+			 c.getServico();
+			 if(proxFila >= 1 && proxFila <= 5 && c.getQtdServicos() == 0)
+			 {
+		    	semCaixas.acquire();
+		    	
 				filaCaixas.add(c);
+				
+				semCaixas.release();
 			}
-			else
+			else if(proxFila >= 1 && proxFila <= 5 && c.getQtdServicos() != 0)
 			{
+				semFilas.acquire();
+				
 				filas.setFilaCliente(proxFila, c);
-			}			
-		}
-		else
-		{
-			c.getServico();
-			filaCaixas.add(c);
-		}
-		
-		proxFila = 0;
+				
+				semFilas.release();
+			}
+			else if(proxFila == 6)
+			{
+				semCaixas.acquire();
+					
+				filaCaixas.add(c);
+					
+				semCaixas.release();
+			}
+				
+			proxFila = 0;
+		 } 
+		 catch (InterruptedException e) 
+		 {
+		     e.printStackTrace();
+		 }
 	}
 	
-	public synchronized Cliente pegaCliente()
+	// Acesso a RC
+	public Cliente pegaCliente()
 	{
-		// A prioridade das filas segue da seguinte forma do maior para o menor
-		// Mais alta: 5, 4, 3, 2, 1 :Mais baixa 
-		for(int fila = 5; fila >= 1; fila--)
-		{
-			if(!(filas.getFila(fila).isEmpty()))
+		 try 
+		 {
+		     semFilas.acquire();
+		        
+		     // A prioridade das filas segue da seguinte forma do maior para o menor
+			 // Mais alta: 5, 4, 3, 2, 1 :Mais baixa 
+			 for(int fila = 5; fila >= 1; fila--)
 			{
-				for(Cliente c: filas.getFila(fila))
+				if(!(filas.getFila(fila).isEmpty()))
 				{
-					if(c.verServico().contains("Pedicure"))
-					{	
-						filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
-						
-						if(fila < 5)
-						{
-							proxFila = fila+1;
+					for(Cliente c: filas.getFila(fila))
+					{
+						if(c.verServico().contains("Pedicure"))
+						{	
+							filas.removeClienteIndex(fila, filas.getFila(fila).indexOf(c));
+							semFilas.release();
+							
+							if(fila < 5)
+							{
+								proxFila = fila+1;
+							}
+							else
+							{
+								proxFila = 6;
+							}
+							
+							
+							return c;
 						}
-						else
-						{
-							proxFila = 6;
-						}
-						
-						return c;
 					}
-				}
-			}				
-		}
-		
+				}				
+			}
+		 } 
+		 catch (InterruptedException e) 
+		 {
+		     e.printStackTrace();
+		 } 
+	
+		 semFilas.release();
+
+		 proxFila = 0;
 		return null;
 	}
 }

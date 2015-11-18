@@ -17,6 +17,8 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import java.util.concurrent.Semaphore;  
+
 public class Salao implements Runnable
 {
 	private FilasClientes filas;
@@ -24,8 +26,12 @@ public class Salao implements Runnable
 	
 	private static Financeira financeira;
 	
-	// usa o array lista para a fila 1
-	public Salao(FilasClientes filas, ArrayList<Cliente> filaCaixas)
+	Semaphore semFilas;
+	Semaphore semCaixas;
+	
+	// Usa o array lista para a fila 1
+	public Salao(FilasClientes filas, ArrayList<Cliente> filaCaixas,
+				 Semaphore semFilas, Semaphore semCaixas)
 	{
 		this.filas = new FilasClientes(null);
 		this.filas = filas;
@@ -34,13 +40,17 @@ public class Salao implements Runnable
 		this.filaCaixas = filaCaixas;
 		
 		financeira = new Financeira();
-	
+		
+		this.semFilas = semFilas;
+		this.semCaixas = semCaixas;
+		
 	}
 	
 	public void run()
 	{
 		while(true)
-		{
+		{	
+			// Acesso a RC -- Colocar ou não?
 			imprime();
 		
 			try
@@ -54,11 +64,11 @@ public class Salao implements Runnable
 		}
 	}
 	
-	public synchronized void imprime()
+	public void imprime()
 	{
 		System.out.println();
 		System.out.println("===========================================");
-		
+		/*
 		for(int fila = 5; fila >= 1; fila--)
 		{
 			System.out.println(filas.getFila(fila).size() + " Clientes na fila " + fila);
@@ -79,6 +89,7 @@ public class Salao implements Runnable
 		System.out.println("--");
 			
 		System.out.println("-------------------------------------------");
+		*/
 		/*
 		System.out.println("Resumo:");
 		for(int i = 0; i < 5; i++)
@@ -115,6 +126,7 @@ public class Salao implements Runnable
 		*/
 		//System.out.println("--");
 		//System.out.println("-------------------------------------------");
-	}
 
+	}
+	
 }
