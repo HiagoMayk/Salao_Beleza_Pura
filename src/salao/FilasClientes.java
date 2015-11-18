@@ -9,9 +9,12 @@ public class FilasClientes
 	ArrayList<Cliente> filaClientes4;
 	ArrayList<Cliente> filaClientes5;
 	
-	public FilasClientes()
+	public FilasClientes(ArrayList<Cliente> fila1)
 	{
 		filaClientes1 = new ArrayList<Cliente>();
+		
+		// Fila também usada na classe que cria os clientes
+		filaClientes1 = fila1;
 		filaClientes2 = new ArrayList<Cliente>();
 		filaClientes3 = new ArrayList<Cliente>();
 		filaClientes4 = new ArrayList<Cliente>();

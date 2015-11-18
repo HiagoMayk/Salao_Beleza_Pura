@@ -17,14 +17,14 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-public class Salao extends JFrame implements ActionListener
+public class Salao extends JFrame implements ActionListener, Runnable
 {
 	private static final long serialVersionUID = 1L;
 
-	private static int idCliente;      // Identificador do cliente e também serve para contar
-	private static int qtdClientesAtendidos;		            // quantos clientes foram atendidos até um determina momento
+	//private static int idCliente;      // Identificador do cliente e também serve para contar
+	//private static int qtdClientesAtendidos;	// quantos clientes foram atendidos até um determina momento
 	
-	private Random gerador; 	// Gera o que for de eleatório do sistema
+	//private Random gerador; 	// Gera o que for de eleatório do sistema
 
 	private FilasClientes filas;
 	ArrayList<Cliente> filaCaixas;
@@ -68,22 +68,19 @@ public class Salao extends JFrame implements ActionListener
 	{
 		this.filas = filas;
 	}
-
-	public Salao()
+	
+	// usa o array lista para a fila 1 
+	public Salao(ArrayList<Cliente> fila1) 
 	{
 		queueLists = new ArrayList<JList<String>>();
 		listModels = new ArrayList<DefaultListModel<String>>();
 		logButton = new JButton("Gerar resumo");
-			
-		idCliente = 0;
-		qtdClientesAtendidos = 0;
 		
-		filas = new FilasClientes();
+		filas = new FilasClientes(fila1);
+		
 		filaCaixas = new ArrayList<Cliente>();
 		
 		financeira = new Financeira();
-		
-		gerador = new Random();
 		
 		cabeleireira = new Cabeleireira[5];
 		manicure = new Manicure[3];
@@ -128,7 +125,7 @@ public class Salao extends JFrame implements ActionListener
 		}
 		
 		tMassagista = new Thread(gMassagistas, massagista, "Massagista1");
-		
+		/*
 		// Screen
 		
 		// Cria filas de servicos
@@ -209,9 +206,9 @@ public class Salao extends JFrame implements ActionListener
         
         logButton.addActionListener(this);
         add(logButton);
-		
+		*/
 	}
-	
+	/*
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		createLogFrame();
@@ -268,7 +265,7 @@ public class Salao extends JFrame implements ActionListener
     			
     			listModel.addElement("Atendimentos a serem computados: " + (financeira.getTotalAtendimentoFunc() - financeira.getTotalAtendimento()));
     			listModel.addElement("Dinheiro a ser recebido no caixa: R$ " + format((financeira.getValorTotalfuncionarios() - financeira.getTotalDinheiroSalao())));    			
-    			listModel.addElement("Clientes que faltam ir ao caixa: " + (idCliente - qtdClientesAtendidos));
+    			//listModel.addElement("Clientes que faltam ir ao caixa: " + (idCliente - qtdClientesAtendidos));
             }
         });
     }
@@ -308,7 +305,8 @@ public class Salao extends JFrame implements ActionListener
 	{
 		listModels.get(i).addElement(s);
 	}
-	
+	*/
+	/*
 	public ArrayList<Integer> geraTempoServicos(int quantidade)
 	{
 		int tempos[] = new int[quantidade];
@@ -342,17 +340,20 @@ public class Salao extends JFrame implements ActionListener
 		
 		return t;
 	}
+	*/
 	
-	public void executar() throws InterruptedException
+	public void run()
 	{
 		//Cliente cliente;
-		ArrayList<Integer> t = new ArrayList<Integer>();
+		//ArrayList<Integer> t = new ArrayList<Integer>();
 		while(true)
 		{
 			int colunas = 0;
-			Cliente cliente = criaCliente();
-			t = geraTempoServicos(cliente.getQtdServicos());
 			
+			//Cliente cliente = criaCliente();
+			
+			//t = geraTempoServicos(cliente.getQtdServicos());
+			/*
 			// Atribui o tempo aos serviços da forma especificada na descrição do projeto
 			// Obs: getServico() da classe serviço não gasta um serviço
 			for(Servico c: cliente.getServicosSolicitados())
@@ -383,93 +384,99 @@ public class Salao extends JFrame implements ActionListener
 					t.remove(0);
 				}
 			}
-	
+			*/
 			//Insere na fila 1, que é a fila dos clientes que acabaram de chegar no salão
-			filas.setFilaCliente(1, cliente);
+			//filas.setFilaCliente(1, cliente);
 			
-			System.out.println();
-			System.out.println("===========================================");
+			colunas = imprime(colunas);
 			
-			for(int fila = 5; fila >= 1; fila--, colunas++)
-			{
-				System.out.println(filas.getFila(fila).size() + " Clientes na fila " + fila);
-				
-				atualizaFilaServico(filas.getFila(fila), fila-1);
-				
-				for(Cliente c: filas.getFila(fila))
-				{	
-					System.out.println("cliente" + c.getIdCliente() + " - " + c.verServico() + " - " + c.getQtdServicos());
-				}
-				System.out.println("--");
-			}
-			
-			colunas++;
-			atualizaFilaCaixa(filaCaixas, colunas-1);
-			System.out.println(filaCaixas.size() + " Clientes na fila do Caixa");
-			for(Cliente c: filaCaixas)
-			{	
-					System.out.println("cliente" + c.getIdCliente());
-			}
-			
-			System.out.println("--");
-				
-			System.out.println("-------------------------------------------");
-			
-			System.out.println("Resumo:");
-			for(int i = 0; i < 5; i++)
-			{
-				System.out.println("Caleleireira" + (i+1) + " : " + (financeira.getFatCabelereira(i).getTotalDinheiro()*0.4));
-			}
-			
-			for(int i = 0; i < 3; i++)
-			{
-				System.out.println("Manicure" + (i+1) + " : " + (financeira.getFatManicure(i).getTotalDinheiro()*0.4));
-			}
-			
-			for(int i = 0; i < 2; i++)
-			{
-				System.out.println("Depiladora" + (i+1) + ": " + (financeira.getFatDepiladora(i).getTotalDinheiro()*0.4));
-			}
-			
-			System.out.println("Massagista: " + (financeira.getFatMassagista().getTotalDinheiro()*0.4));
-			
-			System.out.println("Total de atendimentos: " + financeira.getTotalAtendimentoFunc());
-			System.out.printf("Valor total: R$ %.2f", financeira.getValorTotalfuncionarios());
-			System.out.println();
-			
-			System.out.println("Total de atendimentos computados no caixa: " + financeira.getTotalAtendimento());
-			System.out.printf("Total de dinheiro recebido no caixa: R$ %.2f", financeira.getTotalDinheiroSalao());
-			System.out.println();
-			
-			System.out.println("Atendimentos a serem computados: " + (financeira.getTotalAtendimentoFunc() - financeira.getTotalAtendimento()));
-			System.out.printf("Dinheiro a ser recebido no caixa: R$ %.2f", (financeira.getValorTotalfuncionarios() - financeira.getTotalDinheiroSalao()));
-			System.out.println();
-			
-			System.out.println("Clientes que faltam ir ao caixa: " + (idCliente - qtdClientesAtendidos));
-			System.out.println();
-			
-			System.out.println("--");
-			System.out.println("-------------------------------------------");
-			
-			atualizaColunaFunc(colunas);
-			clientesSendoAtendidos(colunas);
+			//atualizaColunaFunc(colunas);
+			//clientesSendoAtendidos(colunas);
 			String s = atendeCliente();			
+			/*
 			do {
 				System.out.println(s);
 				adicionaFuncEmColuna(s, colunas);
 				s = atendeCliente();
 			} while(s != "");
-			
+			*/
 			try
 			{	
-				// Tempo de geração de clientes: 1 ~ 5 segundos
-				Thread.sleep(1000*(gerador.nextInt(5)+1));
+				Thread.sleep(5000);
 			}
 			catch(InterruptedException ex) 
 			{
 				 Thread.currentThread().interrupt();
 			}
 		}
+	}
+	
+	public synchronized int imprime(int colunas)
+	{
+		System.out.println();
+		System.out.println("===========================================");
+		
+		for(int fila = 5; fila >= 1; fila--, colunas++)
+		{
+			System.out.println(filas.getFila(fila).size() + " Clientes na fila " + fila);
+			
+			//atualizaFilaServico(filas.getFila(fila), fila-1);
+			
+			for(Cliente c: filas.getFila(fila))
+			{	
+				System.out.println("cliente" + c.getIdCliente() + " - " + c.verServico() + " - " + c.getQtdServicos());
+			}
+			System.out.println("--");
+		}
+		
+		colunas++;
+		//atualizaFilaCaixa(filaCaixas, colunas-1);
+		System.out.println(filaCaixas.size() + " Clientes na fila do Caixa");
+		for(Cliente c: filaCaixas)
+		{	
+				System.out.println("cliente" + c.getIdCliente());
+		}
+		
+		System.out.println("--");
+			
+		System.out.println("-------------------------------------------");
+		
+		System.out.println("Resumo:");
+		for(int i = 0; i < 5; i++)
+		{
+			System.out.println("Caleleireira" + (i+1) + " : " + (financeira.getFatCabelereira(i).getTotalDinheiro()*0.4));
+		}
+		
+		for(int i = 0; i < 3; i++)
+		{
+			System.out.println("Manicure" + (i+1) + " : " + (financeira.getFatManicure(i).getTotalDinheiro()*0.4));
+		}
+		
+		for(int i = 0; i < 2; i++)
+		{
+			System.out.println("Depiladora" + (i+1) + ": " + (financeira.getFatDepiladora(i).getTotalDinheiro()*0.4));
+		}
+		
+		System.out.println("Massagista: " + (financeira.getFatMassagista().getTotalDinheiro()*0.4));
+		
+		System.out.println("Total de atendimentos: " + financeira.getTotalAtendimentoFunc());
+		System.out.printf("Valor total: R$ %.2f", financeira.getValorTotalfuncionarios());
+		System.out.println();
+		
+		System.out.println("Total de atendimentos computados no caixa: " + financeira.getTotalAtendimento());
+		System.out.printf("Total de dinheiro recebido no caixa: R$ %.2f", financeira.getTotalDinheiroSalao());
+		System.out.println();
+		
+		System.out.println("Atendimentos a serem computados: " + (financeira.getTotalAtendimentoFunc() - financeira.getTotalAtendimento()));
+		System.out.printf("Dinheiro a ser recebido no caixa: R$ %.2f", (financeira.getValorTotalfuncionarios() - financeira.getTotalDinheiroSalao()));
+		System.out.println();
+		
+		//System.out.println("Clientes que faltam ir ao caixa: " + (idCliente - qtdClientesAtendidos));
+		System.out.println();
+		
+		System.out.println("--");
+		System.out.println("-------------------------------------------");
+		return colunas;
 	}
 	
    /* 
@@ -480,8 +487,7 @@ public class Salao extends JFrame implements ActionListener
 	* filaClientes4 é de um cliente que já foi atendido 3 vezes e ainda tem pedido
 	* filaClientes5 é de um cliente que já foi atendido 4 vezes e ainda tem pedido
 	* */
-
-	public String atendeCliente()
+	public synchronized String atendeCliente()
 	{
 		// Caixas
 		if(!(filaCaixas.isEmpty()))
@@ -555,7 +561,7 @@ public class Salao extends JFrame implements ActionListener
 						}
 					
 						filaCaixas.remove(c);
-						qtdClientesAtendidos++;
+						//qtdClientesAtendidos++;
 						caixa[i] = new Caixa(null, c);
 						tCaixa[i] = new Thread(gCaixas, caixa[i], "Caixa" + (i+1));
 						tCaixa[i].start();
@@ -746,7 +752,7 @@ public class Salao extends JFrame implements ActionListener
 		
 		return "";
 	}
-	
+	/*
 	public void clientesSendoAtendidos(int colunas) 
 	{
 		// Checa caixas
@@ -791,143 +797,17 @@ public class Salao extends JFrame implements ActionListener
 			adicionaFuncEmColuna(tMassagista.getName() + ": Atendendo cliente " + massagista.getCliente().getIdCliente(), colunas);
 		}
 	}
-	
-	//Método que cria uma instancia de cliente, gera os serviços que o cliente quer e retorna essa instancia para
-	// o método executar()
-	public Cliente criaCliente()
-	{
-		idCliente++; 												//Incrementa o identificador do cliente
-		boolean flag = false; 
-		Servico servico;
-		Cliente cliente = new Cliente(idCliente);
-		ArrayList<Integer> inserido = new ArrayList<Integer>(); 	// evita a repetição de tipos de serviços
-		//int quantServicos = gerador.nextInt(6)+1;
-		int quantServicos = 0;
-		int porcentagemQtd = gerador.nextInt(100)+1;
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 		
-		if(porcentagemQtd >= 1 && porcentagemQtd <= 30)					// 30% dos clientes desejam todos os serviços
-		{
-			quantServicos = 5;
-		}
-		else if(porcentagemQtd >= 31 && porcentagemQtd <= 65) 			//35% desejam 4
-		{
-			quantServicos = 4;
-		}
-		else if(porcentagemQtd >= 66 && porcentagemQtd <= 85)  			// 20% desejam 3
-		{
-			quantServicos = 3;
-		}
-		else if(porcentagemQtd >= 86 && porcentagemQtd <= 95) 			 // 10% apenas 2
-		{
-			quantServicos = 2;
-		}
-		else if(porcentagemQtd >= 96 && porcentagemQtd <= 100)  			// 5% apenas 1
-		{
-			quantServicos = 1;
-		}
-		
-		// Faz a inserção da escolha dos clientes inserindo por ordem de escolha
-		// Não deixa escolher mais de uma vez um mesmo serviço
-		for(int i = 0; i < quantServicos; i++)
-		{
-			// Vamos assumir que o maximo aqui é 155%
-			int tipoServico = 0;
-			int porcentagemTipo = gerador.nextInt(100)+1;
-			
-			if(porcentagemTipo >= 1 && porcentagemTipo <= 50)			// 50% para corte
-			{
-				tipoServico = 1;
-			}
-			else if(porcentagemTipo >= 51 && porcentagemTipo <= 90) 	// 40% para penteado
-			{
-				tipoServico = 2;
-			}
-			else if(porcentagemTipo >= 91 && porcentagemTipo <= 120)  	// 30% para pedicure
-			{
-				tipoServico = 3;
-			}
-			else if(porcentagemTipo >= 121 && porcentagemTipo <= 140) 	// 20% para depilação
-			{
-				tipoServico = 4;
-			}
-			else if(porcentagemTipo >= 141 && porcentagemTipo <= 155)  	// 15% para massagem
-			{
-				tipoServico = 5;
-			}
-			
-			if(inserido.isEmpty() == false)
-			{
-				// Enquanto for serviço repetido, gera outro 
-				// (Na realidade, se gerar um igual ele incrementa o valor e testa novamente)
-				// Fiz assim pra simplificar
-				while(flag == false)
-				{
-					for(int num : inserido)
-					{
-						if(num == tipoServico)
-						{	
-							//tipoServico = gerador.nextInt(5)+1;
-							if(tipoServico < 5)
-							{
-								tipoServico++;
-							}
-							else
-							{
-								tipoServico = 1;
-							}
-							
-							flag = true;
-							break;
-						}
-					}
-					
-					if(flag == true)
-					{
-						flag = false;
-					}
-					else
-					{
-						flag = true;
-					}
-				}
-			}
-				
-			flag = false;
-			inserido.add(tipoServico);
-			switch(tipoServico)
-			{
-				case 1:
-					servico = new Servico("Corte");
-					cliente.setServico(servico);
-					break;
-				case 2:
-					servico = new Servico("Penteado");
-					cliente.setServico(servico);
-					break;
-				case 3:
-					servico = new Servico("Pedicure");
-					cliente.setServico(servico);
-					break;
-				case 4:
-					servico = new Servico("Depilação");
-					cliente.setServico(servico);
-					break;
-				case 5:
-					servico = new Servico("Massagem");
-					cliente.setServico(servico);
-					break;
-				default:
-					System.out.println("Opção não existe!!!");
-			}
-		}
-		
-		return cliente;
 	}
-	
-	public static void main (String args[]) throws InterruptedException{
-        
-		Salao salao = new Salao();
+	*/
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 		
-		salao.executar();            	
 	}
 }
