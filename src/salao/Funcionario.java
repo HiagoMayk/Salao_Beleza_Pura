@@ -9,12 +9,10 @@ public abstract class Funcionario implements Runnable
 	// Representa a próxima fila que o cliente será inserido
 	private ArrayList<Cliente> array;
 	
-	public Funcionario(ArrayList<Cliente> array, Cliente c)
+	public Funcionario()
 	{
 		this.cliente = new Cliente(0);
 		this.array = new ArrayList<>();
-		this.cliente = c;
-		this.array = array;
 	}
 	
 	public Cliente getCliente()

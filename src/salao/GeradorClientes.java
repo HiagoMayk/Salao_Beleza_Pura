@@ -73,14 +73,6 @@ public class GeradorClientes implements Runnable
 			{
 				 Thread.currentThread().interrupt();
 			}
-			
-			/*
-			for(Cliente c: fila1)
-			{
-				System.out.println("Cliente" + c.getIdCliente());
-			}
-			*/
-			
 		}
 	}
 
@@ -92,135 +84,135 @@ public class GeradorClientes implements Runnable
 	
 	//Método que cria uma instancia de cliente, gera os serviços que o cliente quer e retorna essa instancia para
 		// o método executar()
-		public Cliente criaCliente()
+	public Cliente criaCliente()
+	{
+		idCliente++; 												//Incrementa o identificador do cliente
+		boolean flag = false; 
+		Servico servico;
+		Cliente cliente = new Cliente(idCliente);
+		ArrayList<Integer> inserido = new ArrayList<Integer>(); 	// evita a repetição de tipos de serviços
+		//int quantServicos = gerador.nextInt(6)+1;
+		int quantServicos = 0;
+		int porcentagemQtd = gerador.nextInt(100)+1;
+			
+		if(porcentagemQtd >= 1 && porcentagemQtd <= 30)					// 30% dos clientes desejam todos os serviços
 		{
-			idCliente++; 												//Incrementa o identificador do cliente
-			boolean flag = false; 
-			Servico servico;
-			Cliente cliente = new Cliente(idCliente);
-			ArrayList<Integer> inserido = new ArrayList<Integer>(); 	// evita a repetição de tipos de serviços
-			//int quantServicos = gerador.nextInt(6)+1;
-			int quantServicos = 0;
-			int porcentagemQtd = gerador.nextInt(100)+1;
+			quantServicos = 5;
+		}
+		else if(porcentagemQtd >= 31 && porcentagemQtd <= 65) 			//35% desejam 4
+		{
+			quantServicos = 4;
+		}
+		else if(porcentagemQtd >= 66 && porcentagemQtd <= 85)  			// 20% desejam 3
+		{
+			quantServicos = 3;
+		}
+		else if(porcentagemQtd >= 86 && porcentagemQtd <= 95) 			 // 10% apenas 2
+		{
+			quantServicos = 2;
+		}
+		else if(porcentagemQtd >= 96 && porcentagemQtd <= 100)  			// 5% apenas 1
+		{
+			quantServicos = 1;
+		}
 			
-			if(porcentagemQtd >= 1 && porcentagemQtd <= 30)					// 30% dos clientes desejam todos os serviços
-			{
-				quantServicos = 5;
-			}
-			else if(porcentagemQtd >= 31 && porcentagemQtd <= 65) 			//35% desejam 4
-			{
-				quantServicos = 4;
-			}
-			else if(porcentagemQtd >= 66 && porcentagemQtd <= 85)  			// 20% desejam 3
-			{
-				quantServicos = 3;
-			}
-			else if(porcentagemQtd >= 86 && porcentagemQtd <= 95) 			 // 10% apenas 2
-			{
-				quantServicos = 2;
-			}
-			else if(porcentagemQtd >= 96 && porcentagemQtd <= 100)  			// 5% apenas 1
-			{
-				quantServicos = 1;
-			}
+		// Faz a inserção da escolha dos clientes inserindo por ordem de escolha
+		// Não deixa escolher mais de uma vez um mesmo serviço
+		for(int i = 0; i < quantServicos; i++)
+		{
+			// Vamos assumir que o maximo aqui é 155%
+			int tipoServico = 0;
+			int porcentagemTipo = gerador.nextInt(100)+1;
 			
-			// Faz a inserção da escolha dos clientes inserindo por ordem de escolha
-			// Não deixa escolher mais de uma vez um mesmo serviço
-			for(int i = 0; i < quantServicos; i++)
+		if(porcentagemTipo >= 1 && porcentagemTipo <= 50)			// 50% para corte
+		{
+			tipoServico = 1;
+		}
+		else if(porcentagemTipo >= 51 && porcentagemTipo <= 90) 	// 40% para penteado
+		{
+			tipoServico = 2;
+		}
+			else if(porcentagemTipo >= 91 && porcentagemTipo <= 120)  	// 30% para pedicure
+		{
+			tipoServico = 3;
+		}
+		else if(porcentagemTipo >= 121 && porcentagemTipo <= 140) 	// 20% para depilação
+		{
+			tipoServico = 4;
+		}
+		else if(porcentagemTipo >= 141 && porcentagemTipo <= 155)  	// 15% para massagem
+		{
+			tipoServico = 5;
+		}
+				
+		if(inserido.isEmpty() == false)
+		{
+			// Enquanto for serviço repetido, gera outro 
+			// (Na realidade, se gerar um igual ele incrementa o valor e testa novamente)
+			// Fiz assim pra simplificar
+			while(flag == false)
 			{
-				// Vamos assumir que o maximo aqui é 155%
-				int tipoServico = 0;
-				int porcentagemTipo = gerador.nextInt(100)+1;
-				
-				if(porcentagemTipo >= 1 && porcentagemTipo <= 50)			// 50% para corte
+				for(int num : inserido)
 				{
-					tipoServico = 1;
-				}
-				else if(porcentagemTipo >= 51 && porcentagemTipo <= 90) 	// 40% para penteado
-				{
-					tipoServico = 2;
-				}
-				else if(porcentagemTipo >= 91 && porcentagemTipo <= 120)  	// 30% para pedicure
-				{
-					tipoServico = 3;
-				}
-				else if(porcentagemTipo >= 121 && porcentagemTipo <= 140) 	// 20% para depilação
-				{
-					tipoServico = 4;
-				}
-				else if(porcentagemTipo >= 141 && porcentagemTipo <= 155)  	// 15% para massagem
-				{
-					tipoServico = 5;
-				}
-				
-				if(inserido.isEmpty() == false)
-				{
-					// Enquanto for serviço repetido, gera outro 
-					// (Na realidade, se gerar um igual ele incrementa o valor e testa novamente)
-					// Fiz assim pra simplificar
-					while(flag == false)
-					{
-						for(int num : inserido)
+					if(num == tipoServico)
+					{	
+						//tipoServico = gerador.nextInt(5)+1;
+						if(tipoServico < 5)
 						{
-							if(num == tipoServico)
-							{	
-								//tipoServico = gerador.nextInt(5)+1;
-								if(tipoServico < 5)
-								{
-									tipoServico++;
-								}
-								else
-								{
-									tipoServico = 1;
-								}
-								
-								flag = true;
-								break;
-							}
-						}
-						
-						if(flag == true)
-						{
-							flag = false;
+							tipoServico++;
 						}
 						else
 						{
-							flag = true;
+							tipoServico = 1;
 						}
+								
+						flag = true;
+						break;
 					}
 				}
-					
-				flag = false;
-				inserido.add(tipoServico);
-				switch(tipoServico)
+						
+				if(flag == true)
 				{
-					case 1:
-						servico = new Servico("Corte");
-						cliente.setServico(servico);
-						break;
-					case 2:
-						servico = new Servico("Penteado");
-						cliente.setServico(servico);
-						break;
-					case 3:
-						servico = new Servico("Pedicure");
-						cliente.setServico(servico);
-						break;
-					case 4:
-						servico = new Servico("Depilação");
-						cliente.setServico(servico);
-						break;
-					case 5:
-						servico = new Servico("Massagem");
-						cliente.setServico(servico);
-						break;
-					default:
-						System.out.println("Opção não existe!!!");
+					flag = false;
+				}
+				else
+				{
+					flag = true;
 				}
 			}
-			
-			return cliente;
 		}
+				
+		flag = false;
+		inserido.add(tipoServico);
+		switch(tipoServico)
+		{
+			case 1:
+				servico = new Servico("Corte");
+				cliente.setServico(servico);
+				break;
+			case 2:
+				servico = new Servico("Penteado");
+				cliente.setServico(servico);
+				break;
+			case 3:
+				servico = new Servico("Pedicure");
+				cliente.setServico(servico);
+				break;
+			case 4:
+				servico = new Servico("Depilação");
+				cliente.setServico(servico);
+				break;
+			case 5:
+				servico = new Servico("Massagem");
+				cliente.setServico(servico);
+				break;
+			default:
+				System.out.println("Opção não existe!!!");
+		}
+	}
+			
+	return cliente;
+}
 	
 	public ArrayList<Integer> geraTempoServicos(int quantidade)
 	{
