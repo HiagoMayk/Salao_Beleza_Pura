@@ -5,13 +5,13 @@ import salao.salao.FilasClientes;
 
 public abstract class Funcionario implements Runnable {
 
-	private int qtdServicos;
+	protected int qtdServicos;
 	
-	private double totalFaturado;
+	protected double totalFaturado;
 	
-	private Cliente cliente;
+	protected Cliente cliente;
 	
-	private FilasClientes filas;
+	protected FilasClientes filas;
 	
 	public Funcionario() {
 		// TODO Auto-generated constructor stub
@@ -68,7 +68,7 @@ public abstract class Funcionario implements Runnable {
 		totalFaturado += d;
 	}
 	
-	protected void reposicionaCliente() {
+	protected synchronized void reposicionaCliente() {
 		if(cliente.quantidadeServicosRestantes() == 0) {
 			filas.insereEmFilaCaixas(cliente);
 		} else {

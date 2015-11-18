@@ -177,5 +177,16 @@ public class FilasClientes {
 		}
 		return null;
 	}
+	
+	public synchronized Cliente getProxParaCaixa() {
+		for(int i = 0; i < filasCaixas.size(); i++) {
+			for(int j = 0; j < filasCaixas.get(i).size();) {
+				Cliente c = filasCaixas.get(i).get(j); 
+				removeDeFilaCaixas(c);
+				return c;
+			}
+		}
+		return null;
+	}
 
 }
