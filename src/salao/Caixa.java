@@ -3,28 +3,68 @@ import java.util.ArrayList;
 
 public class Caixa extends Funcionario
 {
-	public Caixa(ArrayList<Cliente> array, Cliente c)
+	private FilasClientes filas;
+	private ArrayList<Cliente> filaCaixas;
+	private static Financeira financeira;
+	ArrayList<Cliente> array;
+	int proxFila;
+	
+	int tempo;
+	public Caixa(FilasClientes filas, ArrayList<Cliente> filaCaixas)
 	{
-		super(array, c);
-	}
-
-	public void run()
-	{
-		trabalhar();
-		Thread.currentThread().interrupt();
+		this.filas = new FilasClientes(null);
+		this.filas = filas;
+		
+		this.filaCaixas = new ArrayList<Cliente>();
+		this.filaCaixas = filaCaixas;
+		
+		financeira = new Financeira();
+		proxFila = 0;
 	}
 	
-	public void trabalhar()
+	public void run()
 	{
-		//System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + getCliente().getIdCliente());
-
-		try 
+			Cliente  c = new Cliente(0);
+			while(true)
+			{
+				c = pegaCliente();
+				
+				if(c != null)
+				{
+					System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + c.getIdCliente());
+					
+					try
+					{
+						Thread.sleep(2000);
+					}
+					catch(InterruptedException ex) 
+					{
+						 Thread.currentThread().interrupt();
+					}
+				}
+				
+				try
+				{	
+					Thread.sleep(2000);
+				}
+				catch(InterruptedException ex)
+				{
+					 Thread.currentThread().interrupt();
+				}
+			}	
+	}
+	
+	public synchronized Cliente pegaCliente()
+	{
+		if(!(filaCaixas.isEmpty()))
 		{
-			Thread.sleep(5000);
+			for(Cliente c: filaCaixas)
+			{
+				filaCaixas.remove(c);
+				return c;
+			}
 		}
-		catch(InterruptedException ex)
-		{
-			 Thread.currentThread().interrupt();
-		}
+		
+		return null;
 	}
 }
