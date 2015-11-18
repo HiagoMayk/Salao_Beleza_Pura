@@ -24,11 +24,6 @@ public class Salao implements Runnable
 	
 	private static Financeira financeira;
 	
-	public FilasClientes getFilas() 
-	{
-		return filas;
-	}
-	
 	// usa o array lista para a fila 1
 	public Salao(FilasClientes filas, ArrayList<Cliente> filaCaixas)
 	{
@@ -46,7 +41,7 @@ public class Salao implements Runnable
 	{
 		while(true)
 		{
-			imprime();		
+			imprime();
 		
 			try
 			{	
