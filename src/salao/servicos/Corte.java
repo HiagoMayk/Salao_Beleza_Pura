@@ -4,10 +4,10 @@ public class Corte extends Servico {
 
 	/**
 	 * Construtor padrao.
-	 * AJEITAR VALORES!
+	 * @param tempo Tempo a ser gasto
 	 */
-	public Corte() {
-		super(TipoServico.CORTE, 0, 0.0);
+	public Corte(int tempo) {
+		super(TipoServico.CORTE, tempo, 30.0);
 	}
 
 }

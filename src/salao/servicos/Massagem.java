@@ -4,10 +4,10 @@ public class Massagem extends Servico {
 	
 	/**
 	 * Construtor padrao.
-	 * AJEITAR VALORES!
+	 * @param tempo Tempo a ser gasto
 	 */
-	public Massagem() {
-		super(TipoServico.MASSAGEM, 0, 0.0);
+	public Massagem(int tempo) {
+		super(TipoServico.MASSAGEM, tempo, 20.0);
 	}
 
 }
