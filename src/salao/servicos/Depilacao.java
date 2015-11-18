@@ -4,10 +4,10 @@ public class Depilacao extends Servico {
 	
 	/**
 	 * Construtor padrao.
-	 * AJEITAR VALORES!! 
+	 * @param tempo Tempo a ser gasto
 	 */
-	public Depilacao() {
-		super(TipoServico.DEPILACAO, 0, 0.0);
+	public Depilacao(int tempo) {
+		super(TipoServico.DEPILACAO, 0, 40.0);
 	}
 
 }

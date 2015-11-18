@@ -4,10 +4,10 @@ public class Penteado extends Servico {
 	
 	/**
 	 * Construtor padrao.
-	 * AJEITAR VALORES! 
+	 * @param tempo Tempo a ser gasto
 	 */
-	public Penteado() {
-		super(TipoServico.PENTEADO, 0, 0.0);
+	public Penteado(int tempo) {
+		super(TipoServico.PENTEADO, tempo, 50.0);
 	}
 
 }
