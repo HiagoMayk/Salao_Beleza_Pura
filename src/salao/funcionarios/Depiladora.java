@@ -1,10 +1,14 @@
 package salao.funcionarios;
 
 import salao.cliente.Cliente;
-import salao.salao.FilasClientes;
+import salao.simulador.FilasClientes;
 
 public class Depiladora extends Funcionario {
 
+	public Depiladora(FilasClientes f) {
+		super(f);
+	}
+	
 	public Depiladora(FilasClientes f, Cliente c) {
 		super(f, c);
 	}

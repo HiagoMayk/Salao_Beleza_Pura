@@ -1,10 +1,14 @@
 package salao.funcionarios;
 
 import salao.cliente.Cliente;
-import salao.salao.FilasClientes;
+import salao.simulador.FilasClientes;
 
 public class Caixa extends Funcionario {
 
+	public Caixa(FilasClientes f) {
+		super(f);
+	}
+	
 	public Caixa(FilasClientes f, Cliente c) {
 		super(f, c);
 	}

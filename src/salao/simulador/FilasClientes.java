@@ -1,4 +1,4 @@
-package salao.salao;
+package salao.simulador;
 
 import java.util.ArrayList;
 

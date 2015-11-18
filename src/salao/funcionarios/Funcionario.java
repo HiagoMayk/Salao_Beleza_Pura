@@ -1,7 +1,7 @@
 package salao.funcionarios;
 
 import salao.cliente.Cliente;
-import salao.salao.FilasClientes;
+import salao.simulador.FilasClientes;
 
 public abstract class Funcionario implements Runnable {
 
@@ -17,6 +17,13 @@ public abstract class Funcionario implements Runnable {
 		// TODO Auto-generated constructor stub
 		cliente = null;
 		filas = null;
+		qtdServicos = 0;
+		totalFaturado = 0.0;
+	}
+	
+	public Funcionario(FilasClientes f) {
+		filas = f;
+		cliente = null;
 		qtdServicos = 0;
 		totalFaturado = 0.0;
 	}

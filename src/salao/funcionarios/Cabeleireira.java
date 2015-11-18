@@ -3,10 +3,14 @@ package salao.funcionarios;
 import java.util.Random;
 
 import salao.cliente.Cliente;
-import salao.salao.FilasClientes;
+import salao.simulador.FilasClientes;
 
 public class Cabeleireira extends Funcionario {
 
+	public Cabeleireira(FilasClientes f) {
+		super(f);
+	}
+	
 	public Cabeleireira(FilasClientes f, Cliente c) {
 		super(f, c);
 	}

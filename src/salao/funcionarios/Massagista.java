@@ -1,10 +1,14 @@
 package salao.funcionarios;
 
 import salao.cliente.Cliente;
-import salao.salao.FilasClientes;
+import salao.simulador.FilasClientes;
 
 public class Massagista extends Funcionario {
 
+	public Massagista(FilasClientes f) {
+		super(f);
+	}
+	
 	public Massagista(FilasClientes f, Cliente c) {
 		super(f, c);
 	}

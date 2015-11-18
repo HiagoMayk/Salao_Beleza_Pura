@@ -1,10 +1,14 @@
 package salao.funcionarios;
 
 import salao.cliente.Cliente;
-import salao.salao.FilasClientes;
+import salao.simulador.FilasClientes;
 
 public class Manicure extends Funcionario {
 
+	public Manicure(FilasClientes f) {
+		super(f);
+	}
+	
 	public Manicure(FilasClientes f, Cliente c) {
 		super(f, c);
 	}
