@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import salao.funcionarios.*;
+import salao.gui.MainScreen;
 
 public class Salao {
 
@@ -21,6 +22,8 @@ public class Salao {
 	private Semaphore sFilasClientes;
 	
 	private Semaphore sFilasCaixas;
+	
+	private MainScreen ms;
 	
 	private final int numCabeleireiras = 5;
 	private final int numManicures = 3;
@@ -39,6 +42,7 @@ public class Salao {
 		tGeradorClientes = new Thread(geradorClientes, "GeradorClientes");
 		sFilasClientes = new Semaphore(maxThreadsPermitidas);
 		sFilasCaixas = new Semaphore(maxThreadsPermitidas);
+		//ms = new MainScreen(filas, funcionarios, sFilasClientes, sFilasCaixas);
 		
 		for(int i = 0; i < numCabeleireiras; i++) {
 			Cabeleireira c = new Cabeleireira(filas, sFilasClientes, sFilasCaixas);
@@ -71,6 +75,9 @@ public class Salao {
 		}
 		
 		tGeradorClientes.start();
+		//ms.run();
+		ms = new MainScreen(filas, funcionarios, sFilasClientes, sFilasCaixas);
+		ms.setVisible(true);
 		
 		try {	
 			Thread.sleep(2000);

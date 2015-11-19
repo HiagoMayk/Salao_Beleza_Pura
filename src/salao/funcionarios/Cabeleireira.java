@@ -47,6 +47,8 @@ public class Cabeleireira extends Funcionario {
 				}
 				c[0].popServico();
 				this.reposicionaCliente();
+				c[0].setFuncionario(null);
+				this.cliente = null;
 			} else if(c[0] == null && c[1] != null) {
 				this.cliente = c[1];
 				c[1].setFuncionario(this);
@@ -59,6 +61,8 @@ public class Cabeleireira extends Funcionario {
 				}
 				c[1].popServico();
 				this.reposicionaCliente();
+				c[1].setFuncionario(null);
+				this.cliente = null;
 			} else if(c[0] != null && c[1] != null) {
 				if(numeroDaFila(c[0]) > numeroDaFila(c[1])) {
 					this.cliente = c[0];
@@ -72,6 +76,8 @@ public class Cabeleireira extends Funcionario {
 					}
 					c[0].popServico();
 					this.reposicionaCliente();
+					c[0].setFuncionario(null);
+					this.cliente = null;
 				} else if(numeroDaFila(c[0]) < numeroDaFila(c[1])) {
 					this.cliente = c[1];
 					c[1].setFuncionario(this);
@@ -84,6 +90,8 @@ public class Cabeleireira extends Funcionario {
 					}
 					c[1].popServico();
 					this.reposicionaCliente();
+					c[1].setFuncionario(null);
+					this.cliente = null;
 				} else {
 					Random rand = new Random();
 					int next = rand.nextInt(2);
@@ -98,6 +106,8 @@ public class Cabeleireira extends Funcionario {
 					}
 					c[next].popServico();
 					this.reposicionaCliente();
+					c[next].setFuncionario(null);
+					this.cliente = null;
 				}
 			}
 			try {	

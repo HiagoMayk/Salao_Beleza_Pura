@@ -43,6 +43,8 @@ public class Massagista extends Funcionario {
 				}
 				cliente.popServico();
 				this.reposicionaCliente();
+				cliente.setFuncionario(null);
+				this.cliente = null;
 			}
 			try {	
 				Thread.sleep(2000);
