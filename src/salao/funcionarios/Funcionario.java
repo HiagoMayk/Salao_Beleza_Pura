@@ -1,5 +1,7 @@
 package salao.funcionarios;
 
+import java.util.concurrent.Semaphore;
+
 import salao.cliente.Cliente;
 import salao.simulador.FilasClientes;
 
@@ -13,19 +15,27 @@ public abstract class Funcionario implements Runnable {
 	
 	protected FilasClientes filas;
 	
+	protected Semaphore sFilasClientes;
+	
+	protected Semaphore sFilasCaixas;
+	
 	public Funcionario() {
 		// TODO Auto-generated constructor stub
 		cliente = null;
 		filas = null;
 		qtdServicos = 0;
 		totalFaturado = 0.0;
+		sFilasClientes = null;
+		sFilasCaixas = null;
 	}
 	
-	public Funcionario(FilasClientes f) {
+	public Funcionario(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas) {
 		filas = f;
 		cliente = null;
 		qtdServicos = 0;
 		totalFaturado = 0.0;
+		sFilasClientes = semFilasClientes;
+		sFilasCaixas = semFilasCaixas;
 	}
 	
 	public Funcionario(FilasClientes f, Cliente c) {
@@ -33,6 +43,8 @@ public abstract class Funcionario implements Runnable {
 		cliente = c;
 		qtdServicos = 0;
 		totalFaturado = 0.0;
+		sFilasClientes = null;
+		sFilasCaixas = null;
 	}
 
 	public int getQtdServicos() {
@@ -75,12 +87,20 @@ public abstract class Funcionario implements Runnable {
 		totalFaturado += d;
 	}
 	
-	protected synchronized void reposicionaCliente() {
-		if(cliente.quantidadeServicosRestantes() == 0) {
-			filas.insereEmFilaCaixas(cliente);
-		} else {
-			filas.insereEmFilaClientes
-				((cliente.quantidadeServicosSolicitados() - cliente.quantidadeServicosRestantes()) + 1, cliente);
+	protected void reposicionaCliente() {
+		try {
+			this.sFilasClientes.acquire();
+			if(cliente.quantidadeServicosRestantes() == 0) {
+				filas.insereEmFilaCaixas(cliente);
+			} else {
+				filas.insereEmFilaClientes
+					((cliente.quantidadeServicosSolicitados() - cliente.quantidadeServicosRestantes()), cliente);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this.sFilasClientes.release();
 		}
 	}
 

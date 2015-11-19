@@ -1,12 +1,14 @@
 package salao.funcionarios;
 
+import java.util.concurrent.Semaphore;
+
 import salao.cliente.Cliente;
 import salao.simulador.FilasClientes;
 
 public class Manicure extends Funcionario {
 
-	public Manicure(FilasClientes f) {
-		super(f);
+	public Manicure(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas) {
+		super(f, semFilasClientes, semFilasCaixas);
 	}
 	
 	public Manicure(FilasClientes f, Cliente c) {
@@ -16,9 +18,19 @@ public class Manicure extends Funcionario {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		Cliente c = null;
 		while(true) {
-			c = this.filas.getProxParaPedicure();
+			Cliente c = null;
+			
+			try {
+				this.sFilasClientes.acquire();
+				c = this.filas.getProxParaPedicure();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				this.sFilasClientes.release();
+			}
+			
 			if(c != null) {
 				this.cliente = c;
 				cliente.setFuncionario(this);

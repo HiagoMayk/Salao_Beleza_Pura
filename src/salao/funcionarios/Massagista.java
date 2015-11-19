@@ -1,12 +1,14 @@
 package salao.funcionarios;
 
+import java.util.concurrent.Semaphore;
+
 import salao.cliente.Cliente;
 import salao.simulador.FilasClientes;
 
 public class Massagista extends Funcionario {
 
-	public Massagista(FilasClientes f) {
-		super(f);
+	public Massagista(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas) {
+		super(f, semFilasClientes, semFilasCaixas);
 	}
 	
 	public Massagista(FilasClientes f, Cliente c) {
@@ -16,9 +18,19 @@ public class Massagista extends Funcionario {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		Cliente c = null;
 		while(true) {
-			c = this.filas.getProxParaMassagem();
+			Cliente c = null;
+			
+			try {
+				this.sFilasClientes.acquire();
+				c = this.filas.getProxParaMassagem();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				this.sFilasClientes.release();
+			}
+			
 			if(c != null) {
 				this.cliente = c;
 				cliente.setFuncionario(this);

@@ -1,14 +1,15 @@
 package salao.funcionarios;
 
 import java.util.Random;
+import java.util.concurrent.Semaphore;
 
 import salao.cliente.Cliente;
 import salao.simulador.FilasClientes;
 
 public class Cabeleireira extends Funcionario {
 
-	public Cabeleireira(FilasClientes f) {
-		super(f);
+	public Cabeleireira(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas) {
+		super(f, semFilasClientes, semFilasCaixas);
 	}
 	
 	public Cabeleireira(FilasClientes f, Cliente c) {
@@ -19,11 +20,21 @@ public class Cabeleireira extends Funcionario {
 	public void run() {
 		// TODO Auto-generated method stub
 		Cliente c[] = new Cliente[2];
-		c[0] = null;
-		c[1] = null;
 		while(true) {
-			c[0] = this.filas.getProxParaCorte();
-			c[1] = this.filas.getProxParaPenteado();
+			c[0] = null;
+			c[1] = null;
+			
+			try {
+				this.sFilasClientes.acquire();
+				c[0] = this.filas.getProxParaCorte();
+				c[1] = this.filas.getProxParaPenteado();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				this.sFilasClientes.release();
+			}
+
 			if(c[0] != null && c[1] == null) {
 				this.cliente = c[0];
 				c[0].setFuncionario(this);

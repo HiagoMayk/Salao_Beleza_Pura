@@ -96,7 +96,7 @@ public class GeradorClientes implements Runnable {
 				}
 			}
 			
-			filas.insereEmFilaClientes(1, c);
+			filas.insereEmFilaClientes(0, c);
 			
 			try {	
 				// Tempo de geração de clientes: 1 ~ 5 segundos

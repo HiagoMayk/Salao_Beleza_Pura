@@ -36,6 +36,7 @@ public class FilasClientes {
 		for(int i = 0; i < numFilasCaixas; i++) {
 			filasCaixas.add(new ArrayList<Cliente>());
 		}
+		
 		filasClientes = new ArrayList<ArrayList<Cliente>>();
 		for(int i = 0; i < numFilasClientes; i++) {
 			filasClientes.add(new ArrayList<Cliente>());
@@ -90,30 +91,30 @@ public class FilasClientes {
 	}
 
 	/**
-	 * @param fila Indice da fila [1, max]
+	 * @param fila Indice da fila [0, max)
 	 * @param c
 	 */
-	public synchronized void insereEmFilaClientes(int fila, Cliente c) {
-		filasClientes.get(fila-1).add(c);
+	public void insereEmFilaClientes(int fila, Cliente c) {
+		filasClientes.get(fila).add(c);
 	}
 	
 	/**
-	 * @param fila Indice da fila [1, max]
+	 * @param fila Indice da fila [0, max)
 	 * @param c
 	 */
-	public synchronized void removeDeFilaClientes(int fila, Cliente c) {
-		filasClientes.remove(fila-1).add(c);
+	public void removeDeFilaClientes(int fila, Cliente c) {
+		filasClientes.get(fila).remove(c);
 	}
 	
-	public synchronized void insereEmFilaCaixas(Cliente c) {
+	public void insereEmFilaCaixas(Cliente c) {
 		filasCaixas.get(0).add(c);
 	}
 	
-	public synchronized void removeDeFilaCaixas(Cliente c) {
-		filasCaixas.remove(0).add(c);
+	public void removeDeFilaCaixas(Cliente c) {
+		filasCaixas.get(0).remove(c);
 	}
 	
-	public synchronized Cliente getProxParaPenteado() {
+	public Cliente getProxParaPenteado() {
 		for(int i = 0; i < filasClientes.size(); i++) {
 			for(int j = 0; j < filasClientes.get(i).size(); j++) {
 				if(filasClientes.get(i).get(j).proximoServico().getTipo() == TipoServico.PENTEADO) {
@@ -126,7 +127,7 @@ public class FilasClientes {
 		return null;
 	}
 	
-	public synchronized Cliente getProxParaCorte() {
+	public Cliente getProxParaCorte() {
 		for(int i = 0; i < filasClientes.size(); i++) {
 			for(int j = 0; j < filasClientes.get(i).size(); j++) {
 				if(filasClientes.get(i).get(j).proximoServico().getTipo() == TipoServico.CORTE) {
@@ -139,7 +140,7 @@ public class FilasClientes {
 		return null;
 	}
 	
-	public synchronized Cliente getProxParaDepilacao() {
+	public Cliente getProxParaDepilacao() {
 		for(int i = 0; i < filasClientes.size(); i++) {
 			for(int j = 0; j < filasClientes.get(i).size(); j++) {
 				if(filasClientes.get(i).get(j).proximoServico().getTipo() == TipoServico.DEPILACAO) {
@@ -152,7 +153,7 @@ public class FilasClientes {
 		return null;
 	}
 	
-	public synchronized Cliente getProxParaPedicure() {
+	public Cliente getProxParaPedicure() {
 		for(int i = 0; i < filasClientes.size(); i++) {
 			for(int j = 0; j < filasClientes.get(i).size(); j++) {
 				if(filasClientes.get(i).get(j).proximoServico().getTipo() == TipoServico.PEDICURE) {
@@ -165,7 +166,7 @@ public class FilasClientes {
 		return null;
 	}
 	
-	public synchronized Cliente getProxParaMassagem() {
+	public Cliente getProxParaMassagem() {
 		for(int i = 0; i < filasClientes.size(); i++) {
 			for(int j = 0; j < filasClientes.get(i).size(); j++) {
 				if(filasClientes.get(i).get(j).proximoServico().getTipo() == TipoServico.MASSAGEM) {
@@ -178,7 +179,7 @@ public class FilasClientes {
 		return null;
 	}
 	
-	public synchronized Cliente getProxParaCaixa() {
+	public Cliente getProxParaCaixa() {
 		for(int i = 0; i < filasCaixas.size(); i++) {
 			for(int j = 0; j < filasCaixas.get(i).size();) {
 				Cliente c = filasCaixas.get(i).get(j); 
