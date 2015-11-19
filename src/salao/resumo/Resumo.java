@@ -1,6 +1,7 @@
 package salao.resumo;
 
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import salao.funcionarios.Funcionario;
 
@@ -12,14 +13,18 @@ public class Resumo {
 	
 	private int totalAtendimentos;
 	private double totalFaturado;
+	private int numBlockSemResumo;
+	private Semaphore semResumo;
 	
 	public Resumo() {
 		// TODO Auto-generated constructor stub
 		funcionarios = null;
 	}
 	
-	public Resumo(List<Funcionario> f) {
+	public Resumo(List<Funcionario> f, Semaphore semResumo, int numBlockSemResumo) {
 		funcionarios = f;
+		this.semResumo = semResumo;
+		this.numBlockSemResumo = numBlockSemResumo;
 	}
 
 	public List<Funcionario> getFuncionarios() {
@@ -31,6 +36,38 @@ public class Resumo {
 	}
 
 	public int getTotalAtendimentos() {
+		
+		//---------------------------------
+		try {
+				for(int i = 0; i < numBlockSemResumo; i++)
+				{
+					this.semResumo.acquire();
+				}
+					
+				// Sleep só para simular a RC
+				try {	
+					Thread.sleep(1000);
+				} catch(InterruptedException ex) {
+					 Thread.currentThread().interrupt();
+				}
+					
+			// Calcula valores
+					
+			} 
+			catch (InterruptedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			finally 
+			{
+				for(int i = 0; i < numBlockSemResumo; i++)
+				{
+					this.semResumo.release();
+				}
+			}
+				//---------------------------------
+		
 		return totalAtendimentos;
 	}
 
@@ -39,6 +76,32 @@ public class Resumo {
 	}
 
 	public double getTotalFaturado() {
+		//---------------------------------
+		try {
+			for(int i = 0; i < numBlockSemResumo; i++)
+			{
+				this.semResumo.acquire();
+			}
+			
+			
+			// Calcula valores
+			
+		} 
+		catch (InterruptedException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		finally 
+		{
+			for(int i = 0; i < numBlockSemResumo; i++)
+			{
+				this.semResumo.release();
+			}
+		}
+		//---------------------------------
+		
+		
 		return totalFaturado;
 	}
 

@@ -6,6 +6,7 @@ import java.util.concurrent.Semaphore;
 
 public class Simulador 
 {	
+	/*
 	public static void main (String args[]) throws InterruptedException
 	{
 		Cabeleireira cabeleireira[];
@@ -106,5 +107,6 @@ public class Simulador
 		tMassagista.start();
 		
 	}
+	*/
 	
 }

@@ -8,8 +8,8 @@ import salao.simulador.FilasClientes;
 
 public class Cabeleireira extends Funcionario {
 
-	public Cabeleireira(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas) {
-		super(f, semFilasClientes, semFilasCaixas);
+	public Cabeleireira(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo) {
+		super(f, semFilasClientes, semFilasCaixas, semResumo);
 	}
 	
 	public Cabeleireira(FilasClientes f, Cliente c) {
@@ -39,6 +39,29 @@ public class Cabeleireira extends Funcionario {
 				this.cliente = c[0];
 				c[0].setFuncionario(this);
 				System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + c[0].getId());
+				
+				//---------------------------------
+				try {
+					this.semResumo.acquire();
+					
+					// Sleep só para simular a RC
+					try {	
+						Thread.sleep(1000);
+					} catch(InterruptedException ex) {
+						 Thread.currentThread().interrupt();
+					}
+					
+					
+					// insere os valores
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					this.semResumo.release();
+				}
+				//---------------------------------
+				
 				try {	
 					Thread.sleep(1000*c[0].proximoServico().getTempo());
 				}
@@ -51,6 +74,31 @@ public class Cabeleireira extends Funcionario {
 				this.cliente = c[1];
 				c[1].setFuncionario(this);
 				System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + c[1].getId());
+				
+				
+				//---------------------------------
+				try {
+					this.semResumo.acquire();
+					
+					// Sleep só para simular a RC
+					try {	
+						Thread.sleep(1000);
+					} catch(InterruptedException ex) {
+						 Thread.currentThread().interrupt();
+					}
+					
+					
+					// insere os valores
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					this.semResumo.release();
+				}
+				//---------------------------------
+				
+				
 				try {	
 					Thread.sleep(1000*c[1].proximoServico().getTempo());
 				}
@@ -64,6 +112,30 @@ public class Cabeleireira extends Funcionario {
 					this.cliente = c[0];
 					c[0].setFuncionario(this);
 					System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + c[0].getId());
+					
+					
+					//---------------------------------
+					try {
+						this.semResumo.acquire();
+						
+						// Sleep só para simular a RC
+						try {	
+							Thread.sleep(1000);
+						} catch(InterruptedException ex) {
+							 Thread.currentThread().interrupt();
+						}
+						
+						// insere os valores
+						
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} finally {
+						this.semResumo.release();
+					}
+					//---------------------------------
+					
+					
 					try {	
 						Thread.sleep(1000*c[0].proximoServico().getTempo());
 					}
@@ -76,6 +148,33 @@ public class Cabeleireira extends Funcionario {
 					this.cliente = c[1];
 					c[1].setFuncionario(this);
 					System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + c[1].getId());
+					
+					
+					//---------------------------------
+					try {
+						this.semResumo.acquire();
+						
+						
+						
+						// Sleep só para simular a RC
+						try {	
+							Thread.sleep(1000);
+						} catch(InterruptedException ex) {
+							 Thread.currentThread().interrupt();
+						}
+						
+						// insere os valores
+						
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} finally {
+						this.semResumo.release();
+					}
+					//---------------------------------
+					
+					
+					
 					try {	
 						Thread.sleep(1000*c[1].proximoServico().getTempo());
 					}
@@ -100,7 +199,7 @@ public class Cabeleireira extends Funcionario {
 					this.reposicionaCliente();
 				}
 			}
-			try {	
+			try {
 				Thread.sleep(2000);
 			}
 			catch(InterruptedException ex) {

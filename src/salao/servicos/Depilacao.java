@@ -7,7 +7,7 @@ public class Depilacao extends Servico {
 	 * @param tempo Tempo a ser gasto
 	 */
 	public Depilacao(int tempo) {
-		super(TipoServico.DEPILACAO, 0, 40.0);
+		super(TipoServico.DEPILACAO, tempo, 40.0);
 	}
 
 }
