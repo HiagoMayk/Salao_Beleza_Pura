@@ -8,8 +8,8 @@ import salao.simulador.FilasClientes;
 
 public class Cabeleireira extends Funcionario {
 
-	public Cabeleireira(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo, int id) {
-		super(f, semFilasClientes, semFilasCaixas, semResumo, id);
+	public Cabeleireira(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, int id) {
+		super(f, semFilasClientes, semFilasCaixas, id);
 	}
 	
 	public Cabeleireira(FilasClientes f, Cliente c) {
@@ -38,30 +38,7 @@ public class Cabeleireira extends Funcionario {
 			if(c[0] != null && c[1] == null) {
 				this.cliente = c[0];
 				c[0].setFuncionario(this);
-				System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + c[0].getId());
-				
-				//---------------------------------
-				try {
-					this.semResumo.acquire();
-					
-					// Sleep só para simular a RC
-					try {	
-						Thread.sleep(1000);
-					} catch(InterruptedException ex) {
-						 Thread.currentThread().interrupt();
-					}
-					
-					
-					// insere os valores
-					
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally {
-					this.semResumo.release();
-				}
-				//---------------------------------
-				
+				System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + c[0].getId());				
 				try {	
 					Thread.sleep(1000*c[0].proximoServico().getTempo());
 				}
@@ -76,31 +53,6 @@ public class Cabeleireira extends Funcionario {
 				this.cliente = c[1];
 				c[1].setFuncionario(this);
 				System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + c[1].getId());
-				
-				
-				//---------------------------------
-				try {
-					this.semResumo.acquire();
-					
-					// Sleep só para simular a RC
-					try {	
-						Thread.sleep(1000);
-					} catch(InterruptedException ex) {
-						 Thread.currentThread().interrupt();
-					}
-					
-					
-					// insere os valores
-					
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally {
-					this.semResumo.release();
-				}
-				//---------------------------------
-				
-				
 				try {	
 					Thread.sleep(1000*c[1].proximoServico().getTempo());
 				}
@@ -116,30 +68,6 @@ public class Cabeleireira extends Funcionario {
 					this.cliente = c[0];
 					c[0].setFuncionario(this);
 					System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + c[0].getId());
-					
-					
-					//---------------------------------
-					try {
-						this.semResumo.acquire();
-						
-						// Sleep só para simular a RC
-						try {	
-							Thread.sleep(1000);
-						} catch(InterruptedException ex) {
-							 Thread.currentThread().interrupt();
-						}
-						
-						// insere os valores
-						
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} finally {
-						this.semResumo.release();
-					}
-					//---------------------------------
-					
-					
 					try {	
 						Thread.sleep(1000*c[0].proximoServico().getTempo());
 					}
@@ -154,33 +82,6 @@ public class Cabeleireira extends Funcionario {
 					this.cliente = c[1];
 					c[1].setFuncionario(this);
 					System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + c[1].getId());
-					
-					
-					//---------------------------------
-					try {
-						this.semResumo.acquire();
-						
-						
-						
-						// Sleep só para simular a RC
-						try {	
-							Thread.sleep(1000);
-						} catch(InterruptedException ex) {
-							 Thread.currentThread().interrupt();
-						}
-						
-						// insere os valores
-						
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} finally {
-						this.semResumo.release();
-					}
-					//---------------------------------
-					
-					
-					
 					try {	
 						Thread.sleep(1000*c[1].proximoServico().getTempo());
 					}
