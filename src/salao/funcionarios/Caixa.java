@@ -67,6 +67,8 @@ public class Caixa extends Funcionario {
 					 Thread.currentThread().interrupt();
 				}
 				// Volte sempre
+				cliente.setFuncionario(null);
+				this.cliente = null;
 			}
 			try {	
 				Thread.sleep(2000);
