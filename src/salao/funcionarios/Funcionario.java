@@ -7,6 +7,8 @@ import salao.simulador.FilasClientes;
 
 public abstract class Funcionario implements Runnable {
 
+	protected int id;
+	
 	protected int qtdServicos;
 	
 	protected double totalFaturadoLiquido;
@@ -32,9 +34,10 @@ public abstract class Funcionario implements Runnable {
 		totalFaturadoLiquido = 0.0;
 		sFilasClientes = null;
 		sFilasCaixas = null;
+		id = 0;
 	}
 	
-	public Funcionario(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo) {
+	public Funcionario(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo, int id) {
 		filas = f;
 		cliente = null;
 		qtdServicos = 0;
@@ -43,6 +46,7 @@ public abstract class Funcionario implements Runnable {
 		sFilasClientes = semFilasClientes;
 		sFilasCaixas = semFilasCaixas;
 		this.semResumo = semResumo;
+		this.id = id;
 	}
 	
 	public Funcionario(FilasClientes f, Cliente c) {
@@ -53,6 +57,15 @@ public abstract class Funcionario implements Runnable {
 		totalFaturadoLiquido = 0.0;
 		sFilasClientes = null;
 		sFilasCaixas = null;
+		id = 0;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getQtdServicos() {

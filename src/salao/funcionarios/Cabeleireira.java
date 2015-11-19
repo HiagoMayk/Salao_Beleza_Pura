@@ -8,8 +8,8 @@ import salao.simulador.FilasClientes;
 
 public class Cabeleireira extends Funcionario {
 
-	public Cabeleireira(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo) {
-		super(f, semFilasClientes, semFilasCaixas, semResumo);
+	public Cabeleireira(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo, int id) {
+		super(f, semFilasClientes, semFilasCaixas, semResumo, id);
 	}
 	
 	public Cabeleireira(FilasClientes f, Cliente c) {
@@ -220,6 +220,11 @@ public class Cabeleireira extends Funcionario {
 	
 	private int numeroDaFila(Cliente cliente) {
 		return (cliente.quantidadeServicosSolicitados() - cliente.quantidadeServicosRestantes()) + 1;
+	}
+
+	@Override
+	public String toString() {
+		return "Cabeleireira [" + getId() + "]";
 	}
 
 }

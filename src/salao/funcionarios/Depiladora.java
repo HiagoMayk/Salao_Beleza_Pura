@@ -7,8 +7,8 @@ import salao.simulador.FilasClientes;
 
 public class Depiladora extends Funcionario {
 
-	public Depiladora(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo) {
-		super(f, semFilasClientes, semFilasCaixas, semResumo);
+	public Depiladora(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo, int id) {
+		super(f, semFilasClientes, semFilasCaixas, semResumo, id);
 	}
 	
 	public Depiladora(FilasClientes f, Cliente c) {
@@ -77,6 +77,11 @@ public class Depiladora extends Funcionario {
 				 Thread.currentThread().interrupt();
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Depiladora [" + getId() + "]";
 	}
 
 }

@@ -7,8 +7,8 @@ import salao.simulador.FilasClientes;
 
 public class Manicure extends Funcionario {
 
-	public Manicure(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo) {
-		super(f, semFilasClientes, semFilasCaixas, semResumo);
+	public Manicure(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo, int id) {
+		super(f, semFilasClientes, semFilasCaixas, semResumo, id);
 	}
 	
 	public Manicure(FilasClientes f, Cliente c) {
@@ -79,6 +79,11 @@ public class Manicure extends Funcionario {
 				 Thread.currentThread().interrupt();
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Manicure [" + getId() + "]";
 	}
 
 }

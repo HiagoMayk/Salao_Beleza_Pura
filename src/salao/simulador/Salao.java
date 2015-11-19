@@ -5,11 +5,8 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import salao.funcionarios.*;
-<<<<<<< HEAD
 import salao.resumo.*; 
-=======
 import salao.gui.MainScreen;
->>>>>>> b27368d22f913ea163b1850274acdeed08d16018
 
 public class Salao {
 	
@@ -27,13 +24,11 @@ public class Salao {
 	
 	private Semaphore sFilasCaixas;
 	
-<<<<<<< HEAD
 	private Semaphore semResumo;
 	
 	private Resumo resumo;
-=======
+	
 	private MainScreen ms;
->>>>>>> b27368d22f913ea163b1850274acdeed08d16018
 	
 	private final int numCabeleireiras = 5;
 	private final int numManicures = 3;
@@ -54,39 +49,36 @@ public class Salao {
 		tGeradorClientes = new Thread(geradorClientes, "GeradorClientes");
 		sFilasClientes = new Semaphore(maxThreadsPermitidas);
 		sFilasCaixas = new Semaphore(maxThreadsPermitidas);
-<<<<<<< HEAD
 		semResumo = new Semaphore(1);
 		resumo = new Resumo(funcionarios, semResumo, numBlockSemResumo);
-=======
 		//ms = new MainScreen(filas, funcionarios, sFilasClientes, sFilasCaixas);
->>>>>>> b27368d22f913ea163b1850274acdeed08d16018
 		
 		for(int i = 0; i < numCabeleireiras; i++) {
-			Cabeleireira c = new Cabeleireira(filas, sFilasClientes, sFilasCaixas, semResumo);
+			Cabeleireira c = new Cabeleireira(filas, sFilasClientes, sFilasCaixas, semResumo, i+1);
 			funcionarios.add(c);
 			threadsFuncionarios.add(new Thread(c, "Cabeleireira" + (i+1)));
 		}
 		
 		for(int i = 0; i < numManicures; i++) {
-			Manicure m = new Manicure(filas, sFilasClientes, sFilasCaixas, semResumo);
+			Manicure m = new Manicure(filas, sFilasClientes, sFilasCaixas, semResumo, i+1);
 			funcionarios.add(m);
 			threadsFuncionarios.add(new Thread(m, "Manicure" + (i+1)));
 		}
 		
 		for(int i = 0; i < numDepiladoras; i++) {
-			Depiladora d = new Depiladora(filas, sFilasClientes, sFilasCaixas, semResumo);
+			Depiladora d = new Depiladora(filas, sFilasClientes, sFilasCaixas, semResumo, i+1);
 			funcionarios.add(d);
 			threadsFuncionarios.add(new Thread(d, "Depiladora" + (i+1)));
 		}
 		
 		for(int i = 0; i < numMassagistas; i++) {
-			Massagista m = new Massagista(filas, sFilasClientes, sFilasCaixas, semResumo);
+			Massagista m = new Massagista(filas, sFilasClientes, sFilasCaixas, semResumo, i+1);
 			funcionarios.add(m);
 			threadsFuncionarios.add(new Thread(m, "Massagista" + (i+1)));
 		}
 		
 		for(int i = 0; i < numCaixas; i++) {
-			Caixa c = new Caixa(filas, sFilasClientes, sFilasCaixas, semResumo);
+			Caixa c = new Caixa(filas, sFilasClientes, sFilasCaixas, semResumo, i+1);
 			funcionarios.add(c);
 			threadsFuncionarios.add(new Thread(c, "Caixa" + (i+1)));
 		}

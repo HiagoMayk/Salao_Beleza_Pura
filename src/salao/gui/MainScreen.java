@@ -43,7 +43,7 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 	private int colunas = 0;
 
 	public MainScreen(FilasClientes filas, List<Funcionario> funcionarios, Semaphore sFilasClientes, Semaphore sFilasCaixas) {
-		super("Salão Beleza Pura", 1000, 600);
+		super("Salão Beleza Pura", 1000, 450);
 		this.queueLists = new ArrayList<JList<String>>();
 		listModels = new ArrayList<DefaultListModel<String>>();
 		logButton = new JButton("Gerar resumo");
@@ -93,35 +93,6 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 		GerarResumoGUI tela = new GerarResumoGUI();
 		tela.setVisible(true);
 	}
-
-	/*@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		while(true) {
-			atualizaFilasDeServicos();
-			atualizaFilaCaixa();
-			atualizaFuncionarios();
-			
-			new Thread() {
-				public void run() {
-					try {
-						for (int i = 0; i < sim.length; i++) {
-							simulate();
-							Thread.sleep(500);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}.start();
-			
-			/*try {	
-				Thread.sleep(2000);
-			} catch(InterruptedException ex) {
-				 Thread.currentThread().interrupt();
-			}
-		}		
-	}*/
 	
 	public void criaFilasDeServicos() {
 		for(int i = 0; i < filas.getNumFilasClientes(); i++, colunas++) {
@@ -232,7 +203,14 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 	}
 	
 	public void atualizaFuncionarios() {
-		
+		int i = listModels.size()-1;
+		listModels.get(i).clear();
+		for(Funcionario f : funcionarios) {
+			if(f.getCliente() != null) {
+				listModels.get(i).addElement(f.toString() +": Atendendo cliente" + f.getCliente().getId());
+			}
+			
+		}
 	}
 
 }

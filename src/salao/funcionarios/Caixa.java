@@ -7,8 +7,8 @@ import salao.simulador.FilasClientes;
 
 public class Caixa extends Funcionario {
 
-	public Caixa(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo) {
-		super(f, semFilasClientes, semFilasCaixas, semResumo);
+	public Caixa(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo, int id) {
+		super(f, semFilasClientes, semFilasCaixas, semResumo, id);
 	}
 	
 	public Caixa(FilasClientes f, Cliente c) {
@@ -77,6 +77,11 @@ public class Caixa extends Funcionario {
 				 Thread.currentThread().interrupt();
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Caixa [" + getId() + "]";
 	}
 
 }

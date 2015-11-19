@@ -7,8 +7,8 @@ import salao.simulador.FilasClientes;
 
 public class Massagista extends Funcionario {
 
-	public Massagista(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo) {
-		super(f, semFilasClientes, semFilasCaixas, semResumo);
+	public Massagista(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo, int id) {
+		super(f, semFilasClientes, semFilasCaixas, semResumo, id);
 	}
 	
 	public Massagista(FilasClientes f, Cliente c) {
@@ -76,6 +76,11 @@ public class Massagista extends Funcionario {
 				 Thread.currentThread().interrupt();
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Massagista [" + getId() + "]";
 	}
 
 }
