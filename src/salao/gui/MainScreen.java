@@ -19,8 +19,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
 import salao.cliente.Cliente;
+import salao.funcionarios.Caixa;
 import salao.funcionarios.Funcionario;
 import salao.simulador.FilasClientes;
+import salao.simulador.GeradorClientes;
 
 public class MainScreen extends AbstractGUI implements ActionListener {
 
@@ -36,13 +38,17 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 	
 	private List<Funcionario> funcionarios;
 	
+	private List<Caixa> caixas;
+	
 	private Semaphore sFilasClientes;
 	
 	private Semaphore sFilasCaixas;
 	
+	private GeradorClientes geradorClientes;
+	
 	private int colunas = 0;
 
-	public MainScreen(FilasClientes filas, List<Funcionario> funcionarios, Semaphore sFilasClientes, Semaphore sFilasCaixas) {
+	public MainScreen(FilasClientes filas, List<Funcionario> funcionarios, Semaphore sFilasClientes, Semaphore sFilasCaixas, List<Caixa> caixas, GeradorClientes geradorClientes) {
 		super("Salão Beleza Pura", 800, 1000);
 		this.queueLists = new ArrayList<JList<String>>();
 		listModels = new ArrayList<DefaultListModel<String>>();
@@ -51,6 +57,8 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 		this.funcionarios = funcionarios;
 		this.sFilasClientes = sFilasClientes;
 		this.sFilasCaixas = sFilasCaixas;
+		this.caixas = caixas;
+		this.geradorClientes = geradorClientes;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container c = getContentPane();
@@ -90,7 +98,7 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		GerarResumoGUI tela = new GerarResumoGUI(funcionarios);
+		GerarResumoGUI tela = new GerarResumoGUI(funcionarios, caixas, geradorClientes);
 		tela.setVisible(true);
 	}
 	

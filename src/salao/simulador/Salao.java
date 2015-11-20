@@ -70,15 +70,17 @@ public class Salao {
 			threadsFuncionarios.add(new Thread(m, "Massagista" + (i+1)));
 		}
 		
+		List<Caixa> caixas = new ArrayList<Caixa>();
 		for(int i = 0; i < numCaixas; i++) {
-			Caixa c = new Caixa(filas, sFilasClientes, sFilasCaixas, i+1);
+			 Caixa c = new Caixa(filas, sFilasClientes, sFilasCaixas, i+1);
 			funcionarios.add(c);
+			caixas.add(c);
 			threadsFuncionarios.add(new Thread(c, "Caixa" + (i+1)));
 		}
 		
 		tGeradorClientes.start();
 		//ms.run();
-		ms = new MainScreen(filas, funcionarios, sFilasClientes, sFilasCaixas);
+		ms = new MainScreen(filas, funcionarios, sFilasClientes, sFilasCaixas, caixas, geradorClientes);
 		ms.setVisible(true);
 		
 		try {	
@@ -89,7 +91,7 @@ public class Salao {
 		
 		for(Thread t : threadsFuncionarios) {
 			t.start();
-		}		
+		}
 	}
 
 	public Semaphore getsFilasClientes() {
