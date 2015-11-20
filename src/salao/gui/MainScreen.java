@@ -160,19 +160,19 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 	}
 	
 	public void atualizaFilasDeServicos() {
-		try {
+		//try {
 			int i = 0;
-			this.sFilasClientes.acquire();
+			//this.sFilasClientes.acquire();
 			for(ArrayList<Cliente> array : filas.getFilasClientes()) {
 				atualizaFilaDeServicos(array, i);
 				i += 1;
 			}
-		} catch (InterruptedException e) {
+		//} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this.sFilasClientes.release();
-		}
+			//e.printStackTrace();
+		//} finally {
+			///this.sFilasClientes.release();
+		//}
 	}
 	
 	private void atualizaFilaDeServicos(ArrayList<Cliente> fila, int i) {
@@ -183,15 +183,15 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 	}
 	
 	public void atualizaFilasCaixas() {
-		try {
-			this.sFilasCaixas.acquire();
+		//try {
+			//this.sFilasCaixas.acquire();
 			atualizaFilaCaixa(filas.getFilaCaixa(0));
-		} catch (InterruptedException e) {
+		//} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+			//e.printStackTrace();
+		//} finally {
 			this.sFilasCaixas.release();
-		}
+		//}
 	}
 	
 	private void atualizaFilaCaixa(ArrayList<Cliente> fila) {

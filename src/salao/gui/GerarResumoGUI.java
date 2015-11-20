@@ -67,16 +67,16 @@ public class GerarResumoGUI extends AbstractGUI {
 			lucroTotal += f.getTotalFaturadoBruto();
 			if(f instanceof Cabeleireira) {
 				f = (Cabeleireira) f;
-				listModel.addElement(f.toString() + " R$ " + format(f.getTotalFaturadoLiquido()));
+				listModel.addElement(f.toString() + ": Bruto = R$ " + format(f.getTotalFaturadoBruto()) + ", Liq = R$ " + format(f.getTotalFaturadoLiquido()));
 			} else if(f instanceof Depiladora) {
 				f = (Depiladora) f;
-				listModel.addElement(f.toString() + " R$ " + format(f.getTotalFaturadoLiquido()));
+				listModel.addElement(f.toString() +  ": Bruto = R$ " + format(f.getTotalFaturadoBruto()) + ", Liq = R$ " + format(f.getTotalFaturadoLiquido()));
 			} else if(f instanceof Manicure) {
 				f = (Manicure) f;
-				listModel.addElement(f.toString() + " R$ " + format(f.getTotalFaturadoLiquido()));
+				listModel.addElement(f.toString() +  ": Bruto = R$ " + format(f.getTotalFaturadoBruto()) + ", Liq = R$ " + format(f.getTotalFaturadoLiquido()));
 			} else if(f instanceof Massagista) {
 				f = (Massagista) f;
-				listModel.addElement(f.toString() + " R$ " + format(f.getTotalFaturadoLiquido()));
+				listModel.addElement(f.toString() +  ": Bruto = R$ " + format(f.getTotalFaturadoBruto()) + ", Liq = R$ " + format(f.getTotalFaturadoLiquido()));
 			}
 		}
 		listModel.addElement("Lucro total do salão:" + " R$ " + format(lucroTotal));		
