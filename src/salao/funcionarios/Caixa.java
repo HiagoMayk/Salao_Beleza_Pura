@@ -7,8 +7,8 @@ import salao.simulador.FilasClientes;
 
 public class Caixa extends Funcionario {
 
-	public Caixa(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo, int id) {
-		super(f, semFilasClientes, semFilasCaixas, semResumo, id);
+	public Caixa(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, int id) {
+		super(f, semFilasClientes, semFilasCaixas, id);
 	}
 	
 	public Caixa(FilasClientes f, Cliente c) {
@@ -34,34 +34,9 @@ public class Caixa extends Funcionario {
 			if(c != null) {
 				this.cliente = c;
 				cliente.setFuncionario(this);
-				System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + cliente.getId());
-				
-				//---------------------------------
-				try {
-					this.semResumo.acquire();
-					
-					
-					
-					// Sleep só para simular a RC
-					// acho que aqui não precisa acessar nd
-					try {	
-						Thread.sleep(1000);
-					} catch(InterruptedException ex) {
-						 Thread.currentThread().interrupt();
-					}
-					
-					// insere os valores
-					
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally {
-					this.semResumo.release();
-				}
-				//---------------------------------
-				
+				System.out.println(Thread.currentThread().getName() + ": Atendendo cliente" + cliente.getId());				
 				try {	
-					Thread.sleep(2000); // tempo fixo?
+					Thread.sleep(2000); // nao foi especificado tempo
 				}
 				catch(InterruptedException ex) {
 					 Thread.currentThread().interrupt();

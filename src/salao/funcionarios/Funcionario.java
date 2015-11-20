@@ -23,8 +23,6 @@ public abstract class Funcionario implements Runnable {
 	
 	protected Semaphore sFilasCaixas;
 	
-	protected Semaphore semResumo;
-	
 	public Funcionario() {
 		// TODO Auto-generated constructor stub
 		cliente = null;
@@ -37,7 +35,7 @@ public abstract class Funcionario implements Runnable {
 		id = 0;
 	}
 	
-	public Funcionario(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, Semaphore semResumo, int id) {
+	public Funcionario(FilasClientes f, Semaphore semFilasClientes, Semaphore semFilasCaixas, int id) {
 		filas = f;
 		cliente = null;
 		qtdServicos = 0;
@@ -57,7 +55,6 @@ public abstract class Funcionario implements Runnable {
 		quido = 0.0;
 		sFilasClientes = semFilasClientes;
 		sFilasCaixas = semFilasCaixas;
-		this.semResumo = semResumo;
 		this.id = id;
 	}
 	
@@ -97,33 +94,11 @@ public abstract class Funcionario implements Runnable {
 	}
 
 	public void setTotalFaturadoBruto(double totalFaturado) {
-		try
-		{
-			this.semResumo.acquire();
-				
-			this.totalFaturadoBruto = totalFaturado;
-				
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this.semResumo.release();
-		}			
+		this.totalFaturadoBruto = totalFaturado;		
 	}
 	
 	public void setTotalFaturadoLiquido(double totalFaturado) {
-		try
-		{
-			this.semResumo.acquire();
-				
-			this.totalFaturadoLiquido = totalFaturado;
-				
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this.semResumo.release();
-		}	
+		this.totalFaturadoLiquido = totalFaturado;
 	}
 
 	public Cliente getCliente() {
@@ -143,35 +118,13 @@ public abstract class Funcionario implements Runnable {
 	}
 	
 	public void incrementaQtdServicos() {
-		try
-		{
-			this.semResumo.acquire();
-				
-			qtdServicos += 1;
-				
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this.semResumo.release();
-		}
+		qtdServicos += 1;
 	}
 	
 	public void incrementaTotalFaturado(double d) {
-		try
-		{
-			this.semResumo.acquire();
-			
-			totalFaturadoBruto += d;
-			d = d*(40/100);
-			totalFaturadoLiquido += d;
-				
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			this.semResumo.release();
-		}
+		totalFaturadoBruto += d;
+		d = d*(40/100);
+		totalFaturadoLiquido += d;
 	}
 	
 	protected void reposicionaCliente() {
