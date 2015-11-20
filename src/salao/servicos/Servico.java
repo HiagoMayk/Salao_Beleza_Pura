@@ -67,7 +67,7 @@ public abstract class Servico {
 
 	@Override
 	public String toString() {
-		return "Servico [tipo=" + tipo + ", tempo=" + tempo + ", preco=" + preco + "]";
+		return "Servico [tipo=" + tipo + "]";
 	}
 
 	@Override
