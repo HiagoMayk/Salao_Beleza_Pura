@@ -16,7 +16,7 @@ public abstract class AbstractGUI extends JFrame {
 		setLargura(largura);
 		setAltura(altura);
 		setSize(largura, altura);
-		//setResizable(false);
+		setResizable(false);
 	}
 
 	public int getLargura() {

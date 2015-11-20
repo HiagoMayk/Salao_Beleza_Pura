@@ -25,7 +25,7 @@ public class GerarResumoGUI extends AbstractGUI {
 	private List<Funcionario> funcionarios;
 
 	public GerarResumoGUI(List<Funcionario> funcionarios) {
-		super("Resumo das movimentações", 400, 350);
+		super("Resumo das movimentações", 400, 250);
 		this.funcionarios = funcionarios;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		listModel = new DefaultListModel<String>();

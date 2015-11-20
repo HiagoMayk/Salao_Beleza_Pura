@@ -43,7 +43,7 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 	private int colunas = 0;
 
 	public MainScreen(FilasClientes filas, List<Funcionario> funcionarios, Semaphore sFilasClientes, Semaphore sFilasCaixas) {
-		super("Salão Beleza Pura", 1000, 450);
+		super("Salão Beleza Pura", 800, 1000);
 		this.queueLists = new ArrayList<JList<String>>();
 		listModels = new ArrayList<DefaultListModel<String>>();
 		logButton = new JButton("Gerar resumo");
@@ -106,8 +106,8 @@ public class MainScreen extends AbstractGUI implements ActionListener {
             add(rotulo1);
             
             Dimension d = queueLists.get(colunas).getPreferredSize();
-            d.height = 200;
-            d.width = 200;
+            d.height = 70;
+            d.width = 800;
             
             JScrollPane sp = new JScrollPane(queueLists.get(colunas));
             sp.setPreferredSize(d);
@@ -129,7 +129,7 @@ public class MainScreen extends AbstractGUI implements ActionListener {
             add(rotulo1);
             
             Dimension d = queueLists.get(colunas).getPreferredSize();
-            d.height = 200;
+            d.height = 100;
             d.width = 200;
             
             JScrollPane sp = new JScrollPane(queueLists.get(colunas));
@@ -198,7 +198,7 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 		int i = filas.getNumFilasClientes();
 		listModels.get(i).clear();
 		for(Cliente c: fila) {	
-        	listModels.get(i).addElement(c.toString());
+        	listModels.get(i).addElement("Cliente" + c.getId());
 		}
 	}
 	
