@@ -96,8 +96,8 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", servicosSolicitados=" + servicosSolicitados.size() + ", servicosRestantes="
-				+ servicosRestantes.size() + "]";
+		return "Cliente [id=" + id + ", servicosRestantes="
+				+ servicosRestantes.size() + ", servicosSolicitados=" + servicosSolicitados.size()  + ", ProxServico: " + proximoServico() + "]";
 	}
 
 	@Override
