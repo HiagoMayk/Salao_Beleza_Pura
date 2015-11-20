@@ -40,19 +40,7 @@ public abstract class Funcionario implements Runnable {
 		cliente = null;
 		qtdServicos = 0;
 		totalFaturadoBruto = 0.0;
-		totalFaturadoLi
-		public Funcionario() {
-			// TODO Auto-generated constructor stub
-			cliente = null;
-			filas = null;
-			qtdServicos = 0;
-			totalFaturadoBruto = 0.0;
-			totalFaturadoLiquido = 0.0;
-			sFilasClientes = null;
-			sFilasCaixas = null;
-			id = 0;
-		}
-		quido = 0.0;
+		totalFaturadoLiquido = 0.0;
 		sFilasClientes = semFilasClientes;
 		sFilasCaixas = semFilasCaixas;
 		this.id = id;
@@ -123,7 +111,7 @@ public abstract class Funcionario implements Runnable {
 	
 	public void incrementaTotalFaturado(double d) {
 		totalFaturadoBruto += d;
-		d = d*(40/100);
+		d = d*(4/10.0);
 		totalFaturadoLiquido += d;
 	}
 	

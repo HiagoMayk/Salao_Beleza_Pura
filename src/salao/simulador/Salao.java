@@ -89,20 +89,7 @@ public class Salao {
 		
 		for(Thread t : threadsFuncionarios) {
 			t.start();
-		}
-		
-		while(true)
-		{
-			// Imprime aqui pra testar os valores
-			System.out.println("teste");
-			try {	
-				Thread.sleep(1000);
-			} catch(InterruptedException ex) {
-				 Thread.currentThread().interrupt();
-			}
-		}
-		
-		
+		}		
 	}
 
 	public Semaphore getsFilasClientes() {

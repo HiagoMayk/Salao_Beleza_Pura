@@ -1,7 +1,5 @@
 package salao.gui;
 
-import java.awt.GridBagLayout;
-
 import javax.swing.JFrame;
 
 public abstract class AbstractGUI extends JFrame {

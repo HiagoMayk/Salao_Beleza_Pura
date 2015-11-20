@@ -45,10 +45,13 @@ public class Cabeleireira extends Funcionario {
 				catch(InterruptedException ex) {
 					 Thread.currentThread().interrupt();
 				}
+				this.incrementaTotalFaturado(c[0].proximoServico().getPreco());
 				c[0].popServico();
 				this.reposicionaCliente();
 				c[0].setFuncionario(null);
 				this.cliente = null;
+				this.incrementaQtdServicos();
+				
 			} else if(c[0] == null && c[1] != null) {
 				this.cliente = c[1];
 				c[1].setFuncionario(this);
@@ -59,10 +62,12 @@ public class Cabeleireira extends Funcionario {
 				catch(InterruptedException ex) {
 					 Thread.currentThread().interrupt();
 				}
+				this.incrementaTotalFaturado(c[1].proximoServico().getPreco());
 				c[1].popServico();
 				this.reposicionaCliente();
 				c[1].setFuncionario(null);
 				this.cliente = null;
+				this.incrementaQtdServicos();
 			} else if(c[0] != null && c[1] != null) {
 				if(numeroDaFila(c[0]) > numeroDaFila(c[1])) {
 					this.cliente = c[0];
@@ -74,10 +79,12 @@ public class Cabeleireira extends Funcionario {
 					catch(InterruptedException ex) {
 						 Thread.currentThread().interrupt();
 					}
+					this.incrementaTotalFaturado(c[0].proximoServico().getPreco());
 					c[0].popServico();
 					this.reposicionaCliente();
 					c[0].setFuncionario(null);
 					this.cliente = null;
+					this.incrementaQtdServicos();
 				} else if(numeroDaFila(c[0]) < numeroDaFila(c[1])) {
 					this.cliente = c[1];
 					c[1].setFuncionario(this);
@@ -88,10 +95,12 @@ public class Cabeleireira extends Funcionario {
 					catch(InterruptedException ex) {
 						 Thread.currentThread().interrupt();
 					}
+					this.incrementaTotalFaturado(c[1].proximoServico().getPreco());
 					c[1].popServico();
 					this.reposicionaCliente();
 					c[1].setFuncionario(null);
 					this.cliente = null;
+					this.incrementaQtdServicos();
 				} else {
 					Random rand = new Random();
 					int next = rand.nextInt(2);
@@ -104,10 +113,12 @@ public class Cabeleireira extends Funcionario {
 					catch(InterruptedException ex) {
 						 Thread.currentThread().interrupt();
 					}
+					this.incrementaTotalFaturado(c[next].proximoServico().getPreco());
 					c[next].popServico();
 					this.reposicionaCliente();
 					c[next].setFuncionario(null);
 					this.cliente = null;
+					this.incrementaQtdServicos();
 				}
 			}
 			try {

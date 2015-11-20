@@ -90,7 +90,7 @@ public class MainScreen extends AbstractGUI implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		GerarResumoGUI tela = new GerarResumoGUI();
+		GerarResumoGUI tela = new GerarResumoGUI(funcionarios);
 		tela.setVisible(true);
 	}
 	

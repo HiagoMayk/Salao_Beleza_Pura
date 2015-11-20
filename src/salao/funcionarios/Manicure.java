@@ -41,10 +41,13 @@ public class Manicure extends Funcionario {
 				catch(InterruptedException ex) {
 					 Thread.currentThread().interrupt();
 				}
+				this.incrementaTotalFaturado(cliente.proximoServico().getPreco());
 				cliente.popServico();
 				this.reposicionaCliente();
 				cliente.setFuncionario(null);
 				this.cliente = null;
+				this.incrementaQtdServicos();
+
 			}
 			try {	
 				Thread.sleep(2000);
