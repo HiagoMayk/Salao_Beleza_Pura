@@ -140,7 +140,7 @@ public class FilasClientes {
 		return null;
 	}
 	
-	public Cliente getProxParaDepilacao() {
+	public Cliente getProxParaDepilacao() {	
 		for(int i = 0; i < filasClientes.size(); i++) {
 			for(int j = 0; j < filasClientes.get(i).size(); j++) {
 				if(filasClientes.get(i).get(j).proximoServico().getTipo() == TipoServico.DEPILACAO) {
@@ -153,7 +153,7 @@ public class FilasClientes {
 		return null;
 	}
 	
-	public Cliente getProxParaPedicure() {
+	public Cliente getProxParaPedicure() {	
 		for(int i = 0; i < filasClientes.size(); i++) {
 			for(int j = 0; j < filasClientes.get(i).size(); j++) {
 				if(filasClientes.get(i).get(j).proximoServico().getTipo() == TipoServico.PEDICURE) {
@@ -166,7 +166,7 @@ public class FilasClientes {
 		return null;
 	}
 	
-	public Cliente getProxParaMassagem() {
+	public Cliente getProxParaMassagem() {	
 		for(int i = 0; i < filasClientes.size(); i++) {
 			for(int j = 0; j < filasClientes.get(i).size(); j++) {
 				if(filasClientes.get(i).get(j).proximoServico().getTipo() == TipoServico.MASSAGEM) {
@@ -179,7 +179,7 @@ public class FilasClientes {
 		return null;
 	}
 	
-	public Cliente getProxParaCaixa() {
+	public Cliente getProxParaCaixa() {	
 		for(int i = 0; i < filasCaixas.size(); i++) {
 			for(int j = 0; j < filasCaixas.get(i).size();) {
 				Cliente c = filasCaixas.get(i).get(j); 

@@ -69,7 +69,7 @@ public class MainScreen extends AbstractGUI implements ActionListener {
         		try {
         			while(true) {
         				update();
-        				Thread.sleep(100);
+        				Thread.sleep(1000);
         			}
         		} catch (Exception e) {
         			e.printStackTrace();
