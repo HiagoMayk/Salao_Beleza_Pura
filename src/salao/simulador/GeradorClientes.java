@@ -100,7 +100,7 @@ public class GeradorClientes implements Runnable {
 			
 			try {	
 				// Tempo de geração de clientes: 1 ~ 5 segundos
-				Thread.sleep(1000*(rand.nextInt(5)+1));
+				Thread.sleep(500*(rand.nextInt(5)+1));
 			} catch(InterruptedException ex) {
 				 Thread.currentThread().interrupt();
 			}
