@@ -1,0 +1,29 @@
+channel corte, penteado, lavagem, massagem, depilacao, manicure, pagamento
+
+CABELEREIRA(corte, servicos) = if member(penteado, servicos) then corte -> lavagem -> penteado -> CLIENTE(diff(servicos, {penteado}))
+			       else corte -> lavagem -> CLIENTE(servicos)
+
+-- Mudei a ordem aqui pois não faz sentido fazer um pentado para depois cortar o cabelo
+CABELEREIRA(penteado, servicos) = if member(corte, servicos) then corte -> lavagem -> penteado -> CLIENTE(diff(servicos, {corte}))
+			       else penteado -> CLIENTE(servicos)
+
+MASSAGISTA(servicos) = massagem -> CLIENTE(servicos)
+
+DEPILADORA(servicos) = depilacao -> CLIENTE(servicos)
+
+MANICURE(servicos) = manicure -> CLIENTE(servicos)
+
+CAIXA = pagamento -> SKIP
+
+CLIENTE(servicos) =
+	member(corte, servicos) & CABELEREIRA(corte, diff(servicos, {corte}))
+	[]
+	member(penteado, servicos) & CABELEREIRA(penteado, diff(servicos, {penteado}))
+	[]
+	member(massagem, servicos) & MASSAGISTA(diff(servicos, {massagem}))
+	[]
+	member(depilacao, servicos) & DEPILADORA(diff(servicos, {depilacao}))
+	[]
+	member(manicure, servicos) & MANICURE(diff(servicos, {manicure}))
+	[]
+	empty(servicos) & CAIXA
