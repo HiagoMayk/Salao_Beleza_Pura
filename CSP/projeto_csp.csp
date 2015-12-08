@@ -1,29 +1,116 @@
+-- TIPOS
+
+idCliente = {1..100}
+porcentagemServicos = {1..101}
+
+-- CANAIS
+
 channel corte, penteado, lavagem, massagem, depilacao, manicure, pagamento
 
-CABELEREIRA(corte, servicos) = if member(penteado, servicos) then corte -> lavagem -> penteado -> CLIENTE(diff(servicos, {penteado}))
-			       else corte -> lavagem -> CLIENTE(servicos)
+channel cliente : idCliente
+-- CONSTANTES
+
+qtdCabelereira = 5
+qtdManicure = 3
+qtdDepiladora = 2
+qtdMassagista = 1
+atdCaixa = 2
+
+-- FUNCOES
+
+-- j) Os serviços também são procurados segundo um percentual médio de 50% para corte, 40% para penteado, 30% para pedicure, 20% para depilação, 15% para massagem;
+geraServicos(listPercentual, servicos) =
+ if #listPercentual == 0 then
+ 	servicos
+ else if head(listPercentual) >= 1 and head(listPercentual) <= 50 then
+ 	geraServicos(tail(listPercentual), servicos^<corte>)
+ else if head(listPercentual) >= 51 and head(listPercentual) <= 90 then
+ 	geraServicos(tail(listPercentual), servicos^<penteado>)
+ else if head(listPercentual) >= 91 and head(listPercentual) <= 120 then
+ 	geraServicos(tail(listPercentual), servicos^<manicure>)
+ else if head(listPercentual) >= 121 and head(listPercentual) <= 140 then
+ 	geraServicos(tail(listPercentual), servicos^<depilacao>)
+ else if (head(listPercentual) >= 141 and head(listPercentual) <= 155) then
+ 	geraServicos(tail(listPercentual), servicos^<massagem>)
+ else
+ 	servicos
+
+-- i) Em geral 30% dos clientes desejam todos os serviços, 35% desejam 4, 20% desejam 3, 10% apenas 2 e 5% apenas 1;
+geraqtdServicos(percentual) =
+ if percentual >= 1 and percentual <= 30 then
+ 	5
+ else if percentual >= 31 and percentual <= 65 then
+ 	4
+ else if percentual >= 66 and percentual <= 85 then
+ 	3
+ else if percentual >= 86  and percentual<= 95 then
+ 	2
+ else if percentual >= 96 and percentual <= 100 then
+	1
+ else
+ 	0
+
+-- d) Cada cliente pode desejar de 1 a todos os serviços oferecidos pelo salão;
+-- geradorServicos() =
+--	[] x:porcentagemServicos @ x -> GERADOR_SERVICOS(x)
+
+
+--GERADOR_SERVICOS(percentual) =
+--	if geraqtdServicos(percentual) > 0 then SKIP
+--	else STOP
+
+-- PROCESSOS
+
+CABELEREIRA(corte, servicos) =
+ if member(penteado, servicos) then
+	corte -> lavagem -> penteado -> CLIENTE(diff(servicos, {penteado}))
+ else
+	corte -> lavagem -> CLIENTE(servicos)
 
 -- Mudei a ordem aqui pois não faz sentido fazer um pentado para depois cortar o cabelo
-CABELEREIRA(penteado, servicos) = if member(corte, servicos) then corte -> lavagem -> penteado -> CLIENTE(diff(servicos, {corte}))
-			       else penteado -> CLIENTE(servicos)
+CABELEREIRA(penteado, servicos) =
+ if member(corte, servicos) then
+ 	corte -> lavagem -> penteado -> CLIENTE(diff(servicos, {corte}))
+ else
+	penteado -> CLIENTE(servicos)
 
-MASSAGISTA(servicos) = massagem -> CLIENTE(servicos)
+MASSAGISTA(servicos) =
+ massagem -> CLIENTE(servicos)
 
-DEPILADORA(servicos) = depilacao -> CLIENTE(servicos)
+DEPILADORA(servicos) =
+ depilacao -> CLIENTE(servicos)
 
-MANICURE(servicos) = manicure -> CLIENTE(servicos)
-
-CAIXA = pagamento -> SKIP
+MANICURE(servicos) =
+ manicure -> CLIENTE(servicos)
+t
+CAIXA =
+ pagamento -> SKIP
 
 CLIENTE(servicos) =
-	member(corte, servicos) & CABELEREIRA(corte, diff(servicos, {corte}))
-	[]
-	member(penteado, servicos) & CABELEREIRA(penteado, diff(servicos, {penteado}))
-	[]
-	member(massagem, servicos) & MASSAGISTA(diff(servicos, {massagem}))
-	[]
-	member(depilacao, servicos) & DEPILADORA(diff(servicos, {depilacao}))
-	[]
-	member(manicure, servicos) & MANICURE(diff(servicos, {manicure}))
-	[]
-	empty(servicos) & CAIXA
+ member(corte, servicos) & CABELEREIRA(corte, diff(servicos, {corte}))
+ []
+ member(penteado, servicos) & CABELEREIRA(penteado, diff(servicos, {penteado}))
+ []
+ member(massagem, servicos) & MASSAGISTA(diff(servicos, {massagem}))
+ []
+ member(depilacao, servicos) & DEPILADORA(diff(servicos, {depilacao}))
+ []
+ member(manicure, servicos) & MANICURE(diff(servicos, {manicure}))
+ []
+ empty(servicos) & CAIXA
+
+------------
+-- BUFFER --
+------------
+
+DATA = {1..101}
+
+channel in, out : DATA
+
+BUFFER(i) = B(<>,i)
+
+B(s,i) = if (s == <>)
+         then in?idCliente -> B(<idCliente>,i)
+         else if (#s == i)
+              then out!head(s) -> B(tail(s),i)
+              else ((out!head(s) -> B(tail(s),i)) [] in?idCliente -> B(s^<idCliente>,i))
